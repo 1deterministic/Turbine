@@ -26,15 +26,5 @@ import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
 
 public abstract class Forma {
-    // informação de textura da forma
-    private Texture textura;
-    
-    // desenha a forma na tela
-    public abstract void desenha(GL2 gl);
-    
-    // carrega uma textura a partir de um arquivo de imagem
-    public abstract boolean carregaTextura(String caminho);
-   
-    // verifica se este objeto colide com outro objeto recebido como parâmetro
-    public abstract boolean colideCom(Forma outroObjeto);
+    public abstract void desenha(GL2 gl2);
 }

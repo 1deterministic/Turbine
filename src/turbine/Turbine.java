@@ -40,20 +40,9 @@ public class Turbine implements GLEventListener {
     }
 
     public void display(GLAutoDrawable drawable) {
-        final GL2 gl2 = drawable.getGL().getGL2();
-        this.desenhaTriangulo(gl2);
+        
     }
 
-    private void desenhaTriangulo(GL2 gl2) {
-        gl2.glBegin(GL.GL_TRIANGLES);
-        gl2.glColor3f(1f, 1f, 0f);
-        gl2.glVertex2d(0, 0.7);
-        gl2.glColor3f(1f, 0f, 0f);
-        gl2.glVertex2d(-0.2, 0.4);
-        gl2.glColor3f(0f, 0f, 1f);
-        gl2.glVertex2d(0.2, 0.4);
-        gl2.glEnd();
-    }
 
     public void dispose(GLAutoDrawable arg0) {
 
