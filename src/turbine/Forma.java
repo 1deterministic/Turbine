@@ -10,7 +10,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 public abstract class Forma {
     private Texture textura;
     
-    public abstract void desenha(GL2 gl2);
+    public abstract void desenha(Renderizador r);
     
     public void carregarTextura(String caminho){
         // implementar ainda

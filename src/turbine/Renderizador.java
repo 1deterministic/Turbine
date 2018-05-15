@@ -25,21 +25,11 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
 
-public class Elipsoide extends Forma {
-    private Ponto centro;
-    private Double largura, altura, profundidade;
-    
-    public Elipsoide(Ponto centro){
-        this.centro = centro;
-    }
-
-    public void desenha(Renderizador r) {
-        // desenhar uma esfera comum e aplicar escala
-        
-        r.gl.glColor3f(0, 1, 0);
-        r.gl.glPushMatrix();
-            r.glut.glutSolidSphere(0.2f, 30, 30);
-            r.gl.glEnd();
-        r.gl.glPopMatrix();
-    }    
+// tipo uma estrutura de dados para passar todos os elementos necessários para desenhar na tela
+// a ideia é criar aqueles glu, glut, gl, gl2 apenas uma vez
+public class Renderizador {
+        public GL2 gl;
+        public GLU glu;
+	public GLUT glut;
+	public GLAutoDrawable glDrawable;
 }

@@ -11,6 +11,30 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+
+import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
+
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
+import com.jogamp.opengl.util.gl2.GLUT;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.TextureData;
+import com.jogamp.opengl.util.texture.TextureIO;
 
 public class Turbine implements GLEventListener {
 
@@ -40,7 +64,16 @@ public class Turbine implements GLEventListener {
     }
 
     public void display(GLAutoDrawable drawable) {
+        Renderizador r = new Renderizador();
+        r.gl = drawable.getGL().getGL2();
+        r.glDrawable = drawable;
+        r.glu = new GLU();
+        r.glut = new GLUT();
         
+        
+        Elipsoide e = new Elipsoide(new Ponto(0, 0, 0));
+        e.desenha(r);
+        System.out.println("OK");       
     }
 
 
