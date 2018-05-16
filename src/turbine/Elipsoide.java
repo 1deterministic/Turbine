@@ -33,13 +33,13 @@ public class Elipsoide extends Forma {
         this.centro = centro;
     }
 
-    public void desenha(Renderizador r) {
+    public void desenha(OGL ogl) {
         // desenhar uma esfera comum e aplicar escala
         
-        r.gl.glColor3f(0, 1, 0);
-        r.gl.glPushMatrix();
-            r.glut.glutSolidSphere(0.2f, 30, 30);
-            r.gl.glEnd();
-        r.gl.glPopMatrix();
+        ogl.gl.glColor3f(0, 1, 0);
+        ogl.gl.glPushMatrix();
+            ogl.glut.glutSolidSphere(0.1f, 30, 30);
+            ogl.gl.glEnd();
+        ogl.gl.glPopMatrix();
     }    
 }

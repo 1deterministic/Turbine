@@ -1,87 +1,54 @@
 package turbine;
 
-import java.awt.Frame;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
+import java.awt.Container;
 
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GLAutoDrawable;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
 import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
 
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
+public class Turbine {
 
-import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
-import com.jogamp.opengl.util.gl2.GLUT;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureData;
-import com.jogamp.opengl.util.texture.TextureIO;
+    private Renderizador renderizador;
 
-public class Turbine implements GLEventListener {
+    public Turbine() {
+        // Cria janela
+        JFrame janela = new JFrame("Textura");
+        janela.setBounds(50, 100, 800, 800);
+        janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-    public static void main(String[] args) {
+        BorderLayout layout = new BorderLayout();
+        Container caixa = janela.getContentPane();
+        caixa.setLayout(layout);
+
+        // Cria um objeto GLCapabilities para especificar o número de bits
+        // por pixel para RGBA
         GLProfile glp = GLProfile.getDefault();
         GLCapabilities caps = new GLCapabilities(glp);
+        caps.setRedBits(8);
+        caps.setBlueBits(8);
+        caps.setGreenBits(8);
+        caps.setAlphaBits(8);
+
+        // Cria o objeto que irá gerenciar os eventos
+        renderizador = new Renderizador();
+
+        // Cria um canvas, adiciona na janela, e especifica o objeto "ouvinte"
+        // para os eventos Gl, de mouse e teclado
         GLCanvas canvas = new GLCanvas(caps);
-
-        Frame frame = new Frame("Turbine");
-        frame.setSize(800, 600);
-        frame.add(canvas);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-
-        canvas.addGLEventListener(new Turbine());
-        canvas.setVisible(true);
+        janela.add(canvas, BorderLayout.CENTER);
+        canvas.addGLEventListener(renderizador);
+        canvas.addMouseListener(renderizador);
+        canvas.addKeyListener(renderizador);
+        janela.setVisible(true);
+        canvas.requestFocus();
     }
 
-    public void init(GLAutoDrawable drawable) {
-
-    }
-
-    public void display(GLAutoDrawable drawable) {
-        Renderizador r = new Renderizador();
-        r.gl = drawable.getGL().getGL2();
-        r.glDrawable = drawable;
-        r.glu = new GLU();
-        r.glut = new GLUT();
-        
-        
-        Elipsoide e = new Elipsoide(new Ponto(0, 0, 0));
-        e.desenha(r);
-        System.out.println("OK");       
-    }
-
-
-    public void dispose(GLAutoDrawable arg0) {
-
-    }
-
-    public void reshape(GLAutoDrawable arg0, int arg1, int arg2, int arg3, int arg4) {
-
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Turbine t = new Turbine();
     }
 }

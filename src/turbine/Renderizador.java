@@ -25,11 +25,48 @@ import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
 
-// tipo uma estrutura de dados para passar todos os elementos necessários para desenhar na tela
-// a ideia é criar aqueles glu, glut, gl, gl2 apenas uma vez
-public class Renderizador {
-        public GL2 gl;
-        public GLU glu;
-	public GLUT glut;
-	public GLAutoDrawable glDrawable;
+public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
+    private OGL ogl;
+
+    public Renderizador() {
+        ogl = new OGL();
+    }
+
+    public void init(GLAutoDrawable drawable) {
+        this.ogl.glDrawable = drawable;
+        this.ogl.gl = drawable.getGL().getGL2();
+        this.ogl.glu = new GLU();
+        this.ogl.glut = new GLUT();
+        this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
+    }
+
+    public void display(GLAutoDrawable drawable) {
+        this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        this.ogl.gl.glLoadIdentity();
+        
+        Elipsoide e = new Elipsoide(new Ponto(0, 0, 0));
+        e.desenha(this.ogl);
+    }
+
+    public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
+    }
+
+    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
+    }
+
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+    }
+
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+
+    public void dispose(GLAutoDrawable arg0) {
+    }
 }
