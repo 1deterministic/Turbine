@@ -29,7 +29,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private OGL ogl;
 
     public Renderizador() {
-        ogl = new OGL();
+        ogl = new OGL();      
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -39,15 +39,23 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.glut = new GLUT();
         this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
+        
+        // Especifica sistema de coordenadas de projeção
+        this.ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
+        // Inicializa sistema de coordenadas de projeção
+        this.ogl.gl.glLoadIdentity();
+
+        // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
+        this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
         
-        Elipsoide e = new Elipsoide(new Ponto(0.0d, 0.0d, 0.0d), 4.0d, 3.0d, 1.0d);
-        e.escala(new Ponto(2.0d, 1.0d, 1.0d));
-        e.desenha(this.ogl);
+        Elipsoide e = new Elipsoide(new Ponto(1.0d, 2.0d, 1.0d));
+        e.escalar(2.0d);
+        e.desenhar(this.ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {

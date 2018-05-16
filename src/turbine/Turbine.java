@@ -9,6 +9,7 @@ import javax.swing.WindowConstants;
 import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLCanvas;
+import com.jogamp.opengl.util.FPSAnimator;
 
 public class Turbine {
 
@@ -44,6 +45,8 @@ public class Turbine {
         canvas.addMouseListener(renderizador);
         canvas.addKeyListener(renderizador);
         janela.setVisible(true);
+        FPSAnimator animator = new FPSAnimator(canvas, 120);
+        animator.start();
         canvas.requestFocus();
     }
 

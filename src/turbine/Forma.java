@@ -10,9 +10,14 @@ import com.jogamp.opengl.util.texture.TextureIO;
 public abstract class Forma {
     private Texture textura;
     
-    public abstract void desenha(OGL ogl);
+    public abstract void desenhar(OGL ogl);
     
-    public abstract void escala(Ponto p);
+    public abstract void escalar(Double v);
+    
+    public abstract void transladar(Ponto delta);
+    
+    
+    
     
     public void carregarTextura(String caminho){
         // implementar ainda
