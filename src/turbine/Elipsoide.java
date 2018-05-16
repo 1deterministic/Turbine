@@ -29,17 +29,27 @@ public class Elipsoide extends Forma {
     private Ponto centro;
     private Double largura, altura, profundidade;
     
-    public Elipsoide(Ponto centro){
+    public Elipsoide(Ponto centro, Double largura, Double altura, Double profundidade){
         this.centro = centro;
+        this.largura = largura;
+        this.altura = altura;
+        this.profundidade = profundidade;
     }
 
     public void desenha(OGL ogl) {
         // desenhar uma esfera comum e aplicar escala
         
         ogl.gl.glColor3f(0, 1, 0);
+        ogl.gl.glScaled(this.largura, this.altura, this.profundidade);
         ogl.gl.glPushMatrix();
             ogl.glut.glutSolidSphere(0.1f, 30, 30);
             ogl.gl.glEnd();
         ogl.gl.glPopMatrix();
-    }    
+    }
+
+    public void escala(Ponto p) {
+        this.largura *= p.x;
+        this.altura *= p.y;
+        this.profundidade *= p.z;
+    }
 }

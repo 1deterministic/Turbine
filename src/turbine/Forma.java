@@ -12,6 +12,8 @@ public abstract class Forma {
     
     public abstract void desenha(OGL ogl);
     
+    public abstract void escala(Ponto p);
+    
     public void carregarTextura(String caminho){
         // implementar ainda
     }

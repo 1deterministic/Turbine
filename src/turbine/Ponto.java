@@ -2,11 +2,11 @@ package turbine;
 
 public class Ponto {
     // atributos públicos para facilitar a codificação
-    public int x;
-    public int y;
-    public int z;
+    public Double x;
+    public Double y;
+    public Double z;
     
-    public Ponto(int x, int y, int z){
+    public Ponto(Double x, Double y, Double z){
         this.x = x;
         this.y = y;
         this.z = z;

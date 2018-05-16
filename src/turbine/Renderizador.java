@@ -45,7 +45,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
         
-        Elipsoide e = new Elipsoide(new Ponto(0, 0, 0));
+        Elipsoide e = new Elipsoide(new Ponto(0.0d, 0.0d, 0.0d), 4.0d, 3.0d, 1.0d);
+        e.escala(new Ponto(2.0d, 1.0d, 1.0d));
         e.desenha(this.ogl);
     }
 
