@@ -28,6 +28,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
     private OGL ogl;
     private Double rot = 0d;
+    private Camera cam;
 
     public Renderizador() {
         ogl = new OGL();      
@@ -41,6 +42,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         
+        
         // Especifica sistema de coordenadas de projeção
         this.ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
         // Inicializa sistema de coordenadas de projeção
@@ -48,11 +50,17 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
 
         // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
         this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
+        
+        cam = new Camera();
+        cam.local = new Ponto(0d, 0d, 10d);
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
+        
+        cam.local.z -= 0.01d;
+        cam.ajustaObservacao(ogl);
         
         Esfera e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
         e.escalar(2.0d);
