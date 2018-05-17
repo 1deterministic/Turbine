@@ -31,10 +31,14 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Double rot = 0d;
     private Camera cam;
     private Objeto obj;
+    private Esfera e ;
+    private Cubo terreno;
+    private Cubo c;
     long tempo;
 
     public Renderizador() {
-        ogl = new OGL();      
+        ogl = new OGL();
+        System.out.println(System.getProperty("user.dir"));
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -44,7 +48,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.glut = new GLUT();
         this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
-        
+        this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
         
         cam = new Camera();
         
@@ -52,7 +56,24 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.setLocal(new Ponto(0d, 0d, 10d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
         obj.atualizarLocalForma();
+        obj.getForma().carregarTextura("src/turbine/Arquivos/textura.jpg");
         cam.anexarObjeto(obj);
+        
+        c = new Cubo(new Ponto(10.0d, 10.0d, 1d));
+        c.transladar(new Ponto(-1d, 0.5d, 0d));
+        c.carregarTextura("src/turbine/Arquivos/textura.jpg");
+        
+        
+        e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
+        e.escalar(2.0d);
+        e.transladar(new Ponto(0.5d, 0d, -5d));
+        e.carregarTextura("Arquivos/textura.jpg");
+        
+        terreno = new Cubo(new Ponto(1000d, 1000d, 0.01d));
+        terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
+        //terreno.carregarTextura("Arquivos/textura.jpg");
+        terreno.transladar(new Ponto(0d, -1d, 0d));
+        terreno.carregarTextura("src/turbine/Arquivos/textura.jpg");
         
         tempo = System.currentTimeMillis();
     }
@@ -83,15 +104,16 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
         cam.ajustaObservacao(ogl);
         
-        Esfera e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
-        e.escalar(2.0d);
-        e.transladar(new Ponto(0.5d, 0d, -5d));
+        
+       
         e.desenhar(this.ogl);
         
-        Cubo terreno = new Cubo(new Ponto(10.0d, 10.0d, 1d));
-        terreno.rotacionar(rot, new Ponto(1d, 1d, 0d));
+        c.rotacionar(rot, new Ponto(1d, 1d, 0d));
         rot++;
-        terreno.desenhar(this.ogl);
+        c.desenhar(this.ogl);
+        
+        
+        terreno.desenhar(ogl);
         
         obj.getForma().desenhar(ogl);
     }

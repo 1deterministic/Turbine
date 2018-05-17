@@ -2,5 +2,6 @@ package turbine;
 
 // classe de valores constantes
 public final class Constantes {
-    public static final double TAMANHO_PADRAO = 0.1d;
+    // será que é uma boa ideia?
+    public static final double METRO = 0.1d;
 }

@@ -45,7 +45,7 @@ public class Turbine {
         canvas.addMouseListener(renderizador);
         canvas.addKeyListener(renderizador);
         janela.setVisible(true);
-        FPSAnimator animator = new FPSAnimator(canvas, 120);
+        FPSAnimator animator = new FPSAnimator(canvas, 60);
         animator.start();
         canvas.requestFocus();
     }
