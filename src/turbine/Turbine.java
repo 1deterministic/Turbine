@@ -19,7 +19,7 @@ public class Turbine {
         // Cria janela
         JFrame janela = new JFrame("Textura");
         janela.setBounds(50, 100, 800, 800);
-        janela.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        janela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         BorderLayout layout = new BorderLayout();
         Container caixa = janela.getContentPane();
