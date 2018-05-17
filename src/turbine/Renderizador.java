@@ -55,7 +55,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         cam = new Camera();
         
         obj = new Nave();
-        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
+        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
         obj.getForma().setLocal(new Ponto(0d, 0d, 10d));
         cam.anexarObjeto(obj);
     }
@@ -66,6 +66,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         //cam.local.z -= 0.01d;
         obj.getForma().transladar(new Ponto(0d, 0d, -0.01d));
+        obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
         cam.ajustaObservacao(ogl);
         
         Esfera e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
