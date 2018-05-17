@@ -31,11 +31,19 @@ public class Esfera extends Forma {
     
     public void rotacionar(Double angulo, Ponto eixo) {
         // utilizar quaternions para combinar rotações
-        this.angulo = angulo;
+        this.angulo = angulo % 360;
         this.rotacao = eixo;
     }
     
     public void transladar(Ponto delta) {
         this.local.somar(delta);
+    }
+    
+    public void setLocal(Ponto p) {
+        this.local = p;
+    }
+    
+    public Ponto getLocal() {
+        return this.local;
     }
 }

@@ -38,4 +38,12 @@ public class Cubo extends Forma {
     public void transladar(Ponto delta) {
         this.local.somar(delta);
     }
+    
+    public void setLocal(Ponto p) {
+        this.local = p;
+    }
+    
+    public Ponto getLocal() {
+        return this.local;
+    }
 }

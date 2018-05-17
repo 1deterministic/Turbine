@@ -29,6 +29,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private OGL ogl;
     private Double rot = 0d;
     private Camera cam;
+    private Objeto obj;
 
     public Renderizador() {
         ogl = new OGL();      
@@ -52,19 +53,24 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
         
         cam = new Camera();
-        cam.local = new Ponto(0d, 0d, 10d);
+        
+        obj = new Nave();
+        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
+        obj.getForma().setLocal(new Ponto(0d, 0d, 10d));
+        cam.anexarObjeto(obj);
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
         
-        cam.local.z -= 0.01d;
+        //cam.local.z -= 0.01d;
+        obj.getForma().transladar(new Ponto(0d, 0d, -0.01d));
         cam.ajustaObservacao(ogl);
         
         Esfera e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
         e.escalar(2.0d);
-        e.transladar(new Ponto(0.5d, 0d, 0d));
+        e.transladar(new Ponto(0.5d, 0d, -5d));
         e.desenhar(this.ogl);
         
         //Cubo c = new Cubo(new Ponto(1.0d, 2.0d, 1.0d));
@@ -75,6 +81,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         terreno.rotacionar(rot, new Ponto(1d, 1d, 0d));
         rot++;
         terreno.desenhar(this.ogl);
+        
+        obj.getForma().desenhar(ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {

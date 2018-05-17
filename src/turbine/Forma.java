@@ -18,6 +18,11 @@ public abstract class Forma {
     
     public abstract void rotacionar(Double angulo, Ponto eixo);
     
+    // a diferença para transladar é que setLocal especifica o local absoluto
+    public abstract void setLocal(Ponto p);
+    public abstract Ponto getLocal();
+    
+    
     
     public void carregarTextura(String caminho){
         // implementar ainda

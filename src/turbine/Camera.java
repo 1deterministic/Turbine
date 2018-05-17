@@ -3,8 +3,12 @@ package turbine;
 import com.jogamp.opengl.GL2;
 
 public class Camera {
+    // atributos temporariamente públicos
     public Ponto local;
     public Ponto rotacao;
+    
+    private Objeto anexo;
+    
     
     public Camera() {
         local = new Ponto(0d, 0d, 0d);
@@ -16,6 +20,10 @@ public class Camera {
     }
     
     public void ajustaObservacao(OGL ogl) {
+        // mudar depois para pegar a posicao do proprio objeto
+        this.local.z = anexo.getForma().getLocal().z + 1d;
+        this.local.y = anexo.getForma().getLocal().y + 0.1d;
+        
         // Especifica sistema de coordenadas de projeção
         ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
         // Inicializa sistema de coordenadas de projeção
@@ -32,5 +40,9 @@ public class Camera {
         ogl.gl.glRotated(this.rotacao.x, 1, 0, 0);
         ogl.gl.glRotated(this.rotacao.y, 0, 1, 0);
         ogl.gl.glRotated(this.rotacao.z, 0, 0, 1);
+    }
+    
+    public void anexarObjeto(Objeto obj) {
+        this.anexo = obj;
     }
 }
