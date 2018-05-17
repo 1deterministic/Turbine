@@ -68,8 +68,18 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
             cam.anexarObjeto(outro);
         }
         
+        if (System.currentTimeMillis() > tempo + 10 * 1000) {
+            Nave outro = new Nave();
+            outro.setLocal(new Ponto(0d, 0d, -4d));
+            cam.anexarObjeto(outro);
+        }
+        
+        if (System.currentTimeMillis() > tempo + 13 * 1000) {
+            cam.anexarObjeto(obj);
+        }
+        
         //cam.local.z -= 0.01d;
-        obj.transladar(new Ponto(0d, 0d, -0.01d));
+        obj.transladar(new Ponto(0d, 0d, -0.02d));
         obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
         cam.ajustaObservacao(ogl);
         

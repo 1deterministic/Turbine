@@ -24,7 +24,8 @@ public class Camera {
         // mudar depois para pegar a posicao do proprio objeto
 //        this.local.z = anexo.getForma().getLocal().z + 1d;
 //        this.local.y = anexo.getForma().getLocal().y + 0.1d;
-        this.local = anexo.getLocalCamera();
+        //this.local = anexo.getLocalCamera();
+        this.transicaoCamera();
         
         // Especifica sistema de coordenadas de projeção
         ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -48,5 +49,14 @@ public class Camera {
     // anexa um objeto a essa câmera para que ela o siga
     public void anexarObjeto(Objeto obj) {
         this.anexo = obj;
+    }
+    
+    public void transicaoCamera() {
+        if (this.local.getDistancia(anexo.getLocalCamera()) < 0.1) {
+            this.local = anexo.getLocalCamera();
+        } else {
+            Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z);
+            this.transladar(vetorDirecao.versor().escalar(0.1d));
+        }
     }
 }

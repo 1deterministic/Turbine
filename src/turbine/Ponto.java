@@ -34,6 +34,10 @@ public class Ponto {
         this.z *= v;
     }
     
+    public Ponto escalar(Double v) {
+        return new Ponto(this.x * v, this.y * v, this.z * v);
+    }
+    
     // caso seja usado como um vetor, retorna a norma desse vetor
     public Double norma() {
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
