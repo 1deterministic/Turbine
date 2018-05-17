@@ -1,0 +1,112 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x00007f7faa927b14, pid=4582, tid=0x00007f7fabd41700
+#
+# JRE version: OpenJDK Runtime Environment (8.0_171-b11) (build 1.8.0_171-8u171-b11-1~deb9u1-b11)
+# Java VM: OpenJDK 64-Bit Server VM (25.171-b11 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [VBoxOGLcrutil.so+0x3fb14]  crHashtableWalkUnlocked+0x24
+#
+# Failed to write core dump. Core dumps have been disabled. To enable core dumping, try "ulimit -c unlimited" before starting Java again
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.java.com/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f800ca68800):  JavaThread "AWT-EventQueue-1" [_thread_in_native, id=4620, stack(0x00007f7fabc41000,0x00007f7fabd42000)]
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x0000000000000008
+
+Registers:
+RAX=0x0000000000000000, RBX=0x00007f7fa40a7700, RCX=0x0000000000000000, RDX=0x00007f7fa40a7700
+RSP=0x00007f7fabd3f3b0, RBP=0x00007f7fabd3f3e0, RSI=0x00007f7faaaff000, RDI=0x0000000000000000
+R8 =0x00007f7fa406f540, R9 =0x0000000000000000, R10=0x0000000000000000, R11=0x0000000000000000
+R12=0x0000000000000001, R13=0x0000000000000000, R14=0x00007f7faaaff000, R15=0x00007f7fa40a7700
+RIP=0x00007f7faa927b14, EFLAGS=0x0000000000010202, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007f7fabd3f3b0)
+0x00007f7fabd3f3b0:   0000000000000000 00007f7fa40a7700
+0x00007f7fabd3f3c0:   0000000000000001 00007f7f8c0d1b40
+0x00007f7fabd3f3d0:   0000000000000148 00007f800ca68800
+0x00007f7fabd3f3e0:   00007f7fabd3f400 00007f7faaafee0c
+0x00007f7fabd3f3f0:   0000000000004100 0000000000000000
+0x00007f7fabd3f400:   00007f7fabd3f420 00007f7faaafef00
+0x00007f7fabd3f410:   00007f7fabd3fcd0 00007f7faab19460
+0x00007f7fabd3f420:   00007f7fabd3f460 00007f7faa683aa7
+0x00007f7fabd3f430:   00007f7faab19460 00004100fd422904
+0x00007f7fabd3f440:   00007f7fabd3f470 00007f800ca689e0
+0x00007f7fabd3f450:   00000000ec290cc0 00007f7faab19460
+0x00007f7fabd3f460:   00007f7fabd3f4b0 00007f7ffd48796a
+0x00007f7fabd3f470:   00000000ebdc6c40 00007f800c827cc8
+0x00007f7fabd3f480:   00007f800ca68800 00000000eba907a8
+0x00007f7fabd3f490:   00007f800c250a50 0000000003200020
+0x00007f7fabd3f4a0:   00007f7fabd3fcd0 0000000000000009
+0x00007f7fabd3f4b0:   00007f7fabd3fcd0 00007f7ffd437f6c
+0x00007f7fabd3f4c0:   00000000ec291650 00007f7f00000003
+0x00007f7fabd3f4d0:   00000000ec2916e8 00000000ec291780
+0x00007f7fabd3f4e0:   00000000eba25570 0000000000000001
+0x00007f7fabd3f4f0:   00000000c231b5d0 00007f7ffd37d384
+0x00007f7fabd3f500:   00007f7fabd3fcd0 00007f7ffd3d4534
+0x00007f7fabd3f510:   00000000c231b5c0 00007f7ffd37ceb4
+0x00007f7fabd3f520:   0000000000000000 00000000eba90898
+0x00007f7fabd3f530:   00007f7fabd3fcd0 00007f7ffd48f39c
+0x00007f7fabd3f540:   00000000eba908a8 00007f800c827cc8
+0x00007f7fabd3f550:   00007f800ca68800 0000000000000000
+0x00007f7fabd3f560:   00000000eba908a8 00007f800ca68800
+0x00007f7fabd3f570:   00007f7fabd3fcd0 00007f7ffd37321c
+0x00007f7fabd3f580:   00007f800ca68800 00000000eb9a4b28
+0x00007f7fabd3f590:   00007f7f00000001 00000000eba63ef0
+0x00007f7fabd3f5a0:   00000000c23c19f0 00000000eb975fc8 
+
+Instructions: (pc=0x00007f7faa927b14)
+0x00007f7faa927af4:   41 57 49 89 d7 41 56 49 89 f6 41 55 45 31 ed 41
+0x00007f7faa927b04:   54 53 48 83 ec 08 48 89 7d d0 66 90 48 8b 45 d0
+0x00007f7faa927b14:   4a 8b 4c e8 08 48 85 c9 74 35 4d 85 f6 41 0f 95
+0x00007f7faa927b24:   c4 eb 08 48 85 db 48 89 d9 74 24 48 8b 71 08 48 
+
+Register to memory mapping:
+
+RAX=0x0000000000000000 is an unknown value
+RBX=0x00007f7fa40a7700 is an unknown value
+RCX=0x0000000000000000 is an unknown value
+RDX=0x00007f7fa40a7700 is an unknown value
+RSP=0x00007f7fabd3f3b0 is pointing into the stack for thread: 0x00007f800ca68800
+RBP=0x00007f7fabd3f3e0 is pointing into the stack for thread: 0x00007f800ca68800
+RSI=0x00007f7faaaff000: <offset 0x28000> in /var/lib/VBoxGuestAdditions/lib/libGL.so.1 at 0x00007f7faaad7000
+RDI=0x0000000000000000 is an unknown value
+R8 =0x00007f7fa406f540 is an unknown value
+R9 =0x0000000000000000 is an unknown value
+R10=0x0000000000000000 is an unknown value
+R11=0x0000000000000000 is an unknown value
+R12=0x0000000000000001 is an unknown value
+R13=0x0000000000000000 is an unknown value
+R14=0x00007f7faaaff000: <offset 0x28000> in /var/lib/VBoxGuestAdditions/lib/libGL.so.1 at 0x00007f7faaad7000
+R15=0x00007f7fa40a7700 is an unknown value
+
+
+Stack: [0x00007f7fabc41000,0x00007f7fabd42000],  sp=0x00007f7fabd3f3b0,  free space=1016k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [VBoxOGLcrutil.so+0x3fb14]  crHashtableWalkUnlocked+0x24
+C  [libGL.so.1+0x27e0c]
+C  [libGL.so.1+0x27f00]
+C  [libjogl_desktop.so+0x54aa7]  Java_jogamp_opengl_gl4_GL4bcImpl_dispatch_1glClear1__IJ+0x2a
+J 1220  jogamp.opengl.gl4.GL4bcImpl.dispatch_glClear1(IJ)V (0 bytes) @ 0x00007f7ffd48796a [0x00007f7ffd4878c0+0xaa]
+J 1120 C1 jogamp.opengl.gl4.GL4bcImpl.glClear(I)V (43 bytes) @ 0x00007f7ffd437f6c [0x00007f7ffd4375a0+0x9cc]
+J 1228 C1 turbine.Renderizador.display(Lcom/jogamp/opengl/GLAutoDrawable;)V (214 bytes) @ 0x00007f7ffd49a3bc [0x00007f7ffd49a2a0+0x11c]
+J 1227 C1 jogamp.opengl.GLDrawableHelper.displayImpl(Lcom/jogamp/opengl/GLAutoDrawable;)V (86 bytes) @ 0x00007f7ffd4933ec [0x00007f7ffd4927e0+0xc0c]
+J 1225 C1 com.jogamp.opengl.awt.GLCanvas$11.run()V (122 bytes) @ 0x00007f7ffd4990dc [0x00007f7ffd498ac0+0x61c]
+J 1224 C1 jogamp.opengl.GLDrawableHelper.invokeGLImpl(Lcom/jogamp/opengl/GLDrawable;Lcom/jogamp/opengl/GLContext;Ljava/lang/Runnable;Ljava/lang/Runnable;)V (579 bytes) @ 0x00007f7ffd495a5c [0x00007f7ffd494c20+0xe3c]
+J 1223 C1 jogamp.opengl.GLDrawableHelper.invokeGL(Lcom/jogamp/opengl/GLDrawable;Lcom/jogamp/opengl/GLContext;Ljava/lang/Runnable;Ljava/lang/Runnable;)V (76 bytes) @ 0x00007f7ffd488f04 [0x00007f7ffd488e40+0xc4]
+J 1130 C1 com.jogamp.opengl.awt.GLCanvas$12.run()V (126 bytes) @ 0x00007f7ffd444944 [0x00007f7ffd444340+0x604]
+J 1111 C1 java.awt.event.InvocationEvent.dispatch()V (69 bytes) @ 0x00007f7ffd425a4c [0x00007f7ffd425900+0x14c]
+J 1160 C1 java.awt.EventQueue.dispatchEventImpl(Ljava/awt/AWTEvent;Ljava/lang/Object;)V (149 bytes) @ 0x00007f7ffd45f87c [0x00007f7ffd45ddc0+0x1abc]
+J 1158 C1 java.awt.EventQueue$3.run()Ljava/lang/Void; (60 bytes) @ 0x00007f7ffd45b6c4 [0x00007f7ffd45b4c0+0x204]
+J 1157 C1 java.awt.EventQueue$3.run()Ljava/lang/Object; (5 bytes) @ 0x00007f7ffd45bd8c [0x00007f7ffd45bd00+0x8c]
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x665d13]

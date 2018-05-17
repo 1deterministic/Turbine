@@ -27,6 +27,7 @@ import com.jogamp.opengl.util.texture.TextureIO;
 
 public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
     private OGL ogl;
+    private Double rot = 0d;
 
     public Renderizador() {
         ogl = new OGL();      
@@ -58,9 +59,14 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         e.transladar(new Ponto(0.5d, 0d, 0d));
         e.desenhar(this.ogl);
         
-        Cubo c = new Cubo(new Ponto(1.0d, 2.0d, 1.0d));
-        c.escalar(2.0d);
-        c.desenhar(this.ogl);
+        //Cubo c = new Cubo(new Ponto(1.0d, 2.0d, 1.0d));
+        //c.escalar(2.0d);
+        //c.desenhar(this.ogl);
+        
+        Cubo terreno = new Cubo(new Ponto(10.0d, 10.0d, 1d));
+        terreno.rotacionar(rot, new Ponto(1d, 1d, 0d));
+        rot++;
+        terreno.desenhar(this.ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {

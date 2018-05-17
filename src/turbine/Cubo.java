@@ -31,6 +31,8 @@ public class Cubo extends Forma {
     
     public void rotacionar(Double angulo, Ponto eixo) {
         // utilizar quaternions para combinar rotações
+        this.angulo = angulo;
+        this.rotacao = eixo;
     }
     
     public void transladar(Ponto delta) {
