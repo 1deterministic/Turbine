@@ -16,7 +16,7 @@ public abstract class Forma {
     
     public abstract void transladar(Ponto delta);
     
-    
+    public abstract void rotacionar(Double angulo, Ponto eixo);
     
     
     public void carregarTextura(String caminho){
