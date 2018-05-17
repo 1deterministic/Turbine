@@ -56,24 +56,24 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.setLocal(new Ponto(0d, 0d, 10d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
         obj.atualizarLocalForma();
-        obj.getForma().carregarTextura("src/turbine/Arquivos/textura.jpg");
+        obj.getForma().carregarTextura("src/turbine/Arquivos/madeira.jpg");
         cam.anexarObjeto(obj);
         
         c = new Cubo(new Ponto(10.0d, 10.0d, 1d));
         c.transladar(new Ponto(-1d, 0.5d, 0d));
-        c.carregarTextura("src/turbine/Arquivos/textura.jpg");
+        c.carregarTextura("src/turbine/Arquivos/madeira.jpg");
         
         
         e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
         e.escalar(2.0d);
         e.transladar(new Ponto(0.5d, 0d, -5d));
-        e.carregarTextura("Arquivos/textura.jpg");
+        e.carregarTextura("Arquivos/madeira.jpg");
         
-        terreno = new Cubo(new Ponto(1000d, 1000d, 0.01d));
+        terreno = new Cubo(new Ponto(100d, 1000d, 0.01d));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
         //terreno.carregarTextura("Arquivos/textura.jpg");
-        terreno.transladar(new Ponto(0d, -1d, 0d));
-        terreno.carregarTextura("src/turbine/Arquivos/textura.jpg");
+        terreno.transladar(new Ponto(0d, -1d, -10d));
+        terreno.carregarTextura("src/turbine/Arquivos/abstrato.jpg");
         
         tempo = System.currentTimeMillis();
     }
