@@ -21,8 +21,9 @@ public class Camera {
     
     public void ajustaObservacao(OGL ogl) {
         // mudar depois para pegar a posicao do proprio objeto
-        this.local.z = anexo.getForma().getLocal().z + 1d;
-        this.local.y = anexo.getForma().getLocal().y + 0.1d;
+//        this.local.z = anexo.getForma().getLocal().z + 1d;
+//        this.local.y = anexo.getForma().getLocal().y + 0.1d;
+        this.local = anexo.getLocalCamera();
         
         // Especifica sistema de coordenadas de projeção
         ogl.gl.glMatrixMode(GL2.GL_PROJECTION);

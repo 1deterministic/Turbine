@@ -12,6 +12,12 @@ public class Ponto {
         this.z = z;
     }
     
+    public Ponto(Ponto p) {
+        this.x = p.x;
+        this.y = p.y;
+        this.z = p.z;
+    }
+    
     // soma esse ponto com outro ponto
     public void somar(Ponto p) {
         this.x += p.x;

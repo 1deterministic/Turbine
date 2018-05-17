@@ -7,7 +7,16 @@ public abstract class Objeto {
     //private Colisor colisor; // envelope usado na detecção de colisão
     //private boolean aplicar_fisica; // diz se a simulação de física será aplicada nesse objeto
     
+    public abstract void setLocal(Ponto p);
+    public abstract Ponto getLocal();
+    
     public abstract void setForma(Forma f);
     public abstract Forma getForma();
+    
+    public abstract void transladar(Ponto delta);
+    public abstract void atualizarLocalForma();
+    
+    public abstract Ponto getLocalCamera();
+    
     //public abstract void setColisor(Colisor c);
 }

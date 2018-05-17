@@ -44,19 +44,20 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         
         
-        // Especifica sistema de coordenadas de projeção
-        this.ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
-        // Inicializa sistema de coordenadas de projeção
-        this.ogl.gl.glLoadIdentity();
-
-        // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
-        this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
+//        // Especifica sistema de coordenadas de projeção
+//        this.ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
+//        // Inicializa sistema de coordenadas de projeção
+//        this.ogl.gl.glLoadIdentity();
+//
+//        // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
+//        this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
         
         cam = new Camera();
         
         obj = new Nave();
+        obj.setLocal(new Ponto(0d, 0d, 10d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
-        obj.getForma().setLocal(new Ponto(0d, 0d, 10d));
+        obj.atualizarLocalForma();
         cam.anexarObjeto(obj);
     }
 
@@ -65,7 +66,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glLoadIdentity();
         
         //cam.local.z -= 0.01d;
-        obj.getForma().transladar(new Ponto(0d, 0d, -0.01d));
+        obj.transladar(new Ponto(0d, 0d, -0.01d));
         obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
         cam.ajustaObservacao(ogl);
         
