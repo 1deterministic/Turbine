@@ -1,5 +1,7 @@
 package turbine;
 
+// Não é necessariamente um ponto, pense como uma estrutura de dados de 3 valores
+// Foi usada até agora como um ponto, um vetor ou como um vetor de ângulos de rotação
 public class Ponto {
     // atributos públicos para facilitar a codificação
     public Double x;
@@ -25,16 +27,19 @@ public class Ponto {
         this.z += p.z;
     }
     
+    // multiplica os valores por um outro valor qualquer 
     public void multiplicar(Double v) {
         this.x *= v;
         this.y *= v;
         this.z *= v;
     }
     
+    // caso seja usado como um vetor, retorna a norma desse vetor
     public Double norma() {
         return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2) + Math.pow(this.z, 2));
     }
     
+    // caso seja usado como um vetor, retorna o versor desse vetor
     public Ponto versor() {
         Double n = this.norma();
         return new Ponto(this.x / n, this.y / n, this.z / n);

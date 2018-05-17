@@ -44,14 +44,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         
         
-//        // Especifica sistema de coordenadas de projeção
-//        this.ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
-//        // Inicializa sistema de coordenadas de projeção
-//        this.ogl.gl.glLoadIdentity();
-//
-//        // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
-//        this.ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
-        
         cam = new Camera();
         
         obj = new Nave();
@@ -74,10 +66,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         e.escalar(2.0d);
         e.transladar(new Ponto(0.5d, 0d, -5d));
         e.desenhar(this.ogl);
-        
-        //Cubo c = new Cubo(new Ponto(1.0d, 2.0d, 1.0d));
-        //c.escalar(2.0d);
-        //c.desenhar(this.ogl);
         
         Cubo terreno = new Cubo(new Ponto(10.0d, 10.0d, 1d));
         terreno.rotacionar(rot, new Ponto(1d, 1d, 0d));

@@ -1,8 +1,10 @@
 package turbine;
 
+// nave do jogador
 public class Nave extends Objeto {
-    private Ponto local;
-    private Forma forma;
+    private Ponto local; // posição no espaço
+    private Forma forma; // modelo 3d da nave
+    //private Colisor colisor; // container de colisão da nave
     
     public void setLocal(Ponto p) {
         this.local = p;
