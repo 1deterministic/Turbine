@@ -1,5 +1,6 @@
 package turbine;
 
+import java.util.Date;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -30,6 +31,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Double rot = 0d;
     private Camera cam;
     private Objeto obj;
+    long tempo;
 
     public Renderizador() {
         ogl = new OGL();      
@@ -51,11 +53,20 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
         obj.atualizarLocalForma();
         cam.anexarObjeto(obj);
+        
+        tempo = System.currentTimeMillis();
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
+        
+        // teste de troca de câmera
+        if (System.currentTimeMillis() > tempo + 5 * 1000) {
+            Nave outro = new Nave();
+            outro.setLocal(new Ponto(0d, 0d, -1d));
+            cam.anexarObjeto(outro);
+        }
         
         //cam.local.z -= 0.01d;
         obj.transladar(new Ponto(0d, 0d, -0.01d));
