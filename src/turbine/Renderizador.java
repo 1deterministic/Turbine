@@ -80,7 +80,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         e.transladar(new Ponto(3d, 0d, -150d));
         e.setTextura(this.texturas.getTextura("abstrato"));
         
-        terreno = new Cubo(new Ponto(100d, 1000d, 1d));
+        terreno = new Cubo(new Ponto(100d, 1000d, 1000d));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -10d, -450d));
