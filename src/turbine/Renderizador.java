@@ -64,48 +64,50 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
         
         obj = new Nave();
-        obj.setLocal(new Ponto(0d, 0d, 10d));
-        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
+        obj.setLocal(new Ponto(0d, 0d, 500d));
+        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
         obj.atualizarLocalForma();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
         
-        c = new Cubo(new Ponto(10.0d, 10.0d, 1d));
-        c.transladar(new Ponto(-1d, 0.5d, 0d));
+        c = new Cubo(new Ponto(10d, 10d, 10d));
+        c.transladar(new Ponto(-10d, 0.5d, 0d));
         c.setTextura(this.texturas.getTextura("madeira"));
         
         
-        e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
+        e = new Esfera(new Ponto(1.0d, 1.0d, 1.0d));
         e.escalar(2.0d);
-        e.transladar(new Ponto(0.5d, 0d, -5d));
-        e.setTextura(this.texturas.getTextura("madeira"));
+        e.transladar(new Ponto(3d, 0d, -150d));
+        e.setTextura(this.texturas.getTextura("abstrato"));
         
-        terreno = new Cubo(new Ponto(100d, 1000d, 0.01d));
+        terreno = new Cubo(new Ponto(100d, 1000d, 1d));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
         //terreno.carregarTextura("Arquivos/textura.jpg");
-        terreno.transladar(new Ponto(0d, -1d, -10d));
+        terreno.transladar(new Ponto(0d, -10d, -450d));
         terreno.setTextura(this.texturas.getTextura("abstrato"));
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
-        
+
         this.relogio.update();
-        System.out.println(this.relogio.getDeltaTempo());
+        //System.out.println(this.relogio.getDeltaTempo());
         
+        this.cam.transicaoCamera(this.relogio.getDeltaTempo());
+        System.out.println(this.cam.local.z);
         this.cam.ajustaObservacao(this.ogl);
 
-        this.obj.transladar(new Ponto(0d, 0d, -0.02d));
-        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
-        
+        this.obj.transladar(new Ponto(0d, 0d, -0.3d));
+        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 50)), new Ponto(0d, 1d, 1d));
+
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
-        
+
         this.e.desenhar(this.ogl);
         this.c.desenhar(this.ogl);
         this.terreno.desenhar(this.ogl);
-        
+
         this.obj.getForma().desenhar(this.ogl);
     }
 

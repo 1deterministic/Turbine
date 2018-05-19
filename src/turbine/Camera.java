@@ -7,11 +7,13 @@ public class Camera {
     public Ponto local; // local da câmera no espaço
     public Ponto rotacao; // rotação na câmera, por ângulo nos 3 eixos. Talvez mude para um vetor de rotação e um ângulo
     private Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
+    private Double velocidade; // velocidade das transições da câmera
     
     
     public Camera() {
-        local = new Ponto(0d, 0d, 0d);
-        rotacao = new Ponto(0d, 0d, 0d);
+        this.local = new Ponto(0d, 0d, 0d);
+        this.rotacao = new Ponto(0d, 0d, 0d);
+        this.velocidade = 1d;
     }
     
     // caso seja preciso alterar o local de uma câmera sem que ela esteja anexada a um objeto
@@ -25,7 +27,7 @@ public class Camera {
 //        this.local.z = anexo.getForma().getLocal().z + 1d;
 //        this.local.y = anexo.getForma().getLocal().y + 0.1d;
         //this.local = anexo.getLocalCamera();
-        this.transicaoCamera();
+        //this.transicaoCamera();
         
         // Especifica sistema de coordenadas de projeção
         ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
@@ -51,12 +53,13 @@ public class Camera {
         this.anexo = obj;
     }
     
-    public void transicaoCamera() {
-        if (this.local.getDistancia(anexo.getLocalCamera()) < 0.1) {
+    // transiciona essa câmera para o local indicado pelo objeto que ela deve seguir
+    public void transicaoCamera(Double deltaTime) {
+        if (this.local.getDistancia(anexo.getLocalCamera()) < 1d) {
             this.local = anexo.getLocalCamera();
         } else {
             Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z);
-            this.transladar(vetorDirecao.versor().escalar(Constantes.METRO));
+            this.transladar(vetorDirecao.versor().escalar(this.velocidade));
         }
     }
 }

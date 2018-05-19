@@ -42,7 +42,7 @@ public class Esfera extends Forma {
             ogl.glu.gluQuadricDrawStyle(quadrica, GLU.GLU_FILL);
             ogl.glu.gluQuadricNormals(quadrica, GLU.GLU_FLAT);
             ogl.glu.gluQuadricOrientation(quadrica, GLU.GLU_OUTSIDE);
-            ogl.glu.gluSphere(quadrica, Constantes.METRO, 30, 30);
+            ogl.glu.gluSphere(quadrica, 1d, 30, 30);
             ogl.glu.gluDeleteQuadric(quadrica);
             ogl.gl.glEnd();
         ogl.gl.glPopMatrix();
