@@ -31,6 +31,6 @@ public class Nave extends Objeto {
     }
     
     public Ponto getLocalCamera() {
-        return new Ponto(local.x, local.y + 1d, local.z + 10d);
+        return new Ponto(local.x, local.y + 1d, local.z + 4d);
     }
 }

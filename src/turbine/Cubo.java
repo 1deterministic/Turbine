@@ -50,40 +50,40 @@ public class Cubo extends Forma {
             //ogl.gl.glBindTexture(ogl.gl.GL_TEXTURE_2D, textura.getTextureObject(ogl.gl));
             ogl.gl.glBegin(ogl.gl.GL_QUADS);
                     // Front Face
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1d, -1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1d, -1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1d, 1d, 1d);
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1d, 1d, 1d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
 
                     // Back Face
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1d, -1d, -1d);
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1d, 1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1d, 1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1d, -1d, -1d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
 
                     // Top Face
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1d, 1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1d, 1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1d, 1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1d, 1d, -1d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
 
                     // Bottom Face
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1d, -1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1d, -1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1d, -1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1d, -1d, 1d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
 
                     // Right face
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1d, -1d, -1d);
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1d, 1d, -1d);
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1d, 1d, 1d);
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1d, -1d, 1d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
 
                     // Left Face
-                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1d, -1d, -1d);
-                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1d, -1d, 1d);
-                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1d, 1d, 1d);
-                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1d, 1d, -1d);
+                    ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
+                    ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
+                    ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
                 ogl.gl.glEnd();
             ogl.gl.glFlush();
         ogl.gl.glPopMatrix();

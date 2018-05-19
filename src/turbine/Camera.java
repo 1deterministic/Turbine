@@ -1,6 +1,7 @@
 package turbine;
 
 import com.jogamp.opengl.GL2;
+import com.sun.org.apache.xerces.internal.impl.dv.xs.TimeDV;
 
 public class Camera {
     // atributos temporariamente públicos
@@ -13,7 +14,7 @@ public class Camera {
     public Camera() {
         this.local = new Ponto(0d, 0d, 0d);
         this.rotacao = new Ponto(0d, 0d, 0d);
-        this.velocidade = 1d;
+        this.velocidade = 22d;
     }
     
     // caso seja preciso alterar o local de uma câmera sem que ela esteja anexada a um objeto
@@ -35,7 +36,8 @@ public class Camera {
         ogl.gl.glLoadIdentity();
 
         // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
-        ogl.glu.gluPerspective(30d, 1d, 0.2, 500);
+        // 16:9, 65 graus de ângulo visão e 1500 metros de distância de visão
+        ogl.glu.gluPerspective(65d, 1.77d, 0.2, 1500);
         // Especifica sistema de coordenadas do modelo
         ogl.gl.glMatrixMode(GL2.GL_MODELVIEW);
         // Inicializa sistema de coordenadas do modelo
@@ -59,7 +61,8 @@ public class Camera {
             this.local = anexo.getLocalCamera();
         } else {
             Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z);
-            this.transladar(vetorDirecao.versor().escalar(this.velocidade));
+            System.out.println("vel: " + this.velocidade * deltaTime);
+            this.transladar(vetorDirecao.versor().escalar(this.velocidade * deltaTime));
         }
     }
 }

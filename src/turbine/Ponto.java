@@ -53,4 +53,9 @@ public class Ponto {
     public Double getDistancia(Ponto p){
         return Math.sqrt((Math.pow(x - p.x, 2)) + (Math.pow(y - p.y, 2)) + (Math.pow(z - p.z, 2)));
     }
+    
+    // método de debug
+    public String toString() {
+        return "x: " + this.x + ", y: " + this.y + ", z: " + this.z;
+    }
 }

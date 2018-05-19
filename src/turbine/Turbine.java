@@ -18,7 +18,7 @@ public class Turbine {
     public Turbine() {
         // Cria janela
         JFrame janela = new JFrame("Textura");
-        janela.setBounds(50, 100, 800, 800);
+        janela.setBounds(50, 100, 800, 600);
         janela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         BorderLayout layout = new BorderLayout();

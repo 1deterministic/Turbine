@@ -56,8 +56,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
         
-        this.relogio = new Relogio();
-        
         cam = new Camera();
         
         this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
@@ -71,7 +69,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         cam.anexarObjeto(obj);
         
         c = new Cubo(new Ponto(10d, 10d, 10d));
-        c.transladar(new Ponto(-10d, 0.5d, 0d));
+        c.transladar(new Ponto(-50d, 20d, 0d));
         c.setTextura(this.texturas.getTextura("madeira"));
         
         
@@ -85,6 +83,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -10d, -450d));
         terreno.setTextura(this.texturas.getTextura("abstrato"));
+        
+        this.relogio = new Relogio();
+        this.relogio.update();
     }
 
     public void display(GLAutoDrawable drawable) {
@@ -95,11 +96,10 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         //System.out.println(this.relogio.getDeltaTempo());
         
         this.cam.transicaoCamera(this.relogio.getDeltaTempo());
-        System.out.println(this.cam.local.z);
         this.cam.ajustaObservacao(this.ogl);
 
         this.obj.transladar(new Ponto(0d, 0d, -0.3d));
-        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 50)), new Ponto(0d, 1d, 1d));
+        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 10)), new Ponto(0d, 1d, 1d));
 
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
