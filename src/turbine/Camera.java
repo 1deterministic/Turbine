@@ -56,7 +56,7 @@ public class Camera {
             this.local = anexo.getLocalCamera();
         } else {
             Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z);
-            this.transladar(vetorDirecao.versor().escalar(0.1d));
+            this.transladar(vetorDirecao.versor().escalar(Constantes.METRO));
         }
     }
 }

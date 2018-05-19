@@ -39,7 +39,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Esfera e ;
     private Cubo terreno;
     private Cubo c;
-    long tempo;
+    private Relogio relogio;
 
     public Renderizador() {
         this.ogl = new OGL();
@@ -55,6 +55,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
+        
+        this.relogio = new Relogio();
         
         cam = new Camera();
         
@@ -83,48 +85,28 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -1d, -10d));
         terreno.setTextura(this.texturas.getTextura("abstrato"));
-        
-        tempo = System.currentTimeMillis();
     }
 
     public void display(GLAutoDrawable drawable) {
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
         
-        // teste de troca de câmera
-        if (System.currentTimeMillis() > tempo + 5 * 1000) {
-            Nave outro = new Nave();
-            outro.setLocal(new Ponto(0d, 0d, -1d));
-            cam.anexarObjeto(outro);
-        }
+        this.relogio.update();
+        System.out.println(this.relogio.getDeltaTempo());
         
-        if (System.currentTimeMillis() > tempo + 10 * 1000) {
-            Nave outro = new Nave();
-            outro.setLocal(new Ponto(0d, 0d, -4d));
-            cam.anexarObjeto(outro);
-        }
+        this.cam.ajustaObservacao(this.ogl);
+
+        this.obj.transladar(new Ponto(0d, 0d, -0.02d));
+        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
         
-        if (System.currentTimeMillis() > tempo + 13 * 1000) {
-            cam.anexarObjeto(obj);
-        }
+        this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
+        this.rot++;
         
-        //cam.local.z -= 0.01d;
-        obj.transladar(new Ponto(0d, 0d, -0.02d));
-        obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 100)), new Ponto(0d, 0d, 1d));
-        cam.ajustaObservacao(ogl);
+        this.e.desenhar(this.ogl);
+        this.c.desenhar(this.ogl);
+        this.terreno.desenhar(this.ogl);
         
-        
-       
-        e.desenhar(this.ogl);
-        
-        c.rotacionar(rot, new Ponto(1d, 1d, 0d));
-        rot++;
-        c.desenhar(this.ogl);
-        
-        
-        terreno.desenhar(ogl);
-        
-        obj.getForma().desenhar(ogl);
+        this.obj.getForma().desenhar(this.ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
