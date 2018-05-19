@@ -6,6 +6,7 @@ import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -29,6 +30,7 @@ public class Esfera extends Forma {
         // desenha uma esfera comum e apica as operações necessárias
         this.textura.enable(ogl.gl);
         this.textura.bind(ogl.gl);
+        
         ogl.gl.glPushMatrix();
             ogl.gl.glColor3f(1, 1, 1);
             ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z);
@@ -44,6 +46,7 @@ public class Esfera extends Forma {
             ogl.glu.gluDeleteQuadric(quadrica);
             ogl.gl.glEnd();
         ogl.gl.glPopMatrix();
+        
         this.textura.disable(ogl.gl);
     }
 
@@ -61,14 +64,12 @@ public class Esfera extends Forma {
         this.local.somar(delta);
     }
     
-    public void carregarTextura(String caminho) {
-        try {
-            InputStream stream = getClass().getResourceAsStream(caminho);
-            TextureData data = TextureIO.newTextureData(GLProfile.getDefault(), stream, false, "jpg");
-            this.textura = TextureIO.newTexture(data);
-        } catch (IOException exc) {
-            exc.printStackTrace();
-            System.exit(1);
+public void carregarTextura(String caminho) {
+        try{	
+            File fin = new File(caminho);
+            this.textura = TextureIO.newTexture(fin, true);
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
     

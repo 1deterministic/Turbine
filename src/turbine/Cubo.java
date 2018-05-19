@@ -34,8 +34,9 @@ public class Cubo extends Forma {
     }
 
     public void desenhar(OGL ogl) {
-//        this.textura.enable(ogl.gl);
-//        this.textura.bind(ogl.gl);
+        
+        this.textura.enable(ogl.gl);
+        this.textura.bind(ogl.gl);
         
         ogl.gl.glPushMatrix();
             ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z);
@@ -46,7 +47,7 @@ public class Cubo extends Forma {
 
             ogl.gl.glColor3f(1, 1, 1);
             
-            ogl.gl.glBindTexture(ogl.gl.GL_TEXTURE_2D, textura.getTextureObject(ogl.gl));
+            //ogl.gl.glBindTexture(ogl.gl.GL_TEXTURE_2D, textura.getTextureObject(ogl.gl));
             ogl.gl.glBegin(ogl.gl.GL_QUADS);
                     // Front Face
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-Constantes.METRO, -Constantes.METRO, Constantes.METRO);
@@ -86,6 +87,7 @@ public class Cubo extends Forma {
                 ogl.gl.glEnd();
             ogl.gl.glFlush();
         ogl.gl.glPopMatrix();
+        
         this.textura.disable(ogl.gl);
     }
 
