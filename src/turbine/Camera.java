@@ -8,13 +8,11 @@ public class Camera {
     public Ponto local; // local da câmera no espaço
     public Ponto rotacao; // rotação na câmera, por ângulo nos 3 eixos. Talvez mude para um vetor de rotação e um ângulo
     private Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
-    private Double velocidade; // velocidade das transições da câmera
     
     
     public Camera() {
         this.local = new Ponto(0d, 0d, 0d);
         this.rotacao = new Ponto(0d, 0d, 0d);
-        this.velocidade = 22d;
     }
     
     // caso seja preciso alterar o local de uma câmera sem que ela esteja anexada a um objeto
@@ -60,9 +58,9 @@ public class Camera {
         if (this.local.getDistancia(anexo.getLocalCamera()) < 1d) {
             this.local = anexo.getLocalCamera();
         } else {
-            Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z);
-            System.out.println("vel: " + this.velocidade * deltaTime);
-            this.transladar(vetorDirecao.versor().escalar(this.velocidade * deltaTime));
+            Double velocidade = this.anexo.getVelocidade() + this.local.getDistancia(this.anexo.getLocal()) * 5d;
+            Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z).versor();
+            this.transladar(vetorDirecao.versor().escalar(velocidade * deltaTime));
         }
     }
 }

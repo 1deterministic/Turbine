@@ -12,6 +12,12 @@ public abstract class Objeto {
     public abstract void setForma(Forma f); // define a forma (modelo 3d) do objeto
     public abstract Forma getForma(); // retorna a forma do objeto
     
+    public abstract void setDirecao(Ponto d); // define a forma (modelo 3d) do objeto
+    public abstract Ponto getDirecao(); // retorna a forma do objeto
+    
+    public abstract void setVelocidade(Double v); // define a forma (modelo 3d) do objeto
+    public abstract Double getVelocidade(); // retorna a forma do objeto
+    
     //public abstract void setColisor(Colisor c); // define o container colisor desse objeto
     //public abstract Colisor getColisor(); // retorna o container colisor desse objeto
     
@@ -21,5 +27,6 @@ public abstract class Objeto {
     
     public abstract Ponto getLocalCamera(); // retorna o ponto onde a câmera deve estar para seguir esse objeto
     
-    
+    // física
+    public abstract void manterInercia(Double timeDelta);
 }

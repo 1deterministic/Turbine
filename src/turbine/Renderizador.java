@@ -64,6 +64,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj = new Nave();
         obj.setLocal(new Ponto(0d, 0d, 500d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
+        obj.setDirecao(new Ponto(0d, -0.01d, -1d));
+        obj.setVelocidade(22d);
         obj.atualizarLocalForma();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
@@ -92,22 +94,26 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
 
+        // atualiza o relógio 
         this.relogio.update();
-        //System.out.println(this.relogio.getDeltaTempo());
         
+        // atualiza a câmera
         this.cam.transicaoCamera(this.relogio.getDeltaTempo());
         this.cam.ajustaObservacao(this.ogl);
 
-        this.obj.transladar(new Ponto(0d, 0d, -0.3d));
         this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 10)), new Ponto(0d, 1d, 1d));
 
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
-
+        
+        
+        // roda a física
+        this.obj.manterInercia(this.relogio.getDeltaTempo());
+        
+        // desenha todos os objetos
         this.e.desenhar(this.ogl);
         this.c.desenhar(this.ogl);
         this.terreno.desenhar(this.ogl);
-
         this.obj.getForma().desenhar(this.ogl);
     }
 
