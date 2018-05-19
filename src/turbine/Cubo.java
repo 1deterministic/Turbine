@@ -105,13 +105,8 @@ public class Cubo extends Forma {
         this.local.somar(delta);
     }
     
-    public void carregarTextura(String caminho) {
-        try{	
-            File fin = new File(caminho);
-            this.textura = TextureIO.newTexture(fin, true);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+    public void setTextura(Texture textura) {
+        this.textura = textura;
     }
     
     public void setLocal(Ponto p) {

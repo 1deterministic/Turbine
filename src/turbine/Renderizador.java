@@ -31,6 +31,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     
     private String root;
     
+    private Texturas texturas;
+    
     private Double rot = 0d;
     private Camera cam;
     private Objeto obj;
@@ -42,6 +44,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     public Renderizador() {
         this.ogl = new OGL();
         this.root = System.getProperty("user.dir"); // guarda o caminho da raiz do executável
+        this.texturas = new Texturas();
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -55,28 +58,31 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         cam = new Camera();
         
+        this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
+        this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
+        
         obj = new Nave();
         obj.setLocal(new Ponto(0d, 0d, 10d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 3d)));
         obj.atualizarLocalForma();
-        obj.getForma().carregarTextura(this.root + "/src/turbine/Arquivos/madeira.jpg");
+        obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
         
         c = new Cubo(new Ponto(10.0d, 10.0d, 1d));
         c.transladar(new Ponto(-1d, 0.5d, 0d));
-        c.carregarTextura(this.root + "/src/turbine/Arquivos/madeira.jpg");
+        c.setTextura(this.texturas.getTextura("madeira"));
         
         
         e = new Esfera(new Ponto(1.0d, 2.0d, 1.0d));
         e.escalar(2.0d);
         e.transladar(new Ponto(0.5d, 0d, -5d));
-        e.carregarTextura(this.root + "/src/turbine/Arquivos/madeira.jpg");
+        e.setTextura(this.texturas.getTextura("madeira"));
         
         terreno = new Cubo(new Ponto(100d, 1000d, 0.01d));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -1d, -10d));
-        terreno.carregarTextura(this.root + "/src/turbine/Arquivos/abstrato.jpg");
+        terreno.setTextura(this.texturas.getTextura("abstrato"));
         
         tempo = System.currentTimeMillis();
     }
