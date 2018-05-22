@@ -55,10 +55,10 @@ public class Camera {
     
     // transiciona essa câmera para o local indicado pelo objeto que ela deve seguir
     public void transicaoCamera(Double deltaTime) {
-        if (this.local.getDistancia(anexo.getLocalCamera()) < 1d) {
+        if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime) {
             this.local = anexo.getLocalCamera();
         } else {
-            Double velocidade = this.anexo.getVelocidade() + this.local.getDistancia(this.anexo.getLocal()) * 5d;
+            Double velocidade = this.anexo.getVelocidade() + this.local.getDistancia(this.anexo.getLocal());
             Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z).versor();
             this.transladar(vetorDirecao.versor().escalar(velocidade * deltaTime));
         }

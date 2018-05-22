@@ -57,6 +57,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
         
         cam = new Camera();
+        cam.local.z = 800d;
         
         this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
@@ -80,7 +81,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         e.transladar(new Ponto(3d, 0d, -150d));
         e.setTextura(this.texturas.getTextura("abstrato"));
         
-        terreno = new Cubo(new Ponto(100d, 1000d, 1000d));
+        terreno = new Cubo(new Ponto(100d, 1000d, 1d));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -10d, -450d));
