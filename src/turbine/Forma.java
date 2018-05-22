@@ -20,4 +20,7 @@ public abstract class Forma {
     // a diferença para transladar é que setLocal especifica o local absoluto
     public abstract void setLocal(Ponto p);
     public abstract Ponto getLocal();
+    
+    public abstract void setDimensoes(Ponto p);
+    public abstract Ponto getDimensoes();
 }

@@ -34,7 +34,7 @@ public class Camera {
         ogl.gl.glLoadIdentity();
 
         // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
-        // 16:9, 90 graus de ângulo visão e 1500 metros de distância de visão
+        // 16:9, 90 graus de ângulo visão e 5000 metros de distância de visão
         ogl.glu.gluPerspective(90d, 1.77d, 0.2, 5000);
         // Especifica sistema de coordenadas do modelo
         ogl.gl.glMatrixMode(GL2.GL_MODELVIEW);

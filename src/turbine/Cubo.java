@@ -26,6 +26,13 @@ public class Cubo extends Forma {
     private Double angulo; // angulo de rotação
     private Texture textura;
     
+    public Cubo(){
+        this.dimensoes = new Ponto(1d, 1d, 1d);
+        this.local = new Ponto(0.0d, 0.0d, 0.0d);
+        this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
+        this.angulo = 0.0d;
+    }
+    
     public Cubo(Ponto dimensoes){
         this.dimensoes = dimensoes;
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
@@ -115,5 +122,13 @@ public class Cubo extends Forma {
     
     public Ponto getLocal() {
         return this.local;
+    }
+    
+    public void setDimensoes(Ponto p) {
+        this.dimensoes = p;
+    }
+    
+    public Ponto getDimensoes() {
+        return this.dimensoes;
     }
 }

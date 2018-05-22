@@ -6,16 +6,20 @@ public class Nave extends Objeto {
     private Forma forma; // modelo 3d da nave
     private Ponto direcao;
     private Double velocidade;
-    //private Colisor colisor; // container de colisão da nave
+    private Colisor colisor; // container de colisão da nave
     
     public Nave() {
         this.local = new Ponto(0d, 0d, 0d);
         this.direcao = new Ponto(0d, 0d, 0d);
         this.velocidade = 0d;
+        this.forma = new Cubo();
+        this.colisor = new Colisor();
     }
     
     public void setLocal(Ponto p) {
         this.local = p;
+        this.atualizarLocalForma();
+        this.atualizarLocalColisor();
     }
     public Ponto getLocal() {
         return this.local;
@@ -24,8 +28,17 @@ public class Nave extends Objeto {
     public void setForma(Forma forma) {
         this.forma = forma;
     }
+    
     public Forma getForma() {
         return this.forma;
+    }
+    
+    public void setColisor(Colisor c) {
+        this.colisor = c;
+    }
+    
+    public Colisor getColisor() {
+        return this.colisor;
     }
     
     public void setDirecao(Ponto d) {
@@ -48,10 +61,15 @@ public class Nave extends Objeto {
     public void transladar(Ponto delta) {
         this.local.somar(delta);
         this.atualizarLocalForma();
+        this.atualizarLocalColisor();
     }
     
     public void atualizarLocalForma() {
         this.forma.setLocal(new Ponto(this.local));
+    }
+    
+    public void atualizarLocalColisor() {
+        this.colisor.setLocal(new Ponto(this.local));
     }
     
     public Ponto getLocalCamera() {

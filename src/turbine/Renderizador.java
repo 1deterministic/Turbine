@@ -42,6 +42,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Relogio relogio;
     private Controle controle;
     private Esfera planeta;
+    private Cubo parede;
+    private Colisor colisorteste;
+    
 
     public Renderizador() {
         this.ogl = new OGL();
@@ -66,12 +69,20 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
         
+        this.parede = new Cubo(new Ponto(100d, 100d, 100d));
+        this.parede.setTextura(this.texturas.getTextura("madeira"));
+        
+        this.colisorteste = new Colisor();
+        this.colisorteste.setDimensoes(new Ponto(100d, 100d, 100d));
+        
         obj = new Nave();
         obj.setLocal(new Ponto(0d, 0d, 500d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
         obj.setDirecao(new Ponto(0d, -0.01d, -1d));
         obj.setVelocidade(83d); //300Km/h
+        obj.setColisor(new Colisor(obj.getForma().getDimensoes())); // cria um colisor com as mesmas dimensões da forma
         obj.atualizarLocalForma();
+        obj.atualizarLocalColisor();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
         
@@ -118,7 +129,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         // roda a física
         this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
-        this.obj.manterInercia(this.relogio.getDeltaTempo());
+        if (!this.obj.getColisor().colideCom(this.colisorteste))
+            this.obj.manterInercia(this.relogio.getDeltaTempo());
         
         
         // atualiza a câmera
@@ -131,6 +143,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.e.desenhar(this.ogl);
         this.c.desenhar(this.ogl);
         this.terreno.desenhar(this.ogl);
+        this.parede.desenhar(this.ogl);
         this.obj.getForma().desenhar(this.ogl);
     }
 

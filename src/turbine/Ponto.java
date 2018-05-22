@@ -8,6 +8,12 @@ public class Ponto {
     public Double y;
     public Double z;
     
+    public Ponto() {
+        this.x = 0d;
+        this.y = 0d;
+        this.z = 0d;
+    }
+    
     public Ponto(Double x, Double y, Double z){
         this.x = x;
         this.y = y;

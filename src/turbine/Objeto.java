@@ -18,12 +18,12 @@ public abstract class Objeto {
     public abstract void setVelocidade(Double v); // define a forma (modelo 3d) do objeto
     public abstract Double getVelocidade(); // retorna a forma do objeto
     
-    //public abstract void setColisor(Colisor c); // define o container colisor desse objeto
-    //public abstract Colisor getColisor(); // retorna o container colisor desse objeto
+    public abstract void setColisor(Colisor c); // define o container colisor desse objeto
+    public abstract Colisor getColisor(); // retorna o container colisor desse objeto
     
     public abstract void transladar(Ponto delta); // translada esse objeto no espaço, de acordo com as coordenadas em delta
     public abstract void atualizarLocalForma(); // atualiza o local da forma (modelo 3d) desse objeto (caso o objeto seja movido seu modelo tbm deve mover)
-    //public abstract void atualizarLocalColisor(); // atualiza o local do container colisor desse objeto (caso o objeto seja movido seu colisor tbm deve mover)
+    public abstract void atualizarLocalColisor(); // atualiza o local do container colisor desse objeto (caso o objeto seja movido seu colisor tbm deve mover)
     
     public abstract Ponto getLocalCamera(); // retorna o ponto onde a câmera deve estar para seguir esse objeto
     

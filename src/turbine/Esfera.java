@@ -13,14 +13,21 @@ import java.io.InputStream;
 
 
 public class Esfera extends Forma {
-    private Ponto excentricidade; // distorções nos 3 eixos
+    private Ponto dimensoes; // distorções nos 3 eixos
     private Ponto local; // centro
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
     private Texture textura;
     
+    public Esfera(){
+        this.dimensoes = new Ponto(1d, 1d, 1d);
+        this.local = new Ponto(0.0d, 0.0d, 0.0d);
+        this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
+        this.angulo = 0.0d;
+    }
+    
     public Esfera(Ponto excentricidade){
-        this.excentricidade = excentricidade;
+        this.dimensoes = excentricidade;
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
         this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
         this.angulo = 0.0d;
@@ -35,7 +42,7 @@ public class Esfera extends Forma {
             ogl.gl.glColor3f(1, 1, 1);
             ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z);
             ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z);
-            ogl.gl.glScaled(this.excentricidade.x, this.excentricidade.y, this.excentricidade.z);
+            ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z);
             //ogl.glut.glutSolidSphere(Constantes.METRO, 30, 30);
             GLUquadric quadrica = ogl.glu.gluNewQuadric();
             ogl.glu.gluQuadricTexture(quadrica, true);
@@ -51,7 +58,7 @@ public class Esfera extends Forma {
     }
 
     public void escalar(Double v) {
-        this.excentricidade.multiplicar(v);
+        this.dimensoes.multiplicar(v);
     }
     
     public void rotacionar(Double angulo, Ponto eixo) {
@@ -74,5 +81,13 @@ public class Esfera extends Forma {
     
     public Ponto getLocal() {
         return this.local;
+    }
+    
+    public void setDimensoes(Ponto p) {
+        this.dimensoes = p;
+    }
+    
+    public Ponto getDimensoes() {
+        return this.getDimensoes();
     }
 }
