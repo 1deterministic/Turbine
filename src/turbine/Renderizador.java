@@ -41,6 +41,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Cubo c;
     private Relogio relogio;
     private Controle controle;
+    private Esfera planeta;
 
     public Renderizador() {
         this.ogl = new OGL();
@@ -63,6 +64,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
+        this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
         
         obj = new Nave();
         obj.setLocal(new Ponto(0d, 0d, 500d));
@@ -88,6 +90,13 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         //terreno.carregarTextura("Arquivos/textura.jpg");
         terreno.transladar(new Ponto(0d, -10d, -450d));
         terreno.setTextura(this.texturas.getTextura("abstrato"));
+        
+        planeta = new Esfera(new Ponto(1d, 1d, 1d));
+        planeta.escalar(2000d);
+        planeta.transladar(new Ponto(2500d, 0d, -2500d));
+        planeta.rotacionar(90d, new Ponto(-1d, 0d, 0d));
+        planeta.setTextura(this.texturas.getTextura("planeta"));
+        
         
         this.relogio = new Relogio();
         this.relogio.update();
@@ -118,6 +127,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
 
 
         // desenha todos os objetos
+        this.planeta.desenhar(this.ogl);
         this.e.desenhar(this.ogl);
         this.c.desenhar(this.ogl);
         this.terreno.desenhar(this.ogl);
