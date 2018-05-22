@@ -68,7 +68,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.setLocal(new Ponto(0d, 0d, 500d));
         obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
         obj.setDirecao(new Ponto(0d, -0.01d, -1d));
-        obj.setVelocidade(22d);
+        obj.setVelocidade(83d); //300Km/h
         obj.atualizarLocalForma();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
