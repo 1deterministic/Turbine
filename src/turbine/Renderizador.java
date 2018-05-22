@@ -97,12 +97,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // atualiza o relógio 
         this.relogio.update();
         
-        // atualiza a câmera
-        this.cam.transicaoCamera(this.relogio.getDeltaTempo());
-        this.cam.ajustaObservacao(this.ogl);
-
-        this.obj.getForma().rotacionar(Math.toDegrees(Math.sin(rot / 10)), new Ponto(0d, 1d, 1d));
-
+        // atualizar todos os movimentos ANTES DE ATUALIZAR A CÂMERA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
         
@@ -110,6 +105,12 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // roda a física
         this.obj.manterInercia(this.relogio.getDeltaTempo());
         
+        
+        // atualiza a câmera
+        this.cam.transicaoCamera(this.relogio.getDeltaTempo());
+        this.cam.ajustaObservacao(this.ogl);
+
+
         // desenha todos os objetos
         this.e.desenhar(this.ogl);
         this.c.desenhar(this.ogl);
