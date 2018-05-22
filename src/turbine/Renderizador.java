@@ -40,11 +40,13 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Cubo terreno;
     private Cubo c;
     private Relogio relogio;
+    private Controle controle;
 
     public Renderizador() {
         this.ogl = new OGL();
         this.root = System.getProperty("user.dir"); // guarda o caminho da raiz do executável
         this.texturas = new Texturas();
+        this.controle = new Controle();
     }
 
     public void init(GLAutoDrawable drawable) {
@@ -98,12 +100,15 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // atualiza o relógio 
         this.relogio.update();
         
+        System.out.println(this.controle);
+        
         // atualizar todos os movimentos ANTES DE ATUALIZAR A CÂMERA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
         
         
         // roda a física
+        this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
         this.obj.manterInercia(this.relogio.getDeltaTempo());
         
         
@@ -129,12 +134,39 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     }
 
     public void keyPressed(KeyEvent e) {
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                this.controle.cima = true; break;
+                
+            case KeyEvent.VK_DOWN:
+                this.controle.baixo = true; break;
+                
+            case KeyEvent.VK_RIGHT:
+                this.controle.direita = true; break;
+                
+            case KeyEvent.VK_LEFT:
+                this.controle.esquerda = true; break;
+        }
+        
     }
 
     public void keyTyped(KeyEvent e) {
     }
 
     public void keyReleased(KeyEvent e) {
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_UP:
+                this.controle.cima = false; break;
+                
+            case KeyEvent.VK_DOWN:
+                this.controle.baixo = false; break;
+                
+            case KeyEvent.VK_RIGHT:
+                this.controle.direita = false; break;
+                
+            case KeyEvent.VK_LEFT:
+                this.controle.esquerda = false; break;
+        }
     }
 
     public void dispose(GLAutoDrawable arg0) {

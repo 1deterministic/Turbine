@@ -27,6 +27,8 @@ public abstract class Objeto {
     
     public abstract Ponto getLocalCamera(); // retorna o ponto onde a câmera deve estar para seguir esse objeto
     
+    public abstract void movimentar(Controle c, Double timeDelta);
+    
     // física
     public abstract void manterInercia(Double timeDelta);
 }

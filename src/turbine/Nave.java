@@ -62,4 +62,18 @@ public class Nave extends Objeto {
     public void manterInercia(Double timeDelta) {
         this.transladar(this.direcao.versor().escalar(this.velocidade * timeDelta));
     }
+    
+    public void movimentar(Controle c, Double timeDelta){
+        if (c.direita)
+            this.direcao.x += 1d * timeDelta; // coeficiente de agilidade
+        
+        if (c.esquerda)
+            this.direcao.x -= 1d * timeDelta; // coeficiente de agilidade
+        
+        if (c.cima)
+            this.direcao.y += 1d * timeDelta; // coeficiente de agilidade
+        
+        if (c.baixo)
+            this.direcao.y -= 1d * timeDelta; // coeficiente de agilidade
+    }
 }
