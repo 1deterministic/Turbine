@@ -1,6 +1,9 @@
 package turbine;
 
 // nave do jogador
+
+import com.sun.jndi.toolkit.dir.DirSearch;
+
 public class Nave extends Objeto {
     private Ponto local; // posição no espaço
     private Forma forma; // modelo 3d da nave
@@ -118,7 +121,18 @@ public class Nave extends Objeto {
         
         if (c.baixo)
             this.direcao.y -= 1d * timeDelta;
+        
+        // limitação de movimento
+        if (this.direcao.x > 10d * timeDelta)
+            this.direcao.x = 10d * timeDelta;
+        else if (this.direcao.x < -10d * timeDelta)
+            this.direcao.x = -10d * timeDelta;
+        
+        if (this.direcao.y > 10d * timeDelta)
+            this.direcao.y = 10d * timeDelta;
+        else if (this.direcao.y < -10d * timeDelta)
+            this.direcao.y = -10d * timeDelta;
     }
     
-    // aplicar limitação de movimento lateral e vertical aqui
+    
 }

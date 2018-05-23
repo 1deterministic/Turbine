@@ -91,8 +91,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 this.texturas.getTextura("madeira")));
         
         
-        obj.setDirecao(new Ponto(0d, -0.01d, -1d));
-        obj.setVelocidade(83d); //300Km/h
+        obj.setDirecao(new Ponto(0d, 0d, -1d));
+        obj.setVelocidade(250d); //300Km/h
         Colisor colisor = new Colisor();
         colisor.setDimensoes(obj.getForma().getDimensoes());
         obj.setColisor(colisor); // cria um colisor com as mesmas dimensões da forma
