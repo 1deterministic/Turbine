@@ -8,12 +8,12 @@ public class Relogio {
     private Double tempoUltimoFrame;
     private Double deltaTempo;
     
+    // construtor padrão, cria um relógio zerado
     public Relogio() {
         this.tempoUltimoFrame = 0d;
         this.deltaTempo = 0d;
     }
-    
-    
+
     // atualiza o relógio
     public void update() {
         long agora = System.currentTimeMillis();
