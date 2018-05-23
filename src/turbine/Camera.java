@@ -1,7 +1,6 @@
 package turbine;
 
 import com.jogamp.opengl.GL2;
-import com.sun.org.apache.xerces.internal.impl.dv.xs.TimeDV;
 
 public class Camera {
     // atributos temporariamente públicos
@@ -9,7 +8,7 @@ public class Camera {
     public Ponto rotacao; // rotação na câmera, por ângulo nos 3 eixos. Talvez mude para um vetor de rotação e um ângulo
     private Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
     
-    
+    // construtor padrão, cria a câmera na posição 0, 0, 0
     public Camera() {
         this.local = new Ponto(0d, 0d, 0d);
         this.rotacao = new Ponto(0d, 0d, 0d);
@@ -22,12 +21,6 @@ public class Camera {
     
     // ajusta a perspectiva do jogo em relação a essa câmera
     public void ajustaObservacao(OGL ogl) {
-        // mudar depois para pegar a posicao do proprio objeto
-//        this.local.z = anexo.getForma().getLocal().z + 1d;
-//        this.local.y = anexo.getForma().getLocal().y + 0.1d;
-        //this.local = anexo.getLocalCamera();
-        //this.transicaoCamera();
-        
         // Especifica sistema de coordenadas de projeção
         ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
         // Inicializa sistema de coordenadas de projeção
@@ -55,10 +48,16 @@ public class Camera {
     
     // transiciona essa câmera para o local indicado pelo objeto que ela deve seguir
     public void transicaoCamera(Double deltaTime) {
+        // a câmera ficará travada no objeto caso a distância seja menor do que a distância percorrida pelo objeto em 2 frames
         if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime) {
             this.local = anexo.getLocalCamera();
+       // caso a dustância seja maior, a câmera se aproximará do objeto a uma velocidade igual à soma da velocidade do objeto mais a distância entre eles
+       // dessa forma ela se aproximará mais rápido se estiver mais distante e mais devagar quando estiver perto
+       // em uma velocidade que é sempre maior do que a velocidade do objeto que ela irá seguir
         } else {
-            Double velocidade = this.anexo.getVelocidade() + this.local.getDistancia(this.anexo.getLocal());
+            Double velocidade = this.anexo.getVelocidade() + 2d * this.local.getDistancia(this.anexo.getLocal());
+            
+            // calcula a direção na qual a câmera precisa se movimentar
             Ponto vetorDirecao = new Ponto(this.anexo.getLocalCamera().x - this.local.x, this.anexo.getLocalCamera().y - this.local.y, this.anexo.getLocalCamera().z - this.local.z).versor();
             this.transladar(vetorDirecao.versor().escalar(velocidade * deltaTime));
         }

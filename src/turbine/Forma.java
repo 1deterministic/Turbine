@@ -1,7 +1,6 @@
 package turbine;
 
 // classe abstrata dos modelos 3d
-
 import com.jogamp.opengl.util.texture.Texture;
 
 // a ideia é que toda forma desenhada seja subclasse dela

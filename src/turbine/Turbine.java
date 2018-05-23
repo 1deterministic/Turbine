@@ -16,8 +16,7 @@ public class Turbine {
     private Renderizador renderizador;
 
     public Turbine() {
-        // Cria janela
-        JFrame janela = new JFrame("Textura");
+        JFrame janela = new JFrame("NOME DO JOGO");
         janela.setBounds(50, 100, 800, 600);
         janela.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +50,7 @@ public class Turbine {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        // Inicia o jogo
         Turbine t = new Turbine();
     }
 }

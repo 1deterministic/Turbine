@@ -1,31 +1,16 @@
 package turbine;
 
-
-import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
-import static com.jogamp.opengl.GL2.GL_S;
-import static com.jogamp.opengl.GL2.GL_SPHERE_MAP;
-import static com.jogamp.opengl.GL2.GL_T;
-import static com.jogamp.opengl.GL2.GL_TEXTURE_GEN_MODE;
-import static com.jogamp.opengl.GL2.GL_TEXTURE_GEN_S;
-import static com.jogamp.opengl.GL2.GL_TEXTURE_GEN_T;
-import com.jogamp.opengl.GLProfile;
-import static com.jogamp.opengl.GLProfile.GL2;
-import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureData;
-import com.jogamp.opengl.util.texture.TextureIO;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
+// subforma que desenha um cubo
 public class Cubo extends Forma {
     private Ponto dimensoes; // distorções nos 3 eixos
     private Ponto local; // centro
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
-    private Texture textura;
+    private Texture textura; // textura atribuída ao cubo
     
+    // construtor padrão, cria um cubo no local 0, 0, 0, com tamanho 1 em todas as dimensões, sem rotação
     public Cubo(){
         this.dimensoes = new Ponto(1d, 1d, 1d);
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
@@ -33,101 +18,109 @@ public class Cubo extends Forma {
         this.angulo = 0.0d;
     }
     
-    public Cubo(Ponto dimensoes){
+    // construtor completo
+    public Cubo(Ponto local, Ponto dimensoes, Ponto rotacao, Double angulo, Texture textura) {
+        this.local = local;
         this.dimensoes = dimensoes;
-        this.local = new Ponto(0.0d, 0.0d, 0.0d);
-        this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
-        this.angulo = 0.0d;
+        this.rotacao = rotacao;
+        this.angulo = angulo;
+        this.textura = textura;
     }
-
+    
+    // desenha o cubo na tela
     public void desenhar(OGL ogl) {
-        
-        this.textura.enable(ogl.gl);
+        this.textura.enable(ogl.gl); // habilita a textura
         this.textura.bind(ogl.gl);
         
         ogl.gl.glPushMatrix();
-            ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z);
-            ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z);
-            ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z);            
+            ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z); // aplica a translação definida
+            ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z); // aplica a rotação definida
+            ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z); // aplica a escala definida
 
-            ogl.gl.glEnable(ogl.gl.GL_TEXTURE_2D);
-
-            ogl.gl.glColor3f(1, 1, 1);
+            ogl.gl.glEnable(ogl.gl.GL_TEXTURE_2D);// configura a textura 2d
+            ogl.gl.glColor3f(1, 1, 1); // define a cor básica do objeto para branco
             
-            //ogl.gl.glBindTexture(ogl.gl.GL_TEXTURE_2D, textura.getTextureObject(ogl.gl));
-            ogl.gl.glBegin(ogl.gl.GL_QUADS);
-                    // Front Face
+            ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho do cubo
+                    // seta as coordenadas para a textura e desenha a face frontal
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
 
-                    // Back Face
+                    // seta as coordenadas para a textura e desenha a face do fundo
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
 
-                    // Top Face
+                    // seta as coordenadas para a textura e desenha a face de cima
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
 
-                    // Bottom Face
+                    // seta as coordenadas para a textura e desenha a face de baixo
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
 
-                    // Right face
+                    // seta as coordenadas para a textura e desenha a face da direita
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d( 1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
 
-                    // Left Face
+                    // seta as coordenadas para a textura e desenha a face da esquerda
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, -1.0d);
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
-                ogl.gl.glEnd();
+                ogl.gl.glEnd(); // termina o cubo
             ogl.gl.glFlush();
         ogl.gl.glPopMatrix();
         
-        this.textura.disable(ogl.gl);
+        this.textura.disable(ogl.gl); // desabilita a textura
     }
 
+    // escala o cubo em um certo valor
     public void escalar(Double v) {
         this.dimensoes.multiplicar(v);
     }
     
+    // rotaciona o cubo em um certo ângulo em torno de um eixo
     public void rotacionar(Double angulo, Ponto eixo) {
         // utilizar quaternions para combinar rotações
-        this.angulo = angulo;
+        this.angulo = angulo % 360;
         this.rotacao = eixo;
     }
     
+    // movimenta o cubo de acordo com os valores de delta
     public void transladar(Ponto delta) {
         this.local.somar(delta);
     }
     
+    // define a textura do cubo
     public void setTextura(Texture textura) {
         this.textura = textura;
     }
     
+    // define o local do cubo "na mão"
     public void setLocal(Ponto p) {
         this.local = p;
     }
     
+    // retorna o local do cubo
     public Ponto getLocal() {
         return this.local;
     }
     
+    // define as dimensões do cubo
     public void setDimensoes(Ponto p) {
         this.dimensoes = p;
     }
     
+    // retorna as dimensões do cubo
     public Ponto getDimensoes() {
         return this.dimensoes;
     }

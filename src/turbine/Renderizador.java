@@ -69,44 +69,68 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
         
-        this.parede = new Cubo(new Ponto(100d, 100d, 100d));
+        this.parede = new Cubo(
+                new Ponto(0d, 0d, 0d),
+                new Ponto(10d, 10d, 10d),
+                new Ponto(0d, 0d, 0d),
+                0d,
+                this.texturas.getTextura("madeira"));
+                
         this.parede.setTextura(this.texturas.getTextura("madeira"));
         
         this.colisorteste = new Colisor();
-        this.colisorteste.setDimensoes(new Ponto(100d, 100d, 100d));
+        this.colisorteste.setDimensoes(new Ponto(10d, 10d, 10d));
         
         obj = new Nave();
         obj.setLocal(new Ponto(0d, 0d, 500d));
-        obj.setForma(new Cubo(new Ponto(1d, 0.1d, 1d)));
+        obj.setForma(new Cubo(
+                new Ponto(0d, 0d, 0d),
+                new Ponto(1d, 0.1d, 1d),
+                new Ponto(0d, 0d, 0d),
+                0d,
+                this.texturas.getTextura("madeira")));
+        
+        
         obj.setDirecao(new Ponto(0d, -0.01d, -1d));
         obj.setVelocidade(83d); //300Km/h
-        obj.setColisor(new Colisor(obj.getForma().getDimensoes())); // cria um colisor com as mesmas dimensões da forma
+        Colisor colisor = new Colisor();
+        colisor.setDimensoes(obj.getForma().getDimensoes());
+        obj.setColisor(colisor); // cria um colisor com as mesmas dimensões da forma
         obj.atualizarLocalForma();
         obj.atualizarLocalColisor();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
         
-        c = new Cubo(new Ponto(10d, 10d, 10d));
-        c.transladar(new Ponto(-50d, 20d, 0d));
-        c.setTextura(this.texturas.getTextura("madeira"));
+        c = new Cubo(
+                new Ponto(-50d, 20d, 0d),
+                new Ponto(10d, 10d, 10d),
+                new Ponto(0d, 0d, 0d),
+                0d,
+                this.texturas.getTextura("madeira"));
         
         
-        e = new Esfera(new Ponto(1.0d, 1.0d, 1.0d));
-        e.escalar(2.0d);
-        e.transladar(new Ponto(3d, 0d, -150d));
-        e.setTextura(this.texturas.getTextura("abstrato"));
+        e = new Esfera(
+                new Ponto(3d, 0d, -150d),
+                new Ponto(2d, 2d, 2d),
+                new Ponto(0d, 0d, 0d),
+                0d,
+                this.texturas.getTextura("abstrato"));
         
-        terreno = new Cubo(new Ponto(100d, 1000d, 1d));
+        terreno = new Cubo(
+                new Ponto(0d, -10d, -450d),
+                new Ponto(100d, 1000d, 1d),
+                new Ponto(1d, 0d, 0d),
+                90d,
+                this.texturas.getTextura("abstrato"));
         terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
-        //terreno.carregarTextura("Arquivos/textura.jpg");
-        terreno.transladar(new Ponto(0d, -10d, -450d));
-        terreno.setTextura(this.texturas.getTextura("abstrato"));
+
         
-        planeta = new Esfera(new Ponto(1d, 1d, 1d));
-        planeta.escalar(2000d);
-        planeta.transladar(new Ponto(2500d, 0d, -2500d));
-        planeta.rotacionar(90d, new Ponto(-1d, 0d, 0d));
-        planeta.setTextura(this.texturas.getTextura("planeta"));
+        planeta = new Esfera(
+                new Ponto(2500d, 0d, -2500d),
+                new Ponto(2000d, 2000d, 2000d),
+                new Ponto(-1d, 0d, 0d),
+                90d,
+                this.texturas.getTextura("planeta"));
         
         
         this.relogio = new Relogio();
