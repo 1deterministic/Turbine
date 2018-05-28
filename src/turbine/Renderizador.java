@@ -25,6 +25,9 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.TextureData;
 import com.jogamp.opengl.util.texture.TextureIO;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
     private OGL ogl;
@@ -44,6 +47,8 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Esfera planeta;
     private Cubo parede;
     private Colisor colisorteste;
+    private ArrayList<Obstaculo> obstaculos;
+    private int contagem_colisoes = 0;
     
 
     public Renderizador() {
@@ -118,7 +123,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         terreno = new Cubo(
                 new Ponto(0d, -10d, -450d),
-                new Ponto(100d, 1000d, 1d),
+                new Ponto(100d, 10000d, 1d),
                 new Ponto(1d, 0d, 0d),
                 90d,
                 this.texturas.getTextura("abstrato"));
@@ -131,8 +136,31 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 new Ponto(-1d, 0d, 0d),
                 90d,
                 this.texturas.getTextura("planeta"));
+
         
+        this.obstaculos = new ArrayList<>();
+        for(int i = 0; i < 100; i++) {
+            Double x = ThreadLocalRandom.current().nextDouble(-100d, 100d);
+            Double y = ThreadLocalRandom.current().nextDouble(0d, 50d);
+            Double z = i * 100d;
+            
+            this.obstaculos.add(new Obstaculo(
+                new Ponto(),
+                new Cubo(
+                    new Ponto(x, y, -z),
+                    new Ponto(10d, 100d, 10d),
+                    new Ponto(0d, 0d, 0d),
+                    0d,
+                    this.texturas.getTextura("madeira")),
+                new Ponto(),
+                0d,
+                new Colisor(
+                    new Ponto(x, y, -z),
+                    new Ponto(10d, 100d, 10d))
+            ));
+        }
         
+        // inicia o relógio
         this.relogio = new Relogio();
         this.relogio.update();
     }
@@ -144,17 +172,21 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // atualiza o relógio 
         this.relogio.update();
         
-        System.out.println(this.controle);
+        //System.out.println(this.controle);
         
         // atualizar todos os movimentos ANTES DE ATUALIZAR A CÂMERA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
         this.rot++;
         
+        // isso deve ficar depois da física, arrumar depois    
+        for (Obstaculo o: this.obstaculos) {
+            if (this.obj.getColisor().colideCom(o.getColisor()))
+                return;
+        }
         
         // roda a física
         this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
-        if (!this.obj.getColisor().colideCom(this.colisorteste))
-            this.obj.manterInercia(this.relogio.getDeltaTempo());
+        this.obj.manterInercia(this.relogio.getDeltaTempo());
         
         
         // atualiza a câmera
@@ -169,6 +201,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.terreno.desenhar(this.ogl);
         this.parede.desenhar(this.ogl);
         this.obj.getForma().desenhar(this.ogl);
+        for (Obstaculo o: this.obstaculos) {
+            o.getForma().desenhar(this.ogl);
+        }
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
