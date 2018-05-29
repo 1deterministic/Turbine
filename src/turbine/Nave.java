@@ -132,7 +132,5 @@ public class Nave extends Objeto {
         
         
         this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));
-    }
-    
-    
+    }  
 }

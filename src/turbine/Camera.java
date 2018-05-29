@@ -6,7 +6,7 @@ public class Camera {
     // atributos temporariamente públicos
     public Ponto local; // local da câmera no espaço
     public Ponto rotacao; // rotação na câmera, por ângulo nos 3 eixos. Talvez mude para um vetor de rotação e um ângulo
-    private Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
+    public Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
     
     // construtor padrão, cria a câmera na posição 0, 0, 0
     public Camera() {
@@ -48,8 +48,8 @@ public class Camera {
     
     // transiciona essa câmera para o local indicado pelo objeto que ela deve seguir
     public void transicaoCamera(Double deltaTime) {
-        // a câmera ficará travada no objeto caso a distância seja menor do que a distância percorrida pelo objeto em 2 frames
-        if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime) {
+//         a câmera ficará travada no objeto caso a distância seja menor do que a distância percorrida pelo objeto em 2 frames + 25cm (no caso de o objeto estar parado)
+        if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime + 0.25d) {
             this.local = anexo.getLocalCamera();
        // caso a dustância seja maior, a câmera se aproximará do objeto a uma velocidade igual à soma da velocidade do objeto mais a distância entre eles
        // dessa forma ela se aproximará mais rápido se estiver mais distante e mais devagar quando estiver perto

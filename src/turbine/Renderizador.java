@@ -49,6 +49,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Colisor colisorteste;
     private ArrayList<Obstaculo> obstaculos;
     private int contagem_colisoes = 0;
+    private boolean colide = false;
     
 
     public Renderizador() {
@@ -145,7 +146,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
             Double z = i * 100d;
             
             this.obstaculos.add(new Obstaculo(
-                new Ponto(),
+                new Ponto(x, y, -z),
                 new Cubo(
                     new Ponto(x, y, -z),
                     new Ponto(10d, 100d, 10d),
@@ -179,11 +180,17 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.rot++;
         
         // isso deve ficar depois da física, arrumar depois    
-        for (Obstaculo o: this.obstaculos) {
-            if (this.obj.getColisor().colideCom(o.getColisor()))
-                return;
-        }
         
+        for (Obstaculo o: this.obstaculos) {
+            if (!this.colide) {
+                if (this.obj.getColisor().colideCom(o.getColisor())) {
+                    this.colide = true;
+                    this.cam.anexarObjeto(o);
+                    System.out.println(o.getLocal());
+                }
+            }
+        }
+
         // roda a física
         this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
         this.obj.manterInercia(this.relogio.getDeltaTempo());
