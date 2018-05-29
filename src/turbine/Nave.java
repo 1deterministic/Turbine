@@ -129,6 +129,9 @@ public class Nave extends Objeto {
             this.direcao.y = 10d * timeDelta;
         else if (this.direcao.y < -10d * timeDelta)
             this.direcao.y = -10d * timeDelta;
+        
+        
+        this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));
     }
     
     
