@@ -48,7 +48,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Cubo parede;
     private Colisor colisorteste;
     private ArrayList<Obstaculo> obstaculos;
-    private int contagem_colisoes = 0;
     private boolean colide = false;
     
 
@@ -193,6 +192,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
 
         // roda a física
         this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
+        this.obj.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.obj.manterInercia(this.relogio.getDeltaTempo());
         
         

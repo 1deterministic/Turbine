@@ -130,4 +130,24 @@ public class Obstaculo extends Objeto {
         else if (this.direcao.y < -10d * timeDelta)
             this.direcao.y = -10d * timeDelta;
     }
+    
+    public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
+        if (this.local.x < pontoInicial.x) {
+            this.local.x = pontoInicial.x;
+            this.direcao.x = 0d;
+        } else if (this.local.x > pontoFinal.x) {
+            this.local.x = pontoFinal.x;
+            this.direcao.x = 0d;
+        }
+        
+        if (this.local.y < pontoInicial.y) {
+            this.local.y = pontoInicial.y;
+            this.direcao.y = 0d;
+        } else if (this.local.y > pontoFinal.y) {
+            this.local.y = pontoFinal.y;
+            this.direcao.y = 0d;
+        }
+        
+        // ignorar o z por enquanto
+    }
 }

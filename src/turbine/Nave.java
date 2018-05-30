@@ -132,5 +132,26 @@ public class Nave extends Objeto {
         
         
         this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));
-    }  
+    }
+    
+    public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
+        if (this.local.x < pontoInicial.x) {
+            this.local.x = pontoInicial.x;
+            this.direcao.x = 0d;
+        } else if (this.local.x > pontoFinal.x) {
+            this.local.x = pontoFinal.x;
+            this.direcao.x = 0d;
+        }
+        
+        if (this.local.y < pontoInicial.y) {
+            this.local.y = pontoInicial.y;
+            this.direcao.y = 0d;
+        } else if (this.local.y > pontoFinal.y) {
+            this.local.y = pontoFinal.y;
+            this.direcao.y = 0d;
+        }
+        
+        // ignorar o z por enquanto
+    }
+
 }

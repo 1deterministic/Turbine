@@ -22,12 +22,15 @@ public abstract class Objeto {
     public abstract Colisor getColisor(); // retorna o container colisor desse objeto
     
     public abstract void transladar(Ponto delta); // translada esse objeto no espaço, de acordo com as coordenadas em delta
-    public abstract void atualizarLocalForma(); // atualiza o local da forma (modelo 3d) desse objeto (caso o objeto seja movido seu modelo tbm deve mover)
-    public abstract void atualizarLocalColisor(); // atualiza o local do container colisor desse objeto (caso o objeto seja movido seu colisor tbm deve mover)
+        public abstract void atualizarLocalForma(); // atualiza o local da forma (modelo 3d) desse objeto (caso o objeto seja movido seu modelo tbm deve mover)
+        public abstract void atualizarLocalColisor(); // atualiza o local do container colisor desse objeto (caso o objeto seja movido seu colisor tbm deve mover)
     
     public abstract Ponto getLocalCamera(); // retorna o ponto onde a câmera deve estar para seguir esse objeto
     
+    
+    // controle
     public abstract void movimentar(Controle c, Double timeDelta);
+    public abstract void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal);
     
     // física
     public abstract void manterInercia(Double timeDelta);

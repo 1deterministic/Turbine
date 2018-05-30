@@ -48,8 +48,8 @@ public class Camera {
     
     // transiciona essa câmera para o local indicado pelo objeto que ela deve seguir
     public void transicaoCamera(Double deltaTime) {
-//         a câmera ficará travada no objeto caso a distância seja menor do que a distância percorrida pelo objeto em 2 frames + 25cm (no caso de o objeto estar parado)
-        if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime + 0.25d) {
+//         a câmera ficará travada no objeto caso a distância seja menor do que a distância percorrida pelo objeto em 2 frames + 50cm (no caso de o objeto estar parado)
+        if (this.local.getDistancia(anexo.getLocalCamera()) < 2 * this.anexo.getVelocidade() * deltaTime + 0.5d) {
             this.local = anexo.getLocalCamera();
        // caso a dustância seja maior, a câmera se aproximará do objeto a uma velocidade igual à soma da velocidade do objeto mais a distância entre eles
        // dessa forma ela se aproximará mais rápido se estiver mais distante e mais devagar quando estiver perto
