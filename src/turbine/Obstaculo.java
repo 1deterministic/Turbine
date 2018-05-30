@@ -105,6 +105,10 @@ public class Obstaculo extends Objeto {
         this.transladar(this.direcao.escalar(this.velocidade * timeDelta));
     }
     
+    public void aplicarGravidade(Double aceleracao, Double timeDelta) {
+        this.direcao.y -= aceleracao * timeDelta;
+    }
+    
     // aplica as entradas do controle para o obstáculo
     public void movimentar(Controle c, Double timeDelta){
         if (c.direita)

@@ -34,4 +34,5 @@ public abstract class Objeto {
     
     // física
     public abstract void manterInercia(Double timeDelta);
+    public abstract void aplicarGravidade(Double aceleracao, Double timeDelta);
 }

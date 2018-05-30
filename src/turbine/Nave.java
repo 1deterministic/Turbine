@@ -105,6 +105,11 @@ public class Nave extends Objeto {
         this.transladar(this.direcao.escalar(this.velocidade * timeDelta));
     }
     
+    // aplica gravidade à nave
+    public void aplicarGravidade(Double aceleracao, Double timeDelta) {
+        this.direcao.y -= aceleracao * timeDelta;
+    }
+    
     // aplica as entradas do controle para a nave
     public void movimentar(Controle c, Double timeDelta){
         if (c.direita)

@@ -99,6 +99,7 @@ public class Um extends Fase {
         this.nave.movimentar(controle, deltaTempo);
         this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.nave.manterInercia(deltaTempo);
+        this.nave.aplicarGravidade(0.1d, deltaTempo);
         
         // verifica as colisões
         for (Obstaculo o: this.obstaculos) {
