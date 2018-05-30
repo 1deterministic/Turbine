@@ -41,7 +41,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Objeto obj;
     private Esfera e ;
     private Cubo terreno;
-    private Cubo c;
     private Relogio relogio;
     private Controle controle;
     private Esfera planeta;
@@ -50,6 +49,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private ArrayList<Obstaculo> obstaculos;
     private boolean colide = false;
     private Obstaculo chegada;
+    private Ceu ceu;
     
 
     public Renderizador() {
@@ -75,6 +75,11 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
         this.texturas.carregarTextura("chegada", this.root + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("ceu", this.root + "/src/turbine/Arquivos/ceu.jpg");
+        
+        this.ceu = new Ceu(
+          this.texturas.getTextura("ceu")
+        );
         
         this.parede = new Cubo(
                 new Ponto(0d, 0d, 0d),
@@ -107,13 +112,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         obj.atualizarLocalColisor();
         obj.getForma().setTextura(this.texturas.getTextura("madeira"));
         cam.anexarObjeto(obj);
-        
-        c = new Cubo(
-                new Ponto(-50d, 20d, 0d),
-                new Ponto(10d, 10d, 10d),
-                new Ponto(0d, 0d, 0d),
-                0d,
-                this.texturas.getTextura("madeira"));
         
         
         e = new Esfera(
@@ -177,7 +175,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                     new Ponto(0d, 50d, -10000d),
                     new Ponto(100d, 100d, 10d))
             );
-                
         
         // inicia o relógio
         this.relogio = new Relogio();
@@ -191,14 +188,17 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // atualiza o relógio 
         this.relogio.update();
         
+        // desenha o skybox
+        this.ceu.desenhar(this.ogl);
+        
         //System.out.println(this.controle);
+
+        // roda a física
+        this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
+        this.obj.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
+        this.obj.manterInercia(this.relogio.getDeltaTempo());
         
-        // atualizar todos os movimentos ANTES DE ATUALIZAR A CÂMERA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        this.c.rotacionar(this.rot, new Ponto(1d, 1d, 0d));
-        this.rot++;
-        
-        // isso deve ficar depois da física, arrumar depois    
-        
+        // verifica as colisões
         for (Obstaculo o: this.obstaculos) {
             if (!this.colide) {
                 if (this.obj.getColisor().colideCom(o.getColisor())) {
@@ -209,6 +209,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
             }
         }
         
+        // verifica se o fim da fase foi alcançado
         if (!this.colide) {
             if (this.obj.getColisor().colideCom(this.chegada.getColisor())) {
                 this.colide = true;
@@ -216,12 +217,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 System.out.println("Venceu!");
             }
         }
-
-        // roda a física
-        this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
-        this.obj.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
-        this.obj.manterInercia(this.relogio.getDeltaTempo());
-        
         
         // atualiza a câmera
         this.cam.transicaoCamera(this.relogio.getDeltaTempo());
@@ -231,7 +226,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // desenha todos os objetos
         this.planeta.desenhar(this.ogl);
         this.e.desenhar(this.ogl);
-        this.c.desenhar(this.ogl);
         this.terreno.desenhar(this.ogl);
         this.parede.desenhar(this.ogl);
         this.obj.getForma().desenhar(this.ogl);
