@@ -11,6 +11,7 @@ public class Um extends Fase {
     private Nave nave;
     private ArrayList<Obstaculo> obstaculos;
     private Obstaculo chegada;
+    private Obstaculo chao;
     private boolean colide;
     
     public Um() {
@@ -20,6 +21,7 @@ public class Um extends Fase {
         this.ceu = new Ceu();
         this.chegada = new Obstaculo();
         this.obstaculos = new ArrayList<>();
+        this.chao = new Obstaculo();
         this.colide = false;
     }
     
@@ -28,6 +30,7 @@ public class Um extends Fase {
         // carrega todas as texturas necessárias
         this.texturas.carregarTextura("madeira", diretorioRaiz + "/src/turbine/Arquivos/madeira.jpg");
         this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("abstrato", diretorioRaiz + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
         
         // define a posição inicial da câmera
@@ -78,6 +81,16 @@ public class Um extends Fase {
         this.chegada.setVelocidade(0d);
         this.chegada.atualizarLocalColisor();
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
+        
+        // carrega o chão
+        this.chao.setLocal(new Ponto(0d, -1d, -5000d));
+        this.chao.atualizarLocalForma();
+        this.chao.getForma().setDimensoes(new Ponto(100d, 0d, 10000d));
+        this.chao.getForma().setTextura(this.texturas.getTextura("abstrato"));
+        this.chao.setDirecao(new Ponto());
+        this.chao.setVelocidade(0d);
+        this.chao.atualizarLocalColisor();
+        this.chao.getColisor().setDimensoes(this.chao.getForma().getDimensoes());
     }
     
     // roda a física e a lógica
@@ -121,6 +134,7 @@ public class Um extends Fase {
         
          // desenha todos os objetos
         this.nave.getForma().desenhar(ogl);
+        this.chao.getForma().desenhar(ogl);
         this.chegada.getForma().desenhar(ogl);
         for (Obstaculo o: this.obstaculos) {
             o.getForma().desenhar(ogl);
