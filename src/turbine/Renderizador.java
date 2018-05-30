@@ -61,7 +61,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
         this.nave.getForma().setTextura(this.texturas.getTextura("madeira"));
         this.nave.setDirecao(new Ponto(0d, 0d, -1d));
-        this.nave.setVelocidade(250d); //300Km/h
+        this.nave.setVelocidade(250d); //900Km/h
         this.nave.atualizarLocalColisor();
         this.nave.getColisor().setDimensoes(nave.getForma().getDimensoes()); // faz o colisor e a forma terem o mesmo tamanho
         
