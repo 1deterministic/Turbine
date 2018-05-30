@@ -49,6 +49,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Colisor colisorteste;
     private ArrayList<Obstaculo> obstaculos;
     private boolean colide = false;
+    private Obstaculo chegada;
     
 
     public Renderizador() {
@@ -73,6 +74,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
         this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
+        this.texturas.carregarTextura("chegada", this.root + "/src/turbine/Arquivos/chegada.jpg");
         
         this.parede = new Cubo(
                 new Ponto(0d, 0d, 0d),
@@ -160,6 +162,23 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
             ));
         }
         
+        // trocar para uma classe própria
+        this.chegada = new Obstaculo(
+                new Ponto(0d, 50d, -10000d),
+                new Cubo(
+                    new Ponto(0d, 0d, -10000d),
+                    new Ponto(100d, 100d, 10d),
+                    new Ponto(0d, 0d, 0d),
+                    0d,
+                    this.texturas.getTextura("chegada")),
+                new Ponto(),
+                0d,
+                new Colisor(
+                    new Ponto(0d, 50d, -10000d),
+                    new Ponto(100d, 100d, 10d))
+            );
+                
+        
         // inicia o relógio
         this.relogio = new Relogio();
         this.relogio.update();
@@ -189,6 +208,14 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 }
             }
         }
+        
+        if (!this.colide) {
+            if (this.obj.getColisor().colideCom(this.chegada.getColisor())) {
+                this.colide = true;
+                this.cam.anexarObjeto(this.chegada);
+                System.out.println("Venceu!");
+            }
+        }
 
         // roda a física
         this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
@@ -211,6 +238,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         for (Obstaculo o: this.obstaculos) {
             o.getForma().desenhar(this.ogl);
         }
+        this.chegada.getForma().desenhar(this.ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
