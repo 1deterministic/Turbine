@@ -1,64 +1,104 @@
 package turbine;
 
-import java.util.Date;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
-
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
-
 import com.jogamp.opengl.GL;
-import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
-import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.gl2.GLUT;
-import com.jogamp.opengl.util.texture.Texture;
-import com.jogamp.opengl.util.texture.TextureData;
-import com.jogamp.opengl.util.texture.TextureIO;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
+    private String diretorioRaiz;
+    
+    // atributos comuns
     private OGL ogl;
-    
-    private String root;
-    
     private Texturas texturas;
-    
-    private Double rot = 0d;
-    private Camera cam;
-    private Objeto obj;
-    private Esfera e ;
-    private Cubo terreno;
     private Relogio relogio;
     private Controle controle;
-    private Esfera planeta;
-    private Cubo parede;
-    private Colisor colisorteste;
-    private ArrayList<Obstaculo> obstaculos;
-    private boolean colide = false;
-    private Obstaculo chegada;
     private Ceu ceu;
+    private Camera camera;
+    private Nave nave;
+    private ArrayList<Obstaculo> obstaculos;
+    private Obstaculo chegada;
     
+    private boolean colide = false;
 
     public Renderizador() {
+        this.diretorioRaiz = System.getProperty("user.dir"); // guarda o caminho da raiz do executável
+        
+        // todos os atributos comuns são pré alocados mas serão sobrescritos no carregamento da fase escolhida
         this.ogl = new OGL();
-        this.root = System.getProperty("user.dir"); // guarda o caminho da raiz do executável
+        this.relogio = new Relogio();
         this.texturas = new Texturas();
         this.controle = new Controle();
+        this.camera = new Camera();
+        this.nave = new Nave();
+        this.ceu = new Ceu();
+        this.chegada = new Obstaculo();
+        this.obstaculos = new ArrayList<>();
     }
+    
+    public void carregaFaseUm() {
+        // carrega todas as texturas necessárias
+        this.texturas.carregarTextura("madeira", this.diretorioRaiz + "/src/turbine/Arquivos/madeira.jpg");
+        this.texturas.carregarTextura("chegada", this.diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("ceu", this.diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
+        
+        // define a posição inicial da câmera
+        this.camera.local.z = 800d;
 
+        // carrega o skybox
+        this.ceu.setTextura(this.texturas.getTextura("ceu"));
+        
+        // carrega a nave
+        this.nave.setLocal(new Ponto(0d, 0d, 500d));
+        this.nave.atualizarLocalForma();
+        this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
+        this.nave.getForma().setTextura(this.texturas.getTextura("madeira"));
+        this.nave.setDirecao(new Ponto(0d, 0d, -1d));
+        this.nave.setVelocidade(250d); //300Km/h
+        this.nave.atualizarLocalColisor();
+        this.nave.getColisor().setDimensoes(nave.getForma().getDimensoes()); // faz o colisor e a forma terem o mesmo tamanho
+        
+        // anexa a nave na câmera
+        this.camera.anexarObjeto(nave);
+
+        // gera os obstáculos
+        for(int i = 0; i < 100; i++) {
+            Double x = ThreadLocalRandom.current().nextDouble(-100d, 100d);
+            Double y = ThreadLocalRandom.current().nextDouble(0d, 50d);
+            Double z = i * 100d;
+            
+            Obstaculo obstaculo = new Obstaculo();
+            
+            obstaculo.setLocal(new Ponto(x, y, -z));
+            obstaculo.atualizarLocalForma();
+            obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("madeira"));
+            obstaculo.setDirecao(new Ponto());
+            obstaculo.setVelocidade(0d);
+            obstaculo.atualizarLocalColisor();
+            obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
+            
+            this.obstaculos.add(obstaculo);
+        }
+        
+        // carrega a linha de chegada
+        this.chegada.setLocal(new Ponto(0d, 50d, -10000d));
+        this.chegada.atualizarLocalForma();
+        this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d));
+        this.chegada.getForma().setTextura(this.texturas.getTextura("chegada"));
+        this.chegada.setDirecao(new Ponto());
+        this.chegada.setVelocidade(0d);
+        this.chegada.atualizarLocalColisor();
+        this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
+    }
+ 
     public void init(GLAutoDrawable drawable) {
         this.ogl.glDrawable = drawable;
         this.ogl.gl = drawable.getGL().getGL2();
@@ -68,116 +108,10 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
         
-        cam = new Camera();
-        cam.local.z = 800d;
-        
-        this.texturas.carregarTextura("madeira", this.root + "/src/turbine/Arquivos/madeira.jpg");
-        this.texturas.carregarTextura("abstrato", this.root + "/src/turbine/Arquivos/abstrato.jpg");
-        this.texturas.carregarTextura("planeta", this.root + "/src/turbine/Arquivos/planeta.jpg");
-        this.texturas.carregarTextura("chegada", this.root + "/src/turbine/Arquivos/chegada.jpg");
-        this.texturas.carregarTextura("ceu", this.root + "/src/turbine/Arquivos/ceu.jpg");
-        
-        this.ceu = new Ceu(
-          this.texturas.getTextura("ceu")
-        );
-        
-        this.parede = new Cubo(
-                new Ponto(0d, 0d, 0d),
-                new Ponto(10d, 10d, 10d),
-                new Ponto(0d, 0d, 0d),
-                0d,
-                this.texturas.getTextura("madeira"));
-                
-        this.parede.setTextura(this.texturas.getTextura("madeira"));
-        
-        this.colisorteste = new Colisor();
-        this.colisorteste.setDimensoes(new Ponto(10d, 10d, 10d));
-        
-        obj = new Nave();
-        obj.setLocal(new Ponto(0d, 0d, 500d));
-        obj.setForma(new Cubo(
-                new Ponto(0d, 0d, 0d),
-                new Ponto(1d, 0.1d, 1d),
-                new Ponto(0d, 0d, 0d),
-                0d,
-                this.texturas.getTextura("madeira")));
-        
-        
-        obj.setDirecao(new Ponto(0d, 0d, -1d));
-        obj.setVelocidade(250d); //300Km/h
-        Colisor colisor = new Colisor();
-        colisor.setDimensoes(obj.getForma().getDimensoes());
-        obj.setColisor(colisor); // cria um colisor com as mesmas dimensões da forma
-        obj.atualizarLocalForma();
-        obj.atualizarLocalColisor();
-        obj.getForma().setTextura(this.texturas.getTextura("madeira"));
-        cam.anexarObjeto(obj);
-        
-        
-        e = new Esfera(
-                new Ponto(3d, 0d, -150d),
-                new Ponto(2d, 2d, 2d),
-                new Ponto(0d, 0d, 0d),
-                0d,
-                this.texturas.getTextura("abstrato"));
-        
-        terreno = new Cubo(
-                new Ponto(0d, -10d, -450d),
-                new Ponto(100d, 10000d, 1d),
-                new Ponto(1d, 0d, 0d),
-                90d,
-                this.texturas.getTextura("abstrato"));
-        terreno.rotacionar(90d, new Ponto(1d, 0d, 0d));
-
-        
-        planeta = new Esfera(
-                new Ponto(2500d, 0d, -2500d),
-                new Ponto(2000d, 2000d, 2000d),
-                new Ponto(-1d, 0d, 0d),
-                90d,
-                this.texturas.getTextura("planeta"));
-
-        
-        this.obstaculos = new ArrayList<>();
-        for(int i = 0; i < 100; i++) {
-            Double x = ThreadLocalRandom.current().nextDouble(-100d, 100d);
-            Double y = ThreadLocalRandom.current().nextDouble(0d, 50d);
-            Double z = i * 100d;
-            
-            this.obstaculos.add(new Obstaculo(
-                new Ponto(x, y, -z),
-                new Cubo(
-                    new Ponto(x, y, -z),
-                    new Ponto(10d, 100d, 10d),
-                    new Ponto(0d, 0d, 0d),
-                    0d,
-                    this.texturas.getTextura("madeira")),
-                new Ponto(),
-                0d,
-                new Colisor(
-                    new Ponto(x, y, -z),
-                    new Ponto(10d, 100d, 10d))
-            ));
-        }
-        
-        // trocar para uma classe própria
-        this.chegada = new Obstaculo(
-                new Ponto(0d, 50d, -10000d),
-                new Cubo(
-                    new Ponto(0d, 0d, -10000d),
-                    new Ponto(100d, 100d, 10d),
-                    new Ponto(0d, 0d, 0d),
-                    0d,
-                    this.texturas.getTextura("chegada")),
-                new Ponto(),
-                0d,
-                new Colisor(
-                    new Ponto(0d, 50d, -10000d),
-                    new Ponto(100d, 100d, 10d))
-            );
+        // carrega a fase correta
+        this.carregaFaseUm();
         
         // inicia o relógio
-        this.relogio = new Relogio();
         this.relogio.update();
     }
 
@@ -191,19 +125,20 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // desenha o skybox
         this.ceu.desenhar(this.ogl);
         
+        // debug de controle
         //System.out.println(this.controle);
 
         // roda a física
-        this.obj.movimentar(this.controle, this.relogio.getDeltaTempo());
-        this.obj.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
-        this.obj.manterInercia(this.relogio.getDeltaTempo());
+        this.nave.movimentar(this.controle, this.relogio.getDeltaTempo());
+        this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
+        this.nave.manterInercia(this.relogio.getDeltaTempo());
         
         // verifica as colisões
         for (Obstaculo o: this.obstaculos) {
             if (!this.colide) {
-                if (this.obj.getColisor().colideCom(o.getColisor())) {
+                if (this.nave.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
-                    this.cam.anexarObjeto(o);
+                    this.camera.anexarObjeto(o);
                     System.out.println(o.getLocal());
                 }
             }
@@ -211,28 +146,23 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         
         // verifica se o fim da fase foi alcançado
         if (!this.colide) {
-            if (this.obj.getColisor().colideCom(this.chegada.getColisor())) {
+            if (this.nave.getColisor().colideCom(this.chegada.getColisor())) {
                 this.colide = true;
-                this.cam.anexarObjeto(this.chegada);
+                this.camera.anexarObjeto(this.chegada);
                 System.out.println("Venceu!");
             }
         }
         
         // atualiza a câmera
-        this.cam.transicaoCamera(this.relogio.getDeltaTempo());
-        this.cam.ajustaObservacao(this.ogl);
-
+        this.camera.transicaoCamera(this.relogio.getDeltaTempo());
+        this.camera.ajustaObservacao(this.ogl);
 
         // desenha todos os objetos
-        this.planeta.desenhar(this.ogl);
-        this.e.desenhar(this.ogl);
-        this.terreno.desenhar(this.ogl);
-        this.parede.desenhar(this.ogl);
-        this.obj.getForma().desenhar(this.ogl);
+        this.nave.getForma().desenhar(this.ogl);
+        this.chegada.getForma().desenhar(this.ogl);
         for (Obstaculo o: this.obstaculos) {
             o.getForma().desenhar(this.ogl);
         }
-        this.chegada.getForma().desenhar(this.ogl);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {

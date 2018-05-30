@@ -107,8 +107,10 @@ public class Ceu extends Forma {
     // desabilitado
     public void transladar(Ponto delta) {}
     
-    // desabilitado
-    public void setTextura(Texture textura) {}
+    // define a textura do skybox
+    public void setTextura(Texture textura) {
+        this.textura = textura;
+    }
     
     // desabilitado
     public void setLocal(Ponto p) {}
