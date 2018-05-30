@@ -1,8 +1,15 @@
 package Fases;
 
+import Turbine.Texturas;
+import Turbine.Nave;
+import Turbine.OGL;
+import Turbine.Ponto;
+import Turbine.Ceu;
+import Turbine.Obstaculo;
+import Turbine.Camera;
+import Turbine.Controle;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-import turbine.*;
 
 public class Um extends Fase {
     private Texturas texturas;
@@ -54,13 +61,12 @@ public class Um extends Fase {
 
         // gera os obstáculos
         for(int i = 0; i < 100; i++) {
-            Double x = ThreadLocalRandom.current().nextDouble(-100d, 100d);
-            Double y = ThreadLocalRandom.current().nextDouble(0d, 50d);
-            Double z = i * 100d;
-            
             Obstaculo obstaculo = new Obstaculo();
             
-            obstaculo.setLocal(new Ponto(x, y, -z));
+            obstaculo.setLocal(new Ponto(
+                    ThreadLocalRandom.current().nextDouble(-100d, 100d), 
+                    50d, 
+                    -i * 100d));
             obstaculo.atualizarLocalForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
             obstaculo.getForma().setTextura(this.texturas.getTextura("madeira"));

@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 // classe que representa o estado dos controles ativados
 public class Controle {

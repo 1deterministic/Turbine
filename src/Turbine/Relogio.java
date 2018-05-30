@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 
 // classe que roda o relógio do jogo

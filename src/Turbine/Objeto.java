@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 // superclasse dos objetos do jogo
 // a ideia é que os elementos do jogo sejam subclasses dessa classe

@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 // o colisor é (a princípio) um cubo que envolve um objeto
 // é usado para fazer as detecções de colisão

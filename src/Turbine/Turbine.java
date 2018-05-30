@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 import java.awt.BorderLayout;
 import java.awt.Container;

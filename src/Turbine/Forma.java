@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 // classe abstrata dos modelos 3d
 import com.jogamp.opengl.util.texture.Texture;

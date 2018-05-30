@@ -1,6 +1,7 @@
 package Fases;
 
-import turbine.*;
+import Turbine.OGL;
+import Turbine.Controle;
 
 public abstract class Fase {
     // carrega todos os elementos da fase

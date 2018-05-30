@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 // Não é necessariamente um ponto, pense como uma estrutura de dados de 3 valores
 // Foi usada até agora como um ponto, um vetor ou como um vetor de ângulos de rotação

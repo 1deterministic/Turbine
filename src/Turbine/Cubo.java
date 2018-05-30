@@ -1,4 +1,4 @@
-package turbine;
+package Turbine;
 
 import com.jogamp.opengl.util.texture.Texture;
 
