@@ -34,10 +34,11 @@ public class Camera {
         // Inicializa sistema de coordenadas do modelo
         ogl.gl.glLoadIdentity();
         // Especifica posição do observador e do alvo
-        ogl.gl.glTranslated(-this.local.x, -this.local.y, -this.local.z);
-        ogl.gl.glRotated(this.rotacao.x, 1, 0, 0);
-        ogl.gl.glRotated(this.rotacao.y, 0, 1, 0);
-        ogl.gl.glRotated(this.rotacao.z, 0, 0, 1);
+        ogl.glu.gluLookAt(this.local.x, this.local.y, this.local.z, this.anexo.getLocal().x, this.anexo.getLocal().y, this.anexo.getLocal().z, 0, 1, 0);
+        //ogl.gl.glTranslated(-this.local.x, -this.local.y, -this.local.z);
+        //ogl.gl.glRotated(this.rotacao.x, 1, 0, 0);
+        //ogl.gl.glRotated(this.rotacao.y, 0, 1, 0);
+        //ogl.gl.glRotated(this.rotacao.z, 0, 0, 1);
     }
     
     
