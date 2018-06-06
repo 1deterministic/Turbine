@@ -8,6 +8,7 @@ public class Camera {
     //public Ponto rotacao; // rotação na câmera, por ângulo nos 3 eixos. Talvez mude para um vetor de rotação e um ângulo
     public Ponto direcao;
     public Objeto anexo; // objeto anexado a essa câmera, de modo que ela o siga
+    // teste
     
     // construtor padrão, cria a câmera na posição 0, 0, 0
     public Camera() {
