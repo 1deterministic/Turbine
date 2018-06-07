@@ -6,6 +6,8 @@ public abstract class Objeto {
     // aplicar isso em algum lugar
     //private boolean aplicar_fisica; // diz se a simulação de física será aplicada nesse objeto
     
+    public abstract void desenhar(OGL ogl);
+    
     public abstract void setLocal(Ponto p); // define o local do objeto no espaço
     public abstract Ponto getLocal(); // retorna o local do objeto no espaço
     

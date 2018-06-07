@@ -46,7 +46,7 @@ public class Texto extends Forma {
 
             ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
             
-            ogl.gl.glLineWidth(1.0f);
+            ogl.gl.glLineWidth(2.0f);
             ogl.glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, this.texto);
             
             ogl.gl.glFlush();

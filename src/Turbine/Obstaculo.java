@@ -26,6 +26,10 @@ public class Obstaculo extends Objeto {
         this.colisor = colisor;
     }
     
+    public void desenhar(OGL ogl) {
+        this.forma.desenhar(ogl);
+    }
+    
     // define o local do obstáculo (também atualiza o local da forma e colisor atribuídos)
     public void setLocal(Ponto p) {
         this.local = p;

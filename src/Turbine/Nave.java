@@ -18,7 +18,7 @@ public class Nave extends Objeto {
         this.direcao = new Ponto(0d, 0d, 0d);
         this.velocidade = 0d;
         this.forma = new Cubo();
-        this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.01d, 0.01d, 0d));
+        this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.005d, 0.005d, 0d));
         this.colisor = new Colisor();
     }
     
@@ -29,6 +29,11 @@ public class Nave extends Objeto {
         this.direcao = direcao;
         this.velocidade = velocidade;
         this.colisor = colisor;
+    }
+    
+    public void desenhar(OGL ogl) {
+        this.forma.desenhar(ogl);
+        this.hud.desenhar(ogl);
     }
     
     // define o local da nave (também atualiza o local da forma e colisor atribuídos)
@@ -102,7 +107,7 @@ public class Nave extends Objeto {
     
     // atualiza o hud anexo
     public void atualizarHud() {
-        this.hud.setLocal(new Ponto(this.local.x, this.local.y + 1d, this.local.z - 10));
+        this.hud.setLocal(new Ponto(this.local.x + 5d, this.local.y + 1d, this.local.z));
         this.hud.setTexto(this.velocidade + " m/s", Color.white);
     }
     

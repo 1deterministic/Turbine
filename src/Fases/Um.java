@@ -147,13 +147,11 @@ public class Um extends Fase {
         this.camera.ajustaObservacao(ogl);
         
          // desenha todos os objetos
-        this.nave.getForma().desenhar(ogl);
-        this.chao.getForma().desenhar(ogl);
-        this.chegada.getForma().desenhar(ogl);
+        this.nave.desenhar(ogl);
+        this.chao.desenhar(ogl);
+        this.chegada.desenhar(ogl);
         for (Obstaculo o: this.obstaculos) {
-            o.getForma().desenhar(ogl);
+            o.desenhar(ogl);
         }
-        
-        this.nave.getHud().desenhar(ogl);
     }
 }
