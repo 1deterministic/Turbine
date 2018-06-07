@@ -135,7 +135,7 @@ public class TG1 extends Fase {
             if (!this.colide) {
                 if (this.carro.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
-                    this.carro.setIntensidadeTurbo(0d);
+                    this.carro.setIntensidadeTurbo(-30d);
                 }
             }
         }

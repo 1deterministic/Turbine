@@ -131,10 +131,8 @@ public class Carro extends Objeto {
         
         if (this.intensidadeTurbo < 0d) {
             this.intensidadeTurbo += 10 * timeDelta;
-            System.out.println("1");
         } else if (this.intensidadeTurbo > 0d) {
             this.intensidadeTurbo -= 10 * timeDelta;
-            System.out.println("2");
         }
         
         if (Math.abs(this.intensidadeTurbo) < timeDelta)
@@ -184,9 +182,9 @@ public class Carro extends Objeto {
         
         if (this.intensidadeTurbo > 100d)
             this.intensidadeTurbo = 100d;
-        else if (this.intensidadeTurbo < 0d) {
-            this.intensidadeTurbo = 0d;
-        }
+//        else if (this.intensidadeTurbo < 0d) {
+//            this.intensidadeTurbo = 0d;
+//        }
     }
     
     public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
