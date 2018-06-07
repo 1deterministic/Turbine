@@ -7,6 +7,7 @@ public class Controle {
     public boolean esquerda;
     public boolean cima;
     public boolean baixo;
+    public boolean turbo;
     
     // construtor padrão, seta todos os controles para falso
     public Controle(){
@@ -14,6 +15,7 @@ public class Controle {
         this.esquerda = false;
         this.cima = false;
         this.baixo = false;
+        this.turbo = false;
     }
     
     // método de debug (apenas para saber se todos os controles estão registrando)
@@ -21,6 +23,7 @@ public class Controle {
         return "dir: " + this.direita + "\n" +
                "esq: " + this.esquerda + "\n" +
                "cim: " + this.cima + "\n" +
-               "bai: " + this.baixo + "\n";
+               "bai: " + this.baixo + "\n" +
+               "trb: " + this.turbo;
     }
 }

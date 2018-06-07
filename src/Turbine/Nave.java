@@ -8,18 +8,26 @@ public class Nave extends Objeto {
     private Ponto local; // posição no espaço
     private Forma forma; // modelo 3d da nave
     private Texto hud; // painel de informações da nave
+    private Colisor colisor; // container de colisão da nave
+    
     private Ponto direcao; // direção de movimento da nave
     private Double velocidade; // velocidade da nave
-    private Colisor colisor; // container de colisão da nave
+    
+    private Double intensidadeTurbo; 
+    private Double quantidadeTurbo; // quantidade de powerup de velocidade disponível
     
     // construtor padrão
     public Nave() {
         this.local = new Ponto(0d, 0d, 0d);
-        this.direcao = new Ponto(0d, 0d, 0d);
-        this.velocidade = 0d;
         this.forma = new Cubo();
         this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.005d, 0.005d, 0d));
         this.colisor = new Colisor();
+        
+        this.direcao = new Ponto(0d, 0d, 0d);
+        this.velocidade = 0d;
+        
+        this.intensidadeTurbo = 0d;
+        this.quantidadeTurbo = 5d; // quantidade de tempo disponível
     }
     
     // costrutor completo
@@ -108,7 +116,7 @@ public class Nave extends Objeto {
     // atualiza o hud anexo
     public void atualizarHud() {
         this.hud.setLocal(new Ponto(this.local.x + 5d, this.local.y + 1d, this.local.z));
-        this.hud.setTexto(this.velocidade + " m/s", Color.white);
+        this.hud.setTexto((this.velocidade + this.intensidadeTurbo) + " m/s", Color.white);
     }
     
     // retorna o local apropriado para a câmera
@@ -118,7 +126,12 @@ public class Nave extends Objeto {
     
     // movimenta a nave de acordo com a direção e a velocidade atuais
     public void manterInercia(Double timeDelta) {
-        this.transladar(this.direcao.escalar(this.velocidade * timeDelta));
+        this.transladar(this.direcao.escalar((this.velocidade + this.intensidadeTurbo) * timeDelta));
+        
+        this.intensidadeTurbo -= 10 * timeDelta;
+        if (this.intensidadeTurbo < 0d) {
+            this.intensidadeTurbo = 0d;
+        }
     }
     
     // aplica gravidade à nave
@@ -138,7 +151,17 @@ public class Nave extends Objeto {
             this.direcao.y += 1d * timeDelta;
         
         if (c.baixo)
-            this.direcao.y -= 1d * timeDelta;
+            this.direcao.z -= 1d * timeDelta;
+        
+        if (c.turbo) {
+            if (this.quantidadeTurbo > 0d) {
+                this.intensidadeTurbo += 50d * timeDelta; 
+                
+                this.quantidadeTurbo -= timeDelta;
+                if (this.quantidadeTurbo < 0d)
+                    this.quantidadeTurbo = 0d;
+            }
+        }
         
         // limitação de movimento
         if (this.direcao.x > 10d * timeDelta)
@@ -150,6 +173,13 @@ public class Nave extends Objeto {
             this.direcao.y = 10d * timeDelta;
         else if (this.direcao.y < -10d * timeDelta)
             this.direcao.y = -10d * timeDelta;
+
+        
+        if (this.intensidadeTurbo > 100d)
+            this.intensidadeTurbo = 100d;
+        else if (this.intensidadeTurbo < 0d) {
+            this.intensidadeTurbo = 0d;
+        }
 
         // inclina a nave pro lado onde está virando
         this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));

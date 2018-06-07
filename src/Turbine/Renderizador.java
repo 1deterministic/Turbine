@@ -91,6 +91,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 
             case KeyEvent.VK_LEFT:
                 this.controle.esquerda = true; break;
+                
+            case KeyEvent.VK_SPACE:
+                this.controle.turbo = true; break;
         }
         
     }
@@ -111,6 +114,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 
             case KeyEvent.VK_LEFT:
                 this.controle.esquerda = false; break;
+                
+            case KeyEvent.VK_SPACE:
+                this.controle.turbo = false; break;
         }
     }
 
