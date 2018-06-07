@@ -214,4 +214,8 @@ public class Carro extends Objeto {
     public void setIntensidadeTurbo(Double intensidadeTurbo) {
         this.intensidadeTurbo = intensidadeTurbo;
     }
+    
+    public Double getIntensidadeTurbo() {
+        return this.intensidadeTurbo;
+    }
 }

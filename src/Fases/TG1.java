@@ -1,14 +1,6 @@
 package Fases;
 
-import Turbine.Texturas;
-import Turbine.Carro;
-import Turbine.OGL;
-import Turbine.Ponto;
-import Turbine.Ceu;
-import Turbine.CarroAdversario;
-import Turbine.Camera;
-import Turbine.Controle;
-import Turbine.Obstaculo;
+import Turbine.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
@@ -105,7 +97,7 @@ public class TG1 extends Fase {
             Obstaculo chao = new Obstaculo();
             chao.setLocal(new Ponto(0d, -1d, -40d * i));
             chao.atualizarForma();
-            chao.getForma().setDimensoes(new Ponto(10d, 0d, 20d));
+            chao.getForma().setDimensoes(new Ponto(40d, 0d, 20d));
             chao.getForma().setTextura(this.texturas.getTextura("pista"));
             chao.getForma().setCor(Color.white);
             chao.setDirecao(new Ponto());
@@ -131,11 +123,13 @@ public class TG1 extends Fase {
             o.manterInercia(deltaTempo);
             o.aplicarGravidade(0.1d, deltaTempo);
             o.limitarAreaMovimento(new Ponto(-10d, 0d, 0d), new Ponto(10d, 10d, 0d));
+            o.atualizarHud();
             
             if (!this.colide) {
                 if (this.carro.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
                     this.carro.setIntensidadeTurbo(-30d);
+                    o.setIntensidadeTurbo(30d);
                 }
             }
         }
@@ -149,6 +143,22 @@ public class TG1 extends Fase {
             
             if (nao_colide_mais)
                 this.colide = false;
+        }
+        
+        for (CarroAdversario o: this.carrosAdversarios) {
+            for (CarroAdversario p: this.carrosAdversarios) {
+                if (o != p) {
+                    if (o.getColisor().colideCom(p.getColisor())) {
+                        if (o.getLocal().z > p.getLocal().z) {
+                            o.setIntensidadeTurbo(-30d);
+                            p.setIntensidadeTurbo(30d);
+                        } else {
+                            p.setIntensidadeTurbo(-30d);
+                            o.setIntensidadeTurbo(30d);
+                        }               
+                    }
+                }
+            }
         }
         
         // verifica se o fim da fase foi alcançado
