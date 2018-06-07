@@ -29,8 +29,8 @@ public class Obstaculo extends Objeto {
     // define o local do obstáculo (também atualiza o local da forma e colisor atribuídos)
     public void setLocal(Ponto p) {
         this.local = p;
-        this.atualizarLocalForma();
-        this.atualizarLocalColisor();
+        this.atualizarForma();
+        this.atualizarColisor();
     }
     
     // retorna o local do obstáculo
@@ -81,17 +81,17 @@ public class Obstaculo extends Objeto {
     // movimenta o obstáculo de acordo com os valores de delta, movimenta também a forma e o colisor anexos
     public void transladar(Ponto delta) {
         this.local.somar(delta);
-        this.atualizarLocalForma();
-        this.atualizarLocalColisor();
+        this.atualizarForma();
+        this.atualizarColisor();
     }
     
     // atualiza o local da forma anexa de acordo com o local do obstáculo
-    public void atualizarLocalForma() {
+    public void atualizarForma() {
         this.forma.setLocal(new Ponto(this.local));
     }
     
     // atualiza o local do colisor anexo de acordo com o local do obstáculo
-    public void atualizarLocalColisor() {
+    public void atualizarColisor() {
         this.colisor.setLocal(new Ponto(this.local));
     }
     

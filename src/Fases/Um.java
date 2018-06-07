@@ -8,6 +8,7 @@ import Turbine.Ceu;
 import Turbine.Obstaculo;
 import Turbine.Camera;
 import Turbine.Controle;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -45,15 +46,17 @@ public class Um extends Fase {
 
         // carrega o skybox
         this.ceu.setTextura(this.texturas.getTextura("ceu"));
+        this.ceu.setCor(Color.white);
         
         // carrega a nave
         this.nave.setLocal(new Ponto(0d, 0d, 500d));
-        this.nave.atualizarLocalForma();
+        this.nave.atualizarForma();
         this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
         this.nave.getForma().setTextura(this.texturas.getTextura("madeira"));
+        this.nave.getForma().setCor(Color.white);
         this.nave.setDirecao(new Ponto(0d, 0d, -1d));
         this.nave.setVelocidade(250d); //900Km/h
-        this.nave.atualizarLocalColisor();
+        this.nave.atualizarColisor();
         this.nave.getColisor().setDimensoes(nave.getForma().getDimensoes()); // faz o colisor e a forma terem o mesmo tamanho
         
         // anexa a nave na câmera
@@ -67,12 +70,13 @@ public class Um extends Fase {
                     ThreadLocalRandom.current().nextDouble(-100d, 100d), 
                     50d, 
                     -i * 100d));
-            obstaculo.atualizarLocalForma();
+            obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
             obstaculo.getForma().setTextura(this.texturas.getTextura("madeira"));
+            obstaculo.getForma().setCor(Color.white);
             obstaculo.setDirecao(new Ponto());
             obstaculo.setVelocidade(0d);
-            obstaculo.atualizarLocalColisor();
+            obstaculo.atualizarColisor();
             obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
             
             this.obstaculos.add(obstaculo);
@@ -80,22 +84,24 @@ public class Um extends Fase {
         
         // carrega a linha de chegada
         this.chegada.setLocal(new Ponto(0d, 50d, -10000d));
-        this.chegada.atualizarLocalForma();
+        this.chegada.atualizarForma();
         this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d));
         this.chegada.getForma().setTextura(this.texturas.getTextura("chegada"));
+        this.chegada.getForma().setCor(Color.white);
         this.chegada.setDirecao(new Ponto());
         this.chegada.setVelocidade(0d);
-        this.chegada.atualizarLocalColisor();
+        this.chegada.atualizarColisor();
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
         
         // carrega o chão
         this.chao.setLocal(new Ponto(0d, -1d, -5000d));
-        this.chao.atualizarLocalForma();
+        this.chao.atualizarForma();
         this.chao.getForma().setDimensoes(new Ponto(100d, 0d, 10000d));
         this.chao.getForma().setTextura(this.texturas.getTextura("abstrato"));
+        this.chao.getForma().setCor(Color.white);
         this.chao.setDirecao(new Ponto());
         this.chao.setVelocidade(0d);
-        this.chao.atualizarLocalColisor();
+        this.chao.atualizarColisor();
         this.chao.getColisor().setDimensoes(this.chao.getForma().getDimensoes());
     }
     
@@ -103,9 +109,10 @@ public class Um extends Fase {
     public void atualizar(Double deltaTempo, Controle controle) {
         // roda a física
         this.nave.movimentar(controle, deltaTempo);
-        this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.nave.manterInercia(deltaTempo);
         this.nave.aplicarGravidade(0.1d, deltaTempo);
+        this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
+        this.nave.atualizarHud();
         
         // verifica as colisões
         for (Obstaculo o: this.obstaculos) {
@@ -146,5 +153,7 @@ public class Um extends Fase {
         for (Obstaculo o: this.obstaculos) {
             o.getForma().desenhar(ogl);
         }
+        
+        this.nave.getHud().desenhar(ogl);
     }
 }

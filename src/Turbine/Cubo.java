@@ -1,6 +1,7 @@
 package Turbine;
 
 import com.jogamp.opengl.util.texture.Texture;
+import java.awt.Color;
 
 // subforma que desenha um cubo
 public class Cubo extends Forma {
@@ -9,6 +10,7 @@ public class Cubo extends Forma {
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
     private Texture textura; // textura atribuída ao cubo
+    private Color cor; // cor base do cubo
     
     // construtor padrão, cria um cubo no local 0, 0, 0, com tamanho 1 em todas as dimensões, sem rotação
     public Cubo(){
@@ -16,15 +18,17 @@ public class Cubo extends Forma {
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
         this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
         this.angulo = 0.0d;
+        this.cor = new Color(255, 255, 255);
     }
     
     // construtor completo
-    public Cubo(Ponto local, Ponto dimensoes, Ponto rotacao, Double angulo, Texture textura) {
+    public Cubo(Ponto local, Ponto dimensoes, Ponto rotacao, Double angulo, Texture textura, Color cor) {
         this.local = local;
         this.dimensoes = dimensoes;
         this.rotacao = rotacao;
         this.angulo = angulo;
         this.textura = textura;
+        this.cor = cor;
     }
     
     // desenha o cubo na tela
@@ -38,7 +42,7 @@ public class Cubo extends Forma {
             ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z); // aplica a escala definida
 
             ogl.gl.glEnable(ogl.gl.GL_TEXTURE_2D);// configura a textura 2d
-            ogl.gl.glColor3f(1, 1, 1); // define a cor básica do objeto para branco
+            ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
             
             ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho do cubo
                     // seta as coordenadas para a textura e desenha a face frontal
@@ -103,6 +107,12 @@ public class Cubo extends Forma {
     // define a textura do cubo
     public void setTextura(Texture textura) {
         this.textura = textura;
+        
+    }
+    
+    // define a cor básica do cubo
+    public void setCor(Color cor) {
+        this.cor = cor;
     }
     
     // define o local do cubo "na mão"

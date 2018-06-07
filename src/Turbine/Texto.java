@@ -1,106 +1,101 @@
 package Turbine;
 
-import com.jogamp.opengl.glu.GLU;
-import com.jogamp.opengl.glu.GLUquadric;
+import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.util.texture.Texture;
 import java.awt.Color;
 
-// subforma que desenha uma esfera
-public class Esfera extends Forma {
+// subforma que desenha um texto
+public class Texto extends Forma {
+    private String texto; // string do texto
     private Ponto dimensoes; // distorções nos 3 eixos
     private Ponto local; // centro
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
-    private Texture textura; // textura da esfera
-    private Color cor; // cor base da esfera
+    private Color cor; // textura atribuída ao texto
     
-    // construtor padrão, cria uma esfera de tamanho 1, 1, 1 no local 0, 0, 0 e sem rotação
-    public Esfera(){
+    // construtor padrão, cria um texto no local 0, 0, 0, com tamanho 1 em todas as dimensões, sem rotação
+    public Texto(){
+        this.texto = "";
         this.dimensoes = new Ponto(1d, 1d, 1d);
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
         this.rotacao = new Ponto(0.0d, 0.0d, 0.0d);
         this.angulo = 0.0d;
-        this.cor = new Color(255, 255, 255);
     }
     
     // construtor completo
-    public Esfera(Ponto local, Ponto dimensoes, Ponto rotacao, Double angulo, Texture textura, Color cor) {
+    public Texto(String texto, Ponto local, Ponto dimensoes, Ponto rotacao, Double angulo, Color cor) {
+        this.texto = texto;
         this.local = local;
         this.dimensoes = dimensoes;
         this.rotacao = rotacao;
         this.angulo = angulo;
-        this.textura = textura;
         this.cor = cor;
     }
-
-    // desenha a esfera na tela
+    
+    public void setTexto(String texto, Color cor) {
+        this.texto = texto;
+        this.cor = cor;
+    }
+    
+    // desenha o texto na tela
     public void desenhar(OGL ogl) {
-        this.textura.enable(ogl.gl); // habilita a textura
-        this.textura.bind(ogl.gl);
-        
         ogl.gl.glPushMatrix();
-            ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z); // move a esfera para o local definido (a princípio está na origem)
+            ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z); // aplica a translação definida
             ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z); // aplica a rotação definida
             ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z); // aplica a escala definida
+
             ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
             
-            GLUquadric quadrica = ogl.glu.gluNewQuadric();
-            ogl.glu.gluQuadricTexture(quadrica, true);
-            ogl.glu.gluQuadricDrawStyle(quadrica, GLU.GLU_FILL);
-            ogl.glu.gluQuadricNormals(quadrica, GLU.GLU_FLAT);
-            ogl.glu.gluQuadricOrientation(quadrica, GLU.GLU_OUTSIDE);
-            ogl.glu.gluSphere(quadrica, 1d, 30, 30);
-            ogl.glu.gluDeleteQuadric(quadrica);
-            ogl.gl.glEnd(); // termina o desenho
+            ogl.gl.glLineWidth(1.0f);
+            ogl.glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, this.texto);
+            
+            ogl.gl.glFlush();
         ogl.gl.glPopMatrix();
-        
-        this.textura.disable(ogl.gl); // desabilita a textura
     }
 
-    // escala a esfera em um certo valor
+    // escala o texto em um certo valor
     public void escalar(Double v) {
         this.dimensoes.multiplicar(v);
     }
     
-    // rotaciona a esfera em um certo valor em um certo eixo
+    // rotaciona o texto em um certo ângulo em torno de um eixo
     public void rotacionar(Double angulo, Ponto eixo) {
         // utilizar quaternions para combinar rotações
         this.angulo = angulo % 360;
         this.rotacao = eixo;
     }
     
-    // movimenta a esfera de acordo com os valores de delta
+    // movimenta o texto de acordo com os valores de delta
     public void transladar(Ponto delta) {
         this.local.somar(delta);
     }
     
-    // define a textura da esfera
+    // define a textura do texto
     public void setTextura(Texture textura) {
-        this.textura = textura;
     }
     
-    // define a textura básica da esfera
+    // define a cor do texto
     public void setCor(Color cor) {
         this.cor = cor;
     }
     
-    // define o local da esfera "na mão"
+    // define o local do texto "na mão"
     public void setLocal(Ponto p) {
         this.local = p;
     }
     
-    // retorna o local da esfera
+    // retorna o local do texto
     public Ponto getLocal() {
         return this.local;
     }
     
-    // define as dimensoes da esfera
+    // define as dimensões do texto
     public void setDimensoes(Ponto p) {
         this.dimensoes = p;
     }
     
-    // retorna as dimensoes da esfera
+    // retorna as dimensões do texto
     public Ponto getDimensoes() {
-        return this.getDimensoes();
+        return this.dimensoes;
     }
 }

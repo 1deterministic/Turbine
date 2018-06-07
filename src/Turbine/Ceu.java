@@ -3,17 +3,20 @@ package Turbine;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.util.texture.Texture;
+import java.awt.Color;
 
 // subforma que desenha a um skybox
 public class Ceu extends Forma {
     private Texture textura; // textura do céu
+    private Color cor; // cor base do skybox
     
     // construtor padrão
     public Ceu(){}
     
     // construtor completo
-    public Ceu(Texture textura) {
+    public Ceu(Texture textura, Color cor) {
         this.textura = textura;
+        this.cor = cor;
     }
     
     // desenha o skybox na tela
@@ -27,7 +30,7 @@ public class Ceu extends Forma {
             ogl.gl.glDisable(GL.GL_BLEND);
 
             ogl.gl.glEnable(ogl.gl.GL_TEXTURE_2D);// configura a textura 2d
-            ogl.gl.glColor3f(1, 1, 1); // define a cor básica do objeto para branco
+            ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
             
             ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho do skybox
                 // seta as coordenadas para a textura e desenha a face frontal
@@ -110,6 +113,11 @@ public class Ceu extends Forma {
     // define a textura do skybox
     public void setTextura(Texture textura) {
         this.textura = textura;
+    }
+    
+    // define a cor base do skybox
+    public void setCor(Color cor) {
+        this.cor = cor;
     }
     
     // desabilitado

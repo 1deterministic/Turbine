@@ -1,9 +1,13 @@
 package Turbine;
 
 // Nave do jogador
+
+import java.awt.Color;
+
 public class Nave extends Objeto {
     private Ponto local; // posição no espaço
     private Forma forma; // modelo 3d da nave
+    private Texto hud; // painel de informações da nave
     private Ponto direcao; // direção de movimento da nave
     private Double velocidade; // velocidade da nave
     private Colisor colisor; // container de colisão da nave
@@ -14,6 +18,7 @@ public class Nave extends Objeto {
         this.direcao = new Ponto(0d, 0d, 0d);
         this.velocidade = 0d;
         this.forma = new Cubo();
+        this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.01d, 0.01d, 0d));
         this.colisor = new Colisor();
     }
     
@@ -29,8 +34,8 @@ public class Nave extends Objeto {
     // define o local da nave (também atualiza o local da forma e colisor atribuídos)
     public void setLocal(Ponto p) {
         this.local = p;
-        this.atualizarLocalForma();
-        this.atualizarLocalColisor();
+        this.atualizarForma();
+        this.atualizarColisor();
     }
     
     // retorna o local da nave
@@ -81,18 +86,24 @@ public class Nave extends Objeto {
     // movimenta a nave de acordo com os valores de delta, movimenta também a forma e o colisor anexos
     public void transladar(Ponto delta) {
         this.local.somar(delta);
-        this.atualizarLocalForma();
-        this.atualizarLocalColisor();
+        this.atualizarForma();
+        this.atualizarColisor();
     }
     
     // atualiza o local da forma anexa de acordo com o local da nave
-    public void atualizarLocalForma() {
+    public void atualizarForma() {
         this.forma.setLocal(new Ponto(this.local));
     }
     
     // atualiza o local do colisor anexo de acordo com o local da nave
-    public void atualizarLocalColisor() {
+    public void atualizarColisor() {
         this.colisor.setLocal(new Ponto(this.local));
+    }
+    
+    // atualiza o hud anexo
+    public void atualizarHud() {
+        this.hud.setLocal(new Ponto(this.local.x, this.local.y + 1d, this.local.z - 10));
+        this.hud.setTexto(this.velocidade + " m/s", Color.white);
     }
     
     // retorna o local apropriado para a câmera
@@ -157,6 +168,10 @@ public class Nave extends Objeto {
         }
         
         // ignorar o z por enquanto
+    }
+    
+    public Forma getHud() {
+        return this.hud;
     }
 
 }
