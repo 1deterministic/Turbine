@@ -20,7 +20,7 @@ public class Nave extends Objeto {
     public Nave() {
         this.local = new Ponto(0d, 0d, 0d);
         this.forma = new Cubo();
-        this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.005d, 0.005d, 0d));
+        this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.005d, 0.005d, 0.005d)); this.hud.setRotacao(new Ponto(0d, 1d, 0d)); this.hud.setAngulo(-15d);
         this.colisor = new Colisor();
         
         this.direcao = new Ponto(0d, 0d, 0d);
@@ -115,7 +115,7 @@ public class Nave extends Objeto {
     
     // atualiza o hud anexo
     public void atualizarHud() {
-        this.hud.setLocal(new Ponto(this.local.x + 5d, this.local.y + 1d, this.local.z));
+        this.hud.setLocal(new Ponto(this.local.x + 3d, this.local.y + 1d, this.local.z));
         this.hud.setTexto(new String(this.velocidade + this.intensidadeTurbo + "").split("\\.")[0] + " m/s\n" + 
                           new String((100d * this.quantidadeTurbo / 5d) + "").split("\\.")[0] + "% turbo", Color.white);
     }
