@@ -39,18 +39,24 @@ public class Texto extends Forma {
     
     // desenha o texto na tela
     public void desenhar(OGL ogl) {
-        ogl.gl.glPushMatrix();
-            ogl.gl.glTranslated(this.local.x, this.local.y, this.local.z); // aplica a translação definida
-            ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z); // aplica a rotação definida
-            ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z); // aplica a escala definida
+        String textos[] = this.texto.split("\\n+");
+        
+        int i = 0;
+        for (String s : textos) {
+            ogl.gl.glPushMatrix();
+                ogl.gl.glTranslated(this.local.x, this.local.y - i, this.local.z); // aplica a translação definida
+                ogl.gl.glRotated(this.angulo, this.rotacao.x, this.rotacao.y, this.rotacao.z); // aplica a rotação definida
+                ogl.gl.glScaled(this.dimensoes.x, this.dimensoes.y, this.dimensoes.z); // aplica a escala definida
 
-            ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
+                ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
+                ogl.gl.glLineWidth(2.0f);
+                ogl.glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, s);
+                
+                ogl.gl.glFlush();
+            ogl.gl.glPopMatrix();
             
-            ogl.gl.glLineWidth(2.0f);
-            ogl.glut.glutStrokeString(GLUT.STROKE_MONO_ROMAN, this.texto);
-            
-            ogl.gl.glFlush();
-        ogl.gl.glPopMatrix();
+            i++;
+        }
     }
 
     // escala o texto em um certo valor

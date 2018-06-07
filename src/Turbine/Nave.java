@@ -116,7 +116,8 @@ public class Nave extends Objeto {
     // atualiza o hud anexo
     public void atualizarHud() {
         this.hud.setLocal(new Ponto(this.local.x + 5d, this.local.y + 1d, this.local.z));
-        this.hud.setTexto((this.velocidade + this.intensidadeTurbo) + " m/s", Color.white);
+        this.hud.setTexto(new String(this.velocidade + this.intensidadeTurbo + "").split("\\.")[0] + " m/s\n" + 
+                          new String((100d * this.quantidadeTurbo / 5d) + "").split("\\.")[0] + "% turbo", Color.white);
     }
     
     // retorna o local apropriado para a câmera
