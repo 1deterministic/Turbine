@@ -43,6 +43,8 @@ public class Cubo extends Forma {
 
             ogl.gl.glEnable(ogl.gl.GL_TEXTURE_2D);// configura a textura 2d
             ogl.gl.glColor3d(this.cor.getRed() / 255d, this.cor.getGreen() / 255d, this.cor.getBlue() / 255d); // define a cor básica do objeto
+            ogl.gl.glEnable( ogl.gl.GL_BLEND );
+            ogl.gl.glBlendFunc( ogl.gl.GL_SRC_ALPHA, ogl.gl.GL_ONE_MINUS_SRC_ALPHA );
             
             ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho do cubo
                     // seta as coordenadas para a textura e desenha a face frontal
