@@ -136,7 +136,6 @@ public class Um extends Fase {
         
         // atualiza a câmera
         this.camera.transicaoCamera(deltaTempo);
-        System.out.println(controle);
     }
     
     // desenha todos os elementos na tela
