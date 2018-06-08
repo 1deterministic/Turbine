@@ -12,6 +12,7 @@ public class TG1 extends Fase {
     private Camera camera;
     private Carro carro;
     private ArrayList<CarroAdversario> carrosAdversarios;
+    private ArrayList<Obstaculo> predios;
     private Obstaculo chegada;
     private ArrayList<Obstaculo> chao;
     private boolean colide;
@@ -24,6 +25,7 @@ public class TG1 extends Fase {
         this.chegada = new Obstaculo();
         this.carrosAdversarios = new ArrayList<>();
         this.chao = new ArrayList<>();
+        this.predios = new ArrayList<>();
         this.colide = false;
     }
     
@@ -31,6 +33,7 @@ public class TG1 extends Fase {
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
         this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("predio", diretorioRaiz + "/src/turbine/Arquivos/predio.jpg");
         this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
         this.texturas.carregarTextura("pista", diretorioRaiz + "/src/turbine/Arquivos/pista.png");
         this.texturas.carregarTextura("carrovermelho", diretorioRaiz + "/src/turbine/Arquivos/carrovermelho.png");
@@ -81,10 +84,46 @@ public class TG1 extends Fase {
             this.carrosAdversarios.add(obstaculo);
         }
         
+        for(int i = 0; i < 100; i++) {
+            Obstaculo obstaculo = new Obstaculo();
+            
+            obstaculo.setLocal(new Ponto(
+                    30d, 
+                    5d, 
+                    -i * 50d));
+            obstaculo.atualizarForma();
+            obstaculo.getForma().setDimensoes(new Ponto(3d, 10d, 5d));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("predio"));
+            obstaculo.getForma().setCor(Color.white);
+            obstaculo.setDirecao(new Ponto());
+            obstaculo.setVelocidade(0d);
+            obstaculo.atualizarColisor();
+            obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
+            
+            this.predios.add(obstaculo);
+            
+            obstaculo = new Obstaculo();
+            
+            obstaculo.setLocal(new Ponto(
+                    -30d, 
+                    5d, 
+                    -i * 50d));
+            obstaculo.atualizarForma();
+            obstaculo.getForma().setDimensoes(new Ponto(3d, 10d, 5d));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("predio"));
+            obstaculo.getForma().setCor(Color.white);
+            obstaculo.setDirecao(new Ponto());
+            obstaculo.setVelocidade(0d);
+            obstaculo.atualizarColisor();
+            obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
+            
+            this.predios.add(obstaculo);
+        }
+        
         // carrega a linha de chegada
         this.chegada.setLocal(new Ponto(0d, 0d, -5000d));
         this.chegada.atualizarForma();
-        this.chegada.getForma().setDimensoes(new Ponto(10d, 10d, 10d));
+        this.chegada.getForma().setDimensoes(new Ponto(20d, 20d, 10d));
         this.chegada.getForma().setTextura(this.texturas.getTextura("chegada"));
         this.chegada.getForma().setCor(Color.white);
         this.chegada.setDirecao(new Ponto());
@@ -92,7 +131,7 @@ public class TG1 extends Fase {
         this.chegada.atualizarColisor();
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
         
-        for(int i = 0; i < 125; i++) {
+        for(int i = 0; i < 126; i++) {
             // carrega o chão
             Obstaculo chao = new Obstaculo();
             chao.setLocal(new Ponto(0d, -1d, -40d * i));
@@ -190,6 +229,11 @@ public class TG1 extends Fase {
         for (CarroAdversario o: this.carrosAdversarios) {
             o.desenhar(ogl);
         }
+        
+        for (Obstaculo o: this.predios) {
+            o.desenhar(ogl);
+        }
+        
         this.carro.desenhar(ogl);
     }
 }

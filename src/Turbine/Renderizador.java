@@ -33,7 +33,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.controle = new Controle();
         
         // carrega a fase ativa
-        this.fase = new TG1();
+        this.fase = new Um();
     }
  
     public void init(GLAutoDrawable drawable) {
