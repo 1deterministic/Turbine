@@ -51,7 +51,7 @@ public class TG1 extends Fase {
         this.ceu.setCor(Color.white);
         
         // carrega a carro
-        this.carro.setLocal(new Ponto(0d, 0d, 200d));
+        this.carro.setLocal(new Ponto(0d, 0d, 0d));
         this.carro.atualizarForma();
         this.carro.getForma().setDimensoes(new Ponto(1.5d, 1d, 0d));
         this.carro.getForma().setTextura(this.texturas.getTextura("carrovermelho"));
@@ -65,19 +65,20 @@ public class TG1 extends Fase {
         this.camera.anexarObjeto(carro);
 
         // gera os obstáculos
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 50; i++) {
             CarroAdversario obstaculo = new CarroAdversario();
             
             obstaculo.setLocal(new Ponto(
                     ThreadLocalRandom.current().nextDouble(-10d, 10d), 
                     0d, 
-                    -i * 50d));
+                    -i * 5d));
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(1.5d, 1d, 0d));
             obstaculo.getForma().setTextura(this.texturas.getTextura(carrosaleatorios[new Random().nextInt(4)]));
             obstaculo.getForma().setCor(Color.white);
             obstaculo.setDirecao(new Ponto(ThreadLocalRandom.current().nextDouble(-0.2d, 0.2d), 0d, -1d));
             obstaculo.setVelocidade(ThreadLocalRandom.current().nextDouble(35d, 45d));
+            obstaculo.setIntensidadeTurbo(100d);
             obstaculo.atualizarColisor();
             obstaculo.getColisor().setDimensoes(new Ponto(1.5d, 1d, 1d));
             
@@ -131,7 +132,7 @@ public class TG1 extends Fase {
         this.chegada.atualizarColisor();
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
         
-        for(int i = 0; i < 126; i++) {
+        for(int i = 0; i < 200; i++) {
             // carrega o chão
             Obstaculo chao = new Obstaculo();
             chao.setLocal(new Ponto(0d, -1d, -40d * i));
