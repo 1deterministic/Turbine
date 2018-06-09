@@ -36,26 +36,24 @@ public class Dois extends Fase {
     // carrega todos os elementos da fase
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
-        this.texturas.carregarTextura("madeira", diretorioRaiz + "/src/turbine/Arquivos/madeira.jpg");
-        this.texturas.carregarTextura("predio", diretorioRaiz + "/src/turbine/Arquivos/predio.jpg");
         this.texturas.carregarTextura("maquina", diretorioRaiz + "/src/turbine/Arquivos/maquina.jpg");
         this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
         this.texturas.carregarTextura("abstrato", diretorioRaiz + "/src/turbine/Arquivos/abstrato.jpg");
-        this.texturas.carregarTextura("cinza", diretorioRaiz + "/src/turbine/Arquivos/cinza.png");
-        this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/azulceu.png");
+        this.texturas.carregarTextura("azulgelo", diretorioRaiz + "/src/turbine/Arquivos/azulgelo.png");
+        this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
         
         // define a posição inicial da câmera
         this.camera.local.z = 800d;
 
         // carrega o skybox
-        this.ceu.setTextura(this.texturas.getTextura("ceu"));
+        this.ceu.setTextura(this.texturas.getTextura("maquina"));
         this.ceu.setCor(Color.white);
         
         // carrega a nave
         this.nave.setLocal(new Ponto(0d, 0d, 500d));
         this.nave.atualizarForma();
         this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
-        this.nave.getForma().setTextura(this.texturas.getTextura("maquina"));
+        this.nave.getForma().setTextura(this.texturas.getTextura("abstrato"));
         this.nave.getForma().setCor(Color.white);
         this.nave.setDirecao(new Ponto(0d, 0d, -1d));
         this.nave.setVelocidade(300d); //1080Km/h
@@ -75,7 +73,7 @@ public class Dois extends Fase {
                     -i * 100d));
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
-            obstaculo.getForma().setTextura(this.texturas.getTextura("maquina"));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("azulgelo"));
             obstaculo.getForma().setCor(Color.white);
             obstaculo.setDirecao(new Ponto());
             obstaculo.setVelocidade(0d);
@@ -100,7 +98,7 @@ public class Dois extends Fase {
         this.chao.setLocal(new Ponto(0d, -3d, -5000d));
         this.chao.atualizarForma();
         this.chao.getForma().setDimensoes(new Ponto(100d, 2d, 10000d));
-        this.chao.getForma().setTextura(this.texturas.getTextura("maquina"));
+        this.chao.getForma().setTextura(this.texturas.getTextura("ceu"));
         this.chao.getForma().setCor(Color.white);
         this.chao.setDirecao(new Ponto());
         this.chao.setVelocidade(0d);
