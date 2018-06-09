@@ -27,7 +27,7 @@ public class Nave2 extends Objeto {
         this.velocidade = 0d;
         
         this.intensidadeTurbo = 0d;
-        this.quantidadeTurbo = 10d; // quantidade de tempo disponível
+        this.quantidadeTurbo = 5d; // quantidade de tempo disponível
     }
     
     // costrutor completo
@@ -117,7 +117,7 @@ public class Nave2 extends Objeto {
     public void atualizarHud() {
         this.hud.setLocal(new Ponto(this.local.x + 3d, this.local.y + 1d, this.local.z));
         this.hud.setTexto(new String(this.velocidade + this.intensidadeTurbo + "").split("\\.")[0] + " m/s\n" + 
-                          new String((100d * this.quantidadeTurbo / 10d) + "").split("\\.")[0] + "% turbo", Color.white);
+                          new String((100d * this.quantidadeTurbo / 5d) + "").split("\\.")[0] + "% turbo", Color.white);
     }
     
     // retorna o local apropriado para a câmera
@@ -132,6 +132,10 @@ public class Nave2 extends Objeto {
         this.intensidadeTurbo -= 10 * timeDelta;
         if (this.intensidadeTurbo < 0d) {
             this.intensidadeTurbo = 0d;
+        }
+        
+        if (this.quantidadeTurbo <= 5d) {
+            this.quantidadeTurbo += 0.025 * timeDelta;
         }
     }
     
@@ -161,11 +165,6 @@ public class Nave2 extends Objeto {
                 this.quantidadeTurbo -= timeDelta;
                 if (this.quantidadeTurbo < 0d)
                     this.quantidadeTurbo = 0d;
-            }
-            if (this.quantidadeTurbo == 0d) {
-                while (this.quantidadeTurbo <= 10d) {
-                  this.quantidadeTurbo += timeDelta;
-                }
             }
         }
         
