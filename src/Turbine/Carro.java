@@ -151,12 +151,7 @@ public class Carro extends Objeto {
         
         if (c.esquerda)
             this.direcao.x -= 1d * timeDelta;
-        
-        if (c.cima)
-            this.direcao.y += 1d * timeDelta;
-        
-        if (c.baixo)
-            this.direcao.z -= 1d * timeDelta;
+
         
         if (c.turbo) {
             if (this.quantidadeTurbo > 0d) {

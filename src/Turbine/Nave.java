@@ -152,7 +152,7 @@ public class Nave extends Objeto {
             this.direcao.y += 1d * timeDelta;
         
         if (c.baixo)
-            this.direcao.z -= 1d * timeDelta;
+            this.direcao.y -= 1d * timeDelta;
         
         if (c.turbo) {
             if (this.quantidadeTurbo > 0d) {

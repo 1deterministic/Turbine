@@ -149,6 +149,8 @@ public class Um extends Fase {
         // ajusta a observação para o novo local da câmera
         this.camera.ajustaObservacao(ogl);
         
+        this.defineIluminacao(ogl);
+        
          // desenha todos os objetos
         this.nave.desenhar(ogl);
         this.chao.desenhar(ogl);
@@ -156,5 +158,53 @@ public class Um extends Fase {
         for (Obstaculo o: this.obstaculos) {
             o.desenhar(ogl);
         }
+    }
+    
+    public void defineIluminacao(OGL ogl) {
+        // Habilita o modelo de coloriza��o de Gouraud
+        //gl.glShadeModel(GL2.GL_SMOOTH);
+        ogl.gl.glShadeModel(ogl.gl.GL_FLAT);
+
+        //Luz ambiente
+        //Define os par�metros atrav�s de vetores RGBA
+        float luzAmbiente[] = {1.0f, 1.0f, 1.0f, 0.5f};
+        ogl.gl.glLightModelfv(ogl.gl.GL_LIGHT_MODEL_TWO_SIDE, luzAmbiente, 0);
+
+        //Define o tipo de	 reflex�o dos objetos
+        //gl.glColorMaterial(GL2.GL_FRONT, GL2.GL_SPECULAR);
+        ogl.gl.glColorMaterial(ogl.gl.GL_FRONT, ogl.gl.GL_DIFFUSE);
+
+        //Define os par�metros da luz de n�mero 0
+        float posicaoLuz[] = {-30, 0, 0, 1}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
+        float luzDifusa[] = {1.0f, 1.0f, 1.0f, 1.0f}; //define cor  
+        float luzEspecular[] = {1.0f, 1.0f, 1.0f, 1.0f}; // define brilho
+        ogl.gl.glLightfv(ogl.gl.GL_LIGHT0, ogl.gl.GL_AMBIENT, luzAmbiente, 0);
+        //gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_DIFFUSE, luzDifusa, 0 );
+        //gl.glLightfv(GL2.GL_LIGHT0, GL2.GL_SPECULAR, luzEspecular, 0);
+        ogl.gl.glLightfv(ogl.gl.GL_LIGHT0, ogl.gl.GL_POSITION, posicaoLuz, 0);
+
+        //Define os par�metros da luz de n�mero 1
+        float posicaoLuz1[] = {-10.0f, 10.0f, 10.0f, 0.0f}; // �ltimo par�metro: 0-direcional, 1-pontual/posicional 
+        float luzEspecular1[] = {1.0f, 1.0f, 1.0f, 1.0f}; //define brilho
+        float luzDifusa1[] = {1.0f, 1.0f, 1.0f, 1.0f}; //define cor
+
+        ogl.gl.glLightfv(ogl.gl.GL_LIGHT1, ogl.gl.GL_AMBIENT, luzAmbiente, 0);
+        //gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_DIFFUSE, luzDifusa1, 0 );
+        //gl.glLightfv(GL2.GL_LIGHT1, GL2.GL_SPECULAR, luzEspecular1, 0);
+        ogl.gl.glLightfv(ogl.gl.GL_LIGHT1, ogl.gl.GL_POSITION, posicaoLuz1, 0);
+
+        // Brilho do material
+        float especularidade[] = {1.0f, 0.5f, 1.0f, 1.0f};
+        int especMaterial = 10;
+
+        // Define a reflect�ncia do material 
+        ogl.gl.glMaterialfv(ogl.gl.GL_FRONT, ogl.gl.GL_SPECULAR, especularidade, 0);
+        // Define a concentra��o do brilho
+        ogl.gl.glMateriali(ogl.gl.GL_FRONT, ogl.gl.GL_SHININESS, especMaterial);
+
+        ogl.gl.glEnable(ogl.gl.GL_LIGHT0);
+        ogl.gl.glEnable(ogl.gl.GL_LIGHT1);
+        ogl.gl.glEnable(ogl.gl.GL_LIGHTING);
+        ogl.gl.glEnable(ogl.gl.GL_COLOR_MATERIAL);
     }
 }
