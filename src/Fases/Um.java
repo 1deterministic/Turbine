@@ -37,9 +37,12 @@ public class Um extends Fase {
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
         this.texturas.carregarTextura("madeira", diretorioRaiz + "/src/turbine/Arquivos/madeira.jpg");
+        this.texturas.carregarTextura("predio", diretorioRaiz + "/src/turbine/Arquivos/predio.jpg");
+        this.texturas.carregarTextura("maquina", diretorioRaiz + "/src/turbine/Arquivos/maquina.jpg");
         this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
         this.texturas.carregarTextura("abstrato", diretorioRaiz + "/src/turbine/Arquivos/abstrato.jpg");
-        this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
+        this.texturas.carregarTextura("cinza", diretorioRaiz + "/src/turbine/Arquivos/cinza.png");
+        this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/azulceu.png");
         
         // define a posição inicial da câmera
         this.camera.local.z = 800d;
@@ -52,7 +55,7 @@ public class Um extends Fase {
         this.nave.setLocal(new Ponto(0d, 0d, 500d));
         this.nave.atualizarForma();
         this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
-        this.nave.getForma().setTextura(this.texturas.getTextura("madeira"));
+        this.nave.getForma().setTextura(this.texturas.getTextura("cinza"));
         this.nave.getForma().setCor(Color.white);
         this.nave.setDirecao(new Ponto(0d, 0d, -1d));
         this.nave.setVelocidade(250d); //900Km/h
@@ -72,7 +75,7 @@ public class Um extends Fase {
                     -i * 100d));
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
-            obstaculo.getForma().setTextura(this.texturas.getTextura("madeira"));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("cinza"));
             obstaculo.getForma().setCor(Color.white);
             obstaculo.setDirecao(new Ponto());
             obstaculo.setVelocidade(0d);
