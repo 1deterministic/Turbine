@@ -135,9 +135,9 @@ public class TG1 extends Fase {
         for(int i = 0; i < 200; i++) {
             // carrega o chão
             Obstaculo chao = new Obstaculo();
-            chao.setLocal(new Ponto(0d, -1d, -40d * i));
+            chao.setLocal(new Ponto(0d, -3d, -40d * i));
             chao.atualizarForma();
-            chao.getForma().setDimensoes(new Ponto(40d, 0d, 20d));
+            chao.getForma().setDimensoes(new Ponto(40d, 2d, 20d));
             chao.getForma().setTextura(this.texturas.getTextura("pista"));
             chao.getForma().setCor(Color.white);
             chao.setDirecao(new Ponto());

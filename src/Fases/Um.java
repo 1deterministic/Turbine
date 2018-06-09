@@ -94,9 +94,9 @@ public class Um extends Fase {
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
         
         // carrega o chão
-        this.chao.setLocal(new Ponto(0d, -1d, -5000d));
+        this.chao.setLocal(new Ponto(0d, -3d, -5000d));
         this.chao.atualizarForma();
-        this.chao.getForma().setDimensoes(new Ponto(100d, 0d, 10000d));
+        this.chao.getForma().setDimensoes(new Ponto(100d, 2d, 10000d));
         this.chao.getForma().setTextura(this.texturas.getTextura("abstrato"));
         this.chao.getForma().setCor(Color.white);
         this.chao.setDirecao(new Ponto());
