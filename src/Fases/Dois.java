@@ -1,7 +1,7 @@
 package Fases;
 
 import Turbine.Texturas;
-import Turbine.Nave;
+import Turbine.Nave2;
 import Turbine.OGL;
 import Turbine.Ponto;
 import Turbine.Ceu;
@@ -16,7 +16,7 @@ public class Dois extends Fase {
     private Texturas texturas;
     private Ceu ceu;
     private Camera camera;
-    private Nave nave;
+    private Nave2 nave;
     private ArrayList<Obstaculo> obstaculos;
     private Obstaculo chegada;
     private Obstaculo chao;
@@ -25,7 +25,7 @@ public class Dois extends Fase {
     public Dois() {
         this.texturas = new Texturas();
         this.camera = new Camera();
-        this.nave = new Nave();
+        this.nave = new Nave2();
         this.ceu = new Ceu();
         this.chegada = new Obstaculo();
         this.obstaculos = new ArrayList<>();
