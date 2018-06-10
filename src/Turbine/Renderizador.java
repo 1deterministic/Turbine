@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
@@ -29,6 +30,9 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     
     // fase ativa
     private Fase fase;
+    
+    private Fase mudarPara;
+    private boolean mudar = false;
 
     public Renderizador(GLCanvas canvas) {
         // guarda o canvas e adiciona os escutadores de eventos, mouse e teclado
@@ -73,6 +77,12 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     }
 
     public void display(GLAutoDrawable drawable) {
+        if (mudar) {
+            this.fase = this.mudarPara;
+            this.fase.carregar(this.diretorioRaiz);
+            this.mudar = false;
+        }
+        
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         this.ogl.gl.glLoadIdentity();
 
@@ -138,9 +148,11 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
             case KeyEvent.VK_SPACE:
                 this.controle.turbo = false; break;
                 
+            case KeyEvent.VK_BACK_SPACE:
+                this.mudarPara = new TG1(); this.mudar = true; break;
+                
             case KeyEvent.VK_ESCAPE:
-                this.animator.stop();
-                System.exit(0);
+                this.animator.stop(); System.exit(0);
         }
     }
 
