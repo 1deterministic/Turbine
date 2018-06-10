@@ -28,11 +28,11 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     private Relogio relogio;
     private Controle controle;
     
+    // contém o controle de mudança de fases e a fase ativa
+    private EscolhaFase escolhaFase;
+    
     // fase ativa
     private Fase fase;
-    
-    private Fase mudarPara;
-    private boolean mudar = false;
 
     public Renderizador(GLCanvas canvas) {
         // guarda o canvas e adiciona os escutadores de eventos, mouse e teclado
@@ -56,8 +56,10 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.relogio = new Relogio();
         this.controle = new Controle();
         
+        this.escolhaFase = new EscolhaFase();
+        
         // carrega a fase ativa
-        this.fase = new Um();
+        this.fase = this.escolhaFase.getFase();
     }
  
     public void init(GLAutoDrawable drawable) {
@@ -77,10 +79,10 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     }
 
     public void display(GLAutoDrawable drawable) {
-        if (mudar) {
-            this.fase = this.mudarPara;
+        if (this.escolhaFase.isMudar()) {
+            this.fase = this.escolhaFase.getFase();
             this.fase.carregar(this.diretorioRaiz);
-            this.mudar = false;
+            this.escolhaFase.setMudar(false);
         }
         
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -149,7 +151,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 this.controle.turbo = false; break;
                 
             case KeyEvent.VK_BACK_SPACE:
-                this.mudarPara = new TG1(); this.mudar = true; break;
+                this.escolhaFase.setFase(new TG1()); this.escolhaFase.setMudar(true); break;
                 
             case KeyEvent.VK_ESCAPE:
                 this.animator.stop(); System.exit(0);
