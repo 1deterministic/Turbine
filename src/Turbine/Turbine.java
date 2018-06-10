@@ -33,20 +33,14 @@ public class Turbine {
         caps.setGreenBits(8);
         caps.setAlphaBits(8);
 
-        // Cria o objeto que irá gerenciar os eventos
-        renderizador = new Renderizador();
-
         // Cria um canvas, adiciona na janela, e especifica o objeto "ouvinte"
         // para os eventos Gl, de mouse e teclado
         GLCanvas canvas = new GLCanvas(caps);
         janela.add(canvas, BorderLayout.CENTER);
-        canvas.addGLEventListener(renderizador);
-        canvas.addMouseListener(renderizador);
-        canvas.addKeyListener(renderizador);
+        
+        // Cria o objeto que irá gerenciar os eventos
+        renderizador = new Renderizador(canvas);
         janela.setVisible(true);
-        FPSAnimator animator = new FPSAnimator(canvas, 60);
-        animator.start();
-        canvas.requestFocus();
     }
 
     public static void main(String[] args) {

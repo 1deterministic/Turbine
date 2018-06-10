@@ -9,10 +9,16 @@ import java.awt.event.MouseEvent;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
+    // canvas e animator
+    private GLCanvas canvas;
+    private FPSAnimator animator;
+    
     // caminho para o diretório base do programa
     private String diretorioRaiz;
     
@@ -24,8 +30,22 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
     // fase ativa
     private Fase fase;
 
-    public Renderizador() {
-        this.diretorioRaiz = System.getProperty("user.dir"); // guarda o caminho da raiz do executável
+    public Renderizador(GLCanvas canvas) {
+        // guarda o canvas e adiciona os escutadores de eventos, mouse e teclado
+        this.canvas = canvas;
+        this.canvas.addGLEventListener(this);
+        this.canvas.addMouseListener(this);
+        this.canvas.addKeyListener(this);
+        
+        // inicia o animator a 60fps
+        this.animator = new FPSAnimator(this.canvas, 60);
+        this.animator.start();
+        
+        // passa o foco para a janela do jogo
+        this.canvas.requestFocus();
+        
+        // guarda o caminho da raiz do executável
+        this.diretorioRaiz = System.getProperty("user.dir");
         
         // atributos comuns inicializados
         this.ogl = new OGL();
@@ -117,6 +137,10 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 
             case KeyEvent.VK_SPACE:
                 this.controle.turbo = false; break;
+                
+            case KeyEvent.VK_ESCAPE:
+                this.animator.stop();
+                System.exit(0);
         }
     }
 
