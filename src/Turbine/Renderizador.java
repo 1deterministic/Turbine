@@ -14,8 +14,9 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
 import com.jogamp.opengl.util.FPSAnimator;
 import com.jogamp.opengl.util.gl2.GLUT;
+import java.awt.event.MouseListener;
 
-public class Renderizador extends MouseAdapter implements GLEventListener, KeyListener {
+public class Renderizador implements GLEventListener, KeyListener, MouseListener {
     // canvas e animator
     private GLCanvas canvas;
     private FPSAnimator animator;
@@ -90,7 +91,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.relogio.update();
         
         // debug do controle
-        //System.out.println(this.controle);
+        System.out.println(this.controle);
         
         // atualiza a física e a lógica da fase
         this.fase.atualizar(this.relogio.getDeltaTempo(), this.controle);
@@ -101,11 +102,11 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
     }
-
-    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
+    
+    public void dispose(GLAutoDrawable arg0) {
     }
 
-    public void mouseClicked(MouseEvent e) {
+    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
 
     public void keyPressed(KeyEvent e) {
@@ -126,9 +127,6 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 this.controle.turbo = true; break;
         }
         
-    }
-
-    public void keyTyped(KeyEvent e) {
     }
 
     public void keyReleased(KeyEvent e) {
@@ -156,6 +154,31 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         }
     }
 
-    public void dispose(GLAutoDrawable arg0) {
+    public void keyTyped(KeyEvent e) {
+    }
+    
+    public void mouseClicked(MouseEvent e) {
+    }
+    
+    public void mousePressed(MouseEvent e) {
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1: this.controle.esquerda = true; break;
+            case MouseEvent.BUTTON3: this.controle.direita = true; break;
+            case MouseEvent.BUTTON2: this.controle.turbo = true; break;
+        }
+    }
+
+    public void mouseReleased(MouseEvent e) {
+        switch (e.getButton()) {
+            case MouseEvent.BUTTON1: this.controle.esquerda = false; break;
+            case MouseEvent.BUTTON3: this.controle.direita = false; break;
+            case MouseEvent.BUTTON2: this.controle.turbo = false; break;
+        }
+    }
+
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    public void mouseExited(MouseEvent e) {
     }
 }
