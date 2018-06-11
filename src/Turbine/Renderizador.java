@@ -44,10 +44,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         // inicia o animator a 60fps
         this.animator = new FPSAnimator(this.canvas, 60);
         this.animator.start();
-        
-        // passa o foco para a janela do jogo
-        this.canvas.requestFocus();
-        
+
         // guarda o caminho da raiz do executável
         this.diretorioRaiz = System.getProperty("user.dir");
         

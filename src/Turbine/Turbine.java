@@ -41,6 +41,7 @@ public class Turbine {
         // Cria o objeto que irá gerenciar os eventos
         renderizador = new Renderizador(canvas);
         janela.setVisible(true);
+        canvas.requestFocus();
     }
 
     public static void main(String[] args) {
