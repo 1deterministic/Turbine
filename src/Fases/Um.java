@@ -29,7 +29,7 @@ public class Um extends Fase {
     // carrega todos os elementos da fase
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
-        this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("chegada_um", diretorioRaiz + "/src/turbine/Arquivos/chegada_um.png");
         this.texturas.carregarTextura("malha", diretorioRaiz + "/src/turbine/Arquivos/malha.png");
         this.texturas.carregarTextura("borda", diretorioRaiz + "/src/turbine/Arquivos/borda.png");
 
@@ -79,7 +79,7 @@ public class Um extends Fase {
         this.chegada.setLocal(new Ponto(0d, 50d, -10000d));
         this.chegada.atualizarForma();
         this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d));
-        this.chegada.getForma().setTextura(this.texturas.getTextura("chegada"));
+        this.chegada.getForma().setTextura(this.texturas.getTextura("chegada_um"));
         this.chegada.getForma().setCor(Color.white);
         this.chegada.setDirecao(new Ponto());
         this.chegada.setVelocidade(0d);
@@ -120,7 +120,8 @@ public class Um extends Fase {
                 if (this.nave.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
                     this.camera.anexarObjeto(o);
-                    System.out.println(o.getLocal());
+                    // some com a nave da tela
+                    this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
                 }
             }
         }
@@ -129,8 +130,11 @@ public class Um extends Fase {
         if (!this.colide) {
             if (this.nave.getColisor().colideCom(this.chegada.getColisor())) {
                 this.colide = true;
+                // some com a nave da tela
+                this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
+                
+                // muda a câmera para a linha de chegada
                 this.camera.anexarObjeto(this.chegada);
-                System.out.println("Venceu!");
             }
         }
         

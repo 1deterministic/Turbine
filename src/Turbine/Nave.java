@@ -209,5 +209,6 @@ public class Nave extends Objeto {
     public Forma getHud() {
         return this.hud;
     }
-
+    
+    
 }

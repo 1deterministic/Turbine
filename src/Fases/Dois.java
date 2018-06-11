@@ -37,7 +37,7 @@ public class Dois extends Fase {
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
         this.texturas.carregarTextura("maquina", diretorioRaiz + "/src/turbine/Arquivos/maquina.jpg");
-        this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.png");
         this.texturas.carregarTextura("abstrato", diretorioRaiz + "/src/turbine/Arquivos/abstrato.jpg");
         this.texturas.carregarTextura("azulgelo", diretorioRaiz + "/src/turbine/Arquivos/azulgelo.png");
         this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");

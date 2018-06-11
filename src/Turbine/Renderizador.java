@@ -94,7 +94,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
         this.relogio.update();
         
         // debug do controle
-        System.out.println(this.controle);
+        //System.out.println(this.controle);
         
         // atualiza a física e a lógica da fase
         this.fase.atualizar(this.relogio.getDeltaTempo(), this.controle);

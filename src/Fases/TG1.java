@@ -32,7 +32,7 @@ public class TG1 extends Fase {
     // carrega todos os elementos da fase
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
-        this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
+        this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.png");
         this.texturas.carregarTextura("predio", diretorioRaiz + "/src/turbine/Arquivos/predio.jpg");
         this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/ceu.jpg");
         this.texturas.carregarTextura("pista", diretorioRaiz + "/src/turbine/Arquivos/pista.png");
@@ -218,8 +218,10 @@ public class TG1 extends Fase {
         if (!this.colide) {
             if (this.carro.getColisor().colideCom(this.chegada.getColisor())) {
                 this.colide = true;
+                // some com a nave da tela
+                this.carro.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
+                
                 this.camera.anexarObjeto(this.chegada);
-                System.out.println("Venceu!");
             }
         }
         
