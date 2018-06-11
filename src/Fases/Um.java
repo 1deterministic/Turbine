@@ -114,6 +114,14 @@ public class Um extends Fase {
         this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.nave.atualizarHud();
         
+        int pos = 0;
+        for (Obstaculo o: this.obstaculos) {
+            if (o.getLocal().z < this.nave.getLocal().z)
+                pos++;
+        }
+        
+        ((Texto) this.nave.getHud()).setTexto(((Texto) this.nave.getHud()).getTexto() + "\n#: " + pos);
+        
         // verifica as colisões
         for (Obstaculo o: this.obstaculos) {
             if (!this.colide) {
