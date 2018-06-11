@@ -101,6 +101,24 @@ public class Esfera extends Forma {
     
     // retorna as dimensoes da esfera
     public Ponto getDimensoes() {
-        return this.getDimensoes();
+        return this.dimensoes;
     }
+
+    public Ponto getRotacao() {
+        return rotacao;
+    }
+
+    public void setRotacao(Ponto rotacao) {
+        this.rotacao = rotacao;
+    }
+
+    public Double getAngulo() {
+        return angulo;
+    }
+
+    public void setAngulo(Double angulo) {
+        this.angulo = angulo;
+    }
+    
+    
 }
