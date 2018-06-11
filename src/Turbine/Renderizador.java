@@ -149,7 +149,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
                 this.controle.turbo = false; break;
                 
             case KeyEvent.VK_BACK_SPACE:
-                this.escolhaFase.setFase(new TG1()); this.escolhaFase.setMudar(true); break;
+                this.escolhaFase.setFase(new Menu(this.escolhaFase)); this.escolhaFase.setMudar(true); break;
                 
             case KeyEvent.VK_ESCAPE:
                 this.animator.stop(); System.exit(0);
