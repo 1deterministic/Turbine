@@ -12,7 +12,7 @@ public class Um extends Fase {
     private Nave nave;
     private ArrayList<Obstaculo> obstaculos;
     private Obstaculo chegada;
-    private Obstaculo chao;
+    private ArrayList<Obstaculo> chao;
     private boolean colide;
     
     public Um() {
@@ -22,33 +22,30 @@ public class Um extends Fase {
         this.ceu = new Ceu();
         this.chegada = new Obstaculo();
         this.obstaculos = new ArrayList<>();
-        this.chao = new Obstaculo();
+        this.chao = new ArrayList<>();
         this.colide = false;
     }
     
     // carrega todos os elementos da fase
     public void carregar(String diretorioRaiz) {
         // carrega todas as texturas necessárias
-        this.texturas.carregarTextura("madeira", diretorioRaiz + "/src/turbine/Arquivos/madeira.jpg");
-        this.texturas.carregarTextura("predio", diretorioRaiz + "/src/turbine/Arquivos/predio.jpg");
-        this.texturas.carregarTextura("maquina", diretorioRaiz + "/src/turbine/Arquivos/maquina.jpg");
         this.texturas.carregarTextura("chegada", diretorioRaiz + "/src/turbine/Arquivos/chegada.jpg");
-        this.texturas.carregarTextura("abstrato", diretorioRaiz + "/src/turbine/Arquivos/abstrato.jpg");
-        this.texturas.carregarTextura("cinza", diretorioRaiz + "/src/turbine/Arquivos/cinza.png");
-        this.texturas.carregarTextura("ceu", diretorioRaiz + "/src/turbine/Arquivos/azulceu.png");
+        this.texturas.carregarTextura("malha", diretorioRaiz + "/src/turbine/Arquivos/malha.png");
+        this.texturas.carregarTextura("borda", diretorioRaiz + "/src/turbine/Arquivos/borda.png");
+
         
         // define a posição inicial da câmera
         this.camera.local.z = 800d;
 
         // carrega o skybox
-        this.ceu.setTextura(this.texturas.getTextura("ceu"));
+        this.ceu.setTextura(this.texturas.getTextura("borda"));
         this.ceu.setCor(Color.white);
         
         // carrega a nave
         this.nave.setLocal(new Ponto(0d, 0d, 500d));
         this.nave.atualizarForma();
         this.nave.getForma().setDimensoes(new Ponto(1d, 0.1d, 1d));
-        this.nave.getForma().setTextura(this.texturas.getTextura("cinza"));
+        this.nave.getForma().setTextura(this.texturas.getTextura("borda"));
         this.nave.getForma().setCor(Color.white);
         this.nave.setDirecao(new Ponto(0d, 0d, -1d));
         this.nave.setVelocidade(250d); //900Km/h
@@ -68,7 +65,7 @@ public class Um extends Fase {
                     -i * 100d));
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
-            obstaculo.getForma().setTextura(this.texturas.getTextura("cinza"));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("borda"));
             obstaculo.getForma().setCor(Color.white);
             obstaculo.setDirecao(new Ponto());
             obstaculo.setVelocidade(0d);
@@ -89,33 +86,23 @@ public class Um extends Fase {
         this.chegada.atualizarColisor();
         this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
         
-        // carrega o chão
-        this.chao.setLocal(new Ponto(0d, -3d, -5000d));
-        this.chao.atualizarForma();
-        this.chao.getForma().setDimensoes(new Ponto(100d, 2d, 10000d));
-        this.chao.getForma().setTextura(this.texturas.getTextura("abstrato"));
-        this.chao.getForma().setCor(Color.white);
-        this.chao.setDirecao(new Ponto());
-        this.chao.setVelocidade(0d);
-        this.chao.atualizarColisor();
-        this.chao.getColisor().setDimensoes(this.chao.getForma().getDimensoes());
         
-        Obstaculo o = new Obstaculo();
-        o.setLocal(new Ponto(
-                0d,
-                50d,
-                -1000d));
-        o.setForma(new Esfera());
-        o.atualizarForma();
-        o.getForma().setDimensoes(new Ponto(50d, 50d, 50d));
-        o.getForma().setTextura(this.texturas.getTextura("abstrato"));
-        o.getForma().setCor(Color.white);
-        o.setDirecao(new Ponto());
-        o.setVelocidade(0d);
-        o.atualizarColisor();
-        o.getColisor().setDimensoes(o.getForma().getDimensoes());
+        for (int i = 0; i <= 10; i++) {
+            // carrega o chão
+            Obstaculo o = new Obstaculo();
+            o.setLocal(new Ponto(0d, -3d, -1000d * i));
+            o.atualizarForma();
+            o.getForma().setDimensoes(new Ponto(100d, 2d, 500d));
+            o.getForma().setTextura(this.texturas.getTextura("malha"));
+            o.getForma().setCor(Color.white);
+            o.setDirecao(new Ponto());
+            o.setVelocidade(0d);
+            o.atualizarColisor();
+            o.getColisor().setDimensoes(o.getForma().getDimensoes());
+            this.chao.add(o);
+        }
+        
 
-        this.obstaculos.add(o);
     }
     
     // roda a física e a lógica
@@ -161,9 +148,11 @@ public class Um extends Fase {
         
          // desenha todos os objetos
         this.nave.desenhar(ogl);
-        this.chao.desenhar(ogl);
         this.chegada.desenhar(ogl);
         for (Obstaculo o: this.obstaculos) {
+            o.desenhar(ogl);
+        }
+        for (Obstaculo o: this.chao) {
             o.desenhar(ogl);
         }
     }
