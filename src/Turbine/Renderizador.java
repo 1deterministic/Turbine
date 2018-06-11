@@ -56,6 +56,7 @@ public class Renderizador extends MouseAdapter implements GLEventListener, KeyLi
         this.relogio = new Relogio();
         this.controle = new Controle();
         
+        // seta a escolha da fase para o valor padrão (fase menu)
         this.escolhaFase = new EscolhaFase();
         
         // carrega a fase ativa

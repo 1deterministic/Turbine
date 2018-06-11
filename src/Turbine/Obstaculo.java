@@ -101,7 +101,7 @@ public class Obstaculo extends Objeto {
     
     // retorna o local apropriado para a câmera
     public Ponto getLocalCamera() {
-        return new Ponto(this.local.x, this.local.y, this.local.z + 30d);
+        return new Ponto(this.local.x, this.local.y, this.local.z + this.forma.getDimensoes().z + ((Math.sqrt(Math.pow(this.forma.getDimensoes().x, 2)) + Math.sqrt(Math.pow(this.forma.getDimensoes().y, 2))) / 2));
     }
     
     // movimenta o obstáculo de acordo com a direção e a velocidade atuais
