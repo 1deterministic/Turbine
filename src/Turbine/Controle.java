@@ -18,6 +18,14 @@ public class Controle {
         this.turbo = false;
     }
     
+    public void resetarControle() {
+        this.direita = false;
+        this.esquerda = false;
+        this.cima = false;
+        this.baixo = false;
+        this.turbo = false;
+    }
+    
     // método de debug (apenas para saber se todos os controles estão registrando)
     public String toString(){
         return "dir: " + this.direita + "\n" +

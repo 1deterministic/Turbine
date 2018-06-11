@@ -115,10 +115,10 @@ public class Menu extends Fase {
             this.escolhaFase.setMudar(true);
             
             switch(this.selecionado) {
-                case 0:this.escolhaFase.setFase(new Um());break;
-                case 1:this.escolhaFase.setFase(new Dois());break;
-                case 2:this.escolhaFase.setFase(new TG1());break;
-                case 3:break;
+                case 0: controle.resetarControle(); this.escolhaFase.setFase(new Um());break;
+                case 1:controle.resetarControle(); this.escolhaFase.setFase(new Dois());break;
+                case 2:controle.resetarControle(); this.escolhaFase.setFase(new TG1());break;
+                case 3:controle.resetarControle(); break;
             }
         }
         

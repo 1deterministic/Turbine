@@ -82,6 +82,9 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
             this.fase = this.escolhaFase.getFase();
             this.fase.carregar(this.diretorioRaiz);
             this.escolhaFase.setMudar(false);
+            // reinicia o controle de tempo
+            this.relogio = new Relogio();
+            this.relogio.update();
         }
         
         this.ogl.gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
