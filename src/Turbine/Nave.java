@@ -19,7 +19,7 @@ public class Nave extends Objeto {
     // construtor padrão
     public Nave() {
         this.local = new Ponto(0d, 0d, 0d);
-        this.forma = new Cubo();
+        this.forma = new NaveModelo();
         this.hud = new Texto(); this.hud.setDimensoes(new Ponto(0.005d, 0.005d, 0.005d)); this.hud.setRotacao(new Ponto(0d, 1d, 0d)); this.hud.setAngulo(-15d);
         this.colisor = new Colisor();
         
