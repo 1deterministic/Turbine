@@ -213,7 +213,7 @@ public class Um extends Fase {
         //float[] ambientLight = {0.1f, 0.1f, 0.1f, 0f};  // weak RED ambient 
         //ogl.gl.glLightfv(ogl.gl.GL_LIGHT0, ogl.gl.GL_AMBIENT, ambientLight, 0);
 
-        float[] diffuseLight = {0.3f, 0.3f, 0.3f, 0f};  // multicolor diffuse 
+        float[] diffuseLight = {1f, 1f, 1f, 0f};  // multicolor diffuse 
         ogl.gl.glLightfv(ogl.gl.GL_LIGHT0, ogl.gl.GL_DIFFUSE, diffuseLight, 0);
     }
 }

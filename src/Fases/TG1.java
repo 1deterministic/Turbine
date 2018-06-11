@@ -157,6 +157,14 @@ public class TG1 extends Fase {
         this.carro.limitarAreaMovimento(new Ponto(-10d, 0d, 0d), new Ponto(10d, 10d, 0d));
         this.carro.atualizarHud();
         
+        
+        int pos = 1;
+        for (CarroAdversario o: this.carrosAdversarios) {
+            if (o.getLocal().z < this.carro.getLocal().z)
+                pos++;
+        }
+        
+        ((Texto) this.carro.getHud()).setTexto(((Texto) this.carro.getHud()).getTexto() + "\nP: " + pos);
         // verifica as colisões
         for (CarroAdversario o: this.carrosAdversarios) {
             o.movimentar(controle, deltaTempo);
@@ -168,8 +176,13 @@ public class TG1 extends Fase {
             if (!this.colide) {
                 if (this.carro.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
-                    this.carro.setIntensidadeTurbo(-30d);
-                    o.setIntensidadeTurbo(30d);
+                    if (this.carro.getLocal().z > o.getLocal().z) {
+                            this.carro.setIntensidadeTurbo(-30d);
+                            o.setIntensidadeTurbo(30d);
+                        } else {
+                            o.setIntensidadeTurbo(-30d);
+                            this.carro.setIntensidadeTurbo(30d);
+                        }   
                 }
             }
         }

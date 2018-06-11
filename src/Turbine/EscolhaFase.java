@@ -8,7 +8,7 @@ public class EscolhaFase {
     
     public EscolhaFase() { 
         this.mudar = false;
-        this.fase = new Menu();
+        this.fase = new Menu(this);
     }
 
     public boolean isMudar() {

@@ -1,13 +1,6 @@
 package Fases;
 
-import Turbine.Texturas;
-import Turbine.Nave;
-import Turbine.OGL;
-import Turbine.Ponto;
-import Turbine.Ceu;
-import Turbine.Obstaculo;
-import Turbine.Camera;
-import Turbine.Controle;
+import Turbine.*;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -19,15 +12,17 @@ public class Menu extends Fase {
     private ArrayList<Obstaculo> obstaculos;
     private int direcao;
     private int selecionado;
+    EscolhaFase escolhaFase;
 
     
-    public Menu() {
+    public Menu(EscolhaFase escolhaFase) {
         this.texturas = new Texturas();
         this.camera = new Camera();
         this.ceu = new Ceu();
         this.obstaculos = new ArrayList<>();
         this.direcao = 0;
         this.selecionado = 0;
+        this.escolhaFase = escolhaFase;
     }
     
     // carrega todos os elementos da fase
@@ -35,6 +30,8 @@ public class Menu extends Fase {
         // carrega todas as texturas necessárias
         this.texturas.carregarTextura("background", diretorioRaiz + "/src/turbine/Arquivos/Menu/background.png");
         this.texturas.carregarTextura("Um", diretorioRaiz + "/src/turbine/Arquivos/Menu/Um.png");
+        this.texturas.carregarTextura("Dois", diretorioRaiz + "/src/turbine/Arquivos/Menu/Dois.png");
+        this.texturas.carregarTextura("TG1", diretorioRaiz + "/src/turbine/Arquivos/Menu/TG1.png");
 
         // carrega o skybox
         this.ceu.setTextura(this.texturas.getTextura("background"));
@@ -57,7 +54,7 @@ public class Menu extends Fase {
         obstaculo.setLocal(new Ponto(2d, 0d, -0.5d));
         obstaculo.atualizarForma();
         obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
-        obstaculo.getForma().setTextura(this.texturas.getTextura("Um"));
+        obstaculo.getForma().setTextura(this.texturas.getTextura("Dois"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
         obstaculo.setVelocidade(0d);
@@ -69,19 +66,7 @@ public class Menu extends Fase {
         obstaculo.setLocal(new Ponto(4d, 0d, -1d));
         obstaculo.atualizarForma();
         obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
-        obstaculo.getForma().setTextura(this.texturas.getTextura("Um"));
-        obstaculo.getForma().setCor(Color.white);
-        obstaculo.setDirecao(new Ponto());
-        obstaculo.setVelocidade(0d);
-        obstaculo.atualizarColisor();
-        obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
-        this.obstaculos.add(obstaculo);
-        
-        obstaculo = new Obstaculo();
-        obstaculo.setLocal(new Ponto(6d, 0d, -1.5d));
-        obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
-        obstaculo.getForma().setTextura(this.texturas.getTextura("Um"));
+        obstaculo.getForma().setTextura(this.texturas.getTextura("TG1"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
         obstaculo.setVelocidade(0d);
@@ -111,6 +96,19 @@ public class Menu extends Fase {
         
         else
             this.direcao = 0;
+        
+        
+        if (controle.turbo) {
+            this.escolhaFase.setMudar(true);
+            
+            switch(this.selecionado) {
+                case 0:this.escolhaFase.setFase(new Um());break;
+                case 1:this.escolhaFase.setFase(new Dois());break;
+                case 2:this.escolhaFase.setFase(new TG1());break;
+                case 3:this.escolhaFase.setFase(new Um());break;
+            }
+        }
+        
         
         this.camera.anexarObjeto(this.obstaculos.get(this.selecionado));
         // atualiza a câmera
