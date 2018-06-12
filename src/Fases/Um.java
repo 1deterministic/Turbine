@@ -90,19 +90,19 @@ public class Um extends Fase {
             o.atualizarColisor(); // atualiza a posição do pedaço de chão para o memo local do obstáculo
             o.getColisor().setDimensoes(o.getForma().getDimensoes()); // faz o colisor ser do mesmo tamanho da forma do pedaço de chão
             
-            this.chao.add(o); // adiciona o obstáculo no vetor de obstáculos
+            this.chao.add(o); // adiciona o pedaço de chão no vetor do chão
         }
         
         // carrega a linha de chegada
-        this.chegada.setLocal(new Ponto(0d, 50d, -10000d));
-        this.chegada.atualizarForma();
-        this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d));
-        this.chegada.getForma().setTextura(this.texturas.getTextura("chegada_um"));
-        this.chegada.getForma().setCor(Color.white);
-        this.chegada.setDirecao(new Ponto());
-        this.chegada.setVelocidade(0d);
-        this.chegada.atualizarColisor();
-        this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes());
+        this.chegada.setLocal(new Ponto(0d, 50d, -10000d)); // a posição da linha de chegada é 0 no x, 50 no y e -10000 no z
+        this.chegada.atualizarForma();// atualiza o local da forma para o mesmo local da linha de chegada
+        this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d)); // faz a forma da linha de chegada ter o tamanho 100 em largura, 100 em altura e 10 em profundidade
+        this.chegada.getForma().setTextura(this.texturas.getTextura("chegada_um")); // define a textura "borda" para a forma
+        this.chegada.getForma().setCor(Color.white); // define a cor base da forma para branco
+        this.chegada.setDirecao(new Ponto()); // define a direção de movimento para 0, 0, 0 (parado)
+        this.chegada.setVelocidade(0d); // define a velocidade da linha de chegada para 0
+        this.chegada.atualizarColisor(); // atualiza a posição do colisor para o memo local da linha de chegada
+        this.chegada.getColisor().setDimensoes(this.chegada.getForma().getDimensoes()); // faz o colisor ser do mesmo tamanho da forma da linha de chegada
     }
     
     // roda a física e a lógica
@@ -114,35 +114,35 @@ public class Um extends Fase {
         this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.nave.atualizarHud();
         
+        // calcula quantos obstáculos faltam até o final (quantos têm z menor que z da nave)
         int pos = 0;
         for (Obstaculo o: this.obstaculos) {
             if (o.getLocal().z < this.nave.getLocal().z)
                 pos++;
         }
-        
+        // com base no valor calculado, manda essa informação para o hud da nave em uma nova linha
         ((Texto) this.nave.getHud()).setTexto(((Texto) this.nave.getHud()).getTexto() + "\n#: " + pos);
         
-        // verifica as colisões
-        for (Obstaculo o: this.obstaculos) {
-            if (!this.colide) {
+        // verifica as colisões apenas se a nave ainda não colidiu com nada
+        if (!this.colide) {
+            // para cada obstáculo da fase
+            for (Obstaculo o: this.obstaculos) {
+                //testa a colisão
                 if (this.nave.getColisor().colideCom(o.getColisor())) {
-                    this.colide = true;
-                    this.camera.anexarObjeto(o);
-                    // some com a nave da tela
-                    this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
+                    this.colide = true; // se realmente colide, guarda essa informação
+                    this.camera.anexarObjeto(o); // passa a câmera para o obstáculo com o qual a nave colidiu
+                    this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d)); // some com a nave da tela (manda ela para depois da linha de chegada :p)
                 }
             }
         }
         
-        // verifica se o fim da fase foi alcançado
+        // verifica se o fim da fase foi alcançado apenas se a nave ainda não colidiu com nada
         if (!this.colide) {
+            // se a nave tocou a linha de chegada
             if (this.nave.getColisor().colideCom(this.chegada.getColisor())) {
-                this.colide = true;
-                // some com a nave da tela
-                this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
-                
-                // muda a câmera para a linha de chegada
-                this.camera.anexarObjeto(this.chegada);
+                this.colide = true; // guarda essa informação
+                this.camera.anexarObjeto(this.chegada); // muda a câmera para a linha de chegada
+                this.nave.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d)); // some com a nave da tela (manda ela para depois da linha de chegada :p)
             }
         }
         
@@ -161,9 +161,11 @@ public class Um extends Fase {
          // desenha todos os objetos
         this.nave.desenhar(ogl);
         this.chegada.desenhar(ogl);
+        // desenha todos os obstáculos
         for (Obstaculo o: this.obstaculos) {
             o.desenhar(ogl);
         }
+        // desenha todos os pedaços de chão
         for (Obstaculo o: this.chao) {
             o.desenhar(ogl);
         }

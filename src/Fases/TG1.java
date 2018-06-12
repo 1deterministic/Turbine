@@ -7,15 +7,15 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TG1 extends Fase {
-    private Texturas texturas;
-    private Ceu ceu;
-    private Camera camera;
-    private Carro carro;
-    private ArrayList<CarroAdversario> carrosAdversarios;
-    private ArrayList<Obstaculo> predios;
-    private Obstaculo chegada;
-    private ArrayList<Obstaculo> chao;
-    private boolean colide;
+    private Texturas texturas; // mapa de texturas
+    private Ceu ceu; // skybox
+    private Camera camera; // câmera
+    private Carro carro; // carro do jogador
+    private ArrayList<CarroAdversario> carrosAdversarios; // vetor de carros adversários
+    private ArrayList<Obstaculo> predios; // vetor de prédios
+    private Obstaculo chegada; // linha de chegada
+    private ArrayList<Obstaculo> chao; // vetor de pedaços de chão
+    private boolean colide; // guarda se o carro colidiu com algum adversário
     
     public TG1() {
         this.texturas = new Texturas();
@@ -41,10 +41,11 @@ public class TG1 extends Fase {
         this.texturas.carregarTextura("carrobranco", diretorioRaiz + "/src/turbine/Arquivos/carrobranco.png");
         this.texturas.carregarTextura("carroroxo", diretorioRaiz + "/src/turbine/Arquivos/carroroxo.png");
         
+        // vetor de possíveis texturas que um carro adversário pode ter
         String carrosaleatorios[] = {"carrovermelho", "carroverde", "carrobranco", "carroroxo"};
         
         // define a posição inicial da câmera
-        this.camera.local.z = 800d;
+        this.camera.local.z = 0d;
 
         // carrega o skybox
         this.ceu.setTextura(this.texturas.getTextura("ceu"));
@@ -64,27 +65,28 @@ public class TG1 extends Fase {
         // anexa a carro na câmera
         this.camera.anexarObjeto(carro);
 
-        // gera os obstáculos
+        // gera os adversários
         for(int i = 0; i < 50; i++) {
             CarroAdversario obstaculo = new CarroAdversario();
             
             obstaculo.setLocal(new Ponto(
                     ThreadLocalRandom.current().nextDouble(-10d, 10d), 
                     0d, 
-                    -i * 5d));
+                    -i * 5d)); // local aleatório mas relativamente próximo
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(1.5d, 1d, 0d));
-            obstaculo.getForma().setTextura(this.texturas.getTextura(carrosaleatorios[new Random().nextInt(4)]));
+            obstaculo.getForma().setTextura(this.texturas.getTextura(carrosaleatorios[new Random().nextInt(4)])); // atribui uma textura de carro aleatória para este adversário
             obstaculo.getForma().setCor(Color.white);
-            obstaculo.setDirecao(new Ponto(ThreadLocalRandom.current().nextDouble(-0.2d, 0.2d), 0d, -1d));
-            obstaculo.setVelocidade(ThreadLocalRandom.current().nextDouble(35d, 45d));
-            obstaculo.setIntensidadeTurbo(100d);
+            obstaculo.setDirecao(new Ponto(ThreadLocalRandom.current().nextDouble(-0.2d, 0.2d), 0d, -1d)); // define uma direção aleatória entre -0.1 e 0.2 no eixo x (para que ele fique andando lateralmente)
+            obstaculo.setVelocidade(ThreadLocalRandom.current().nextDouble(35d, 45d)); // define uma velocidade aleatória entre 35m/s e 45m/s
+            obstaculo.setIntensidadeTurbo(100d); // dá um impulso inicial (para que os adversários saiam na frente)
             obstaculo.atualizarColisor();
             obstaculo.getColisor().setDimensoes(new Ponto(1.5d, 1d, 1d));
             
             this.carrosAdversarios.add(obstaculo);
         }
         
+        // carrega o chão
         for(int i = 0; i < 100; i++) {
             Obstaculo obstaculo = new Obstaculo();
             
@@ -144,6 +146,7 @@ public class TG1 extends Fase {
             chao.setVelocidade(0d);
             chao.atualizarColisor();
             chao.getColisor().setDimensoes(chao.getForma().getDimensoes());
+            
             this.chao.add(chao);
         }
     }
@@ -157,15 +160,16 @@ public class TG1 extends Fase {
         this.carro.limitarAreaMovimento(new Ponto(-10d, 0d, 0d), new Ponto(10d, 10d, 0d));
         this.carro.atualizarHud();
         
-        
+        // calcula a posição de corrida do carro
         int pos = 1;
         for (CarroAdversario o: this.carrosAdversarios) {
             if (o.getLocal().z < this.carro.getLocal().z)
                 pos++;
         }
-        
+        // manda a posição calculada para io hud do carro
         ((Texto) this.carro.getHud()).setTexto(((Texto) this.carro.getHud()).getTexto() + "\nP: " + pos);
-        // verifica as colisões
+        
+        // movimenta os adversários e verifica as colisões
         for (CarroAdversario o: this.carrosAdversarios) {
             o.movimentar(controle, deltaTempo);
             o.manterInercia(deltaTempo);
@@ -173,9 +177,12 @@ public class TG1 extends Fase {
             o.limitarAreaMovimento(new Ponto(-10d, 0d, 0d), new Ponto(10d, 10d, 0d));
             o.atualizarHud();
             
+            // verifica se o carro colide com este adversário
             if (!this.colide) {
                 if (this.carro.getColisor().colideCom(o.getColisor())) {
                     this.colide = true;
+                    
+                    // caso colida, adiciona impulso positivo ao carro da frente e negativo ao carro de trás (o carro que estiver à frente ganha 30 de impulso e o de trás perde 30 de impulso)
                     if (this.carro.getLocal().z > o.getLocal().z) {
                             this.carro.setIntensidadeTurbo(-30d);
                             o.setIntensidadeTurbo(30d);
@@ -187,20 +194,34 @@ public class TG1 extends Fase {
             }
         }
         
+        // verifica se o carro não colide mais com ninguém
         if (this.colide) {
+            // supõe que o carro não colide mais com ninguém
             boolean nao_colide_mais = true;
+            // procura em todos os adversários
             for (CarroAdversario o: this.carrosAdversarios) {
-                if (this.carro.getColisor().colideCom(o.getColisor()))
+                // se o carro colide com esse adversário
+                if (this.carro.getColisor().colideCom(o.getColisor())) {
+                    // nega a suposição e quebra o laço
                     nao_colide_mais = false;
+                    break;
+                }
             }   
             
+            // caso ele realmente não colida mais
             if (nao_colide_mais)
+                // repassa essa informação para o controle
                 this.colide = false;
         }
         
+        // realiza as colisões entre os carros adversários
+        int i = 0;
         for (CarroAdversario o: this.carrosAdversarios) {
-            for (CarroAdversario p: this.carrosAdversarios) {
+            // compara um certo carro adversário com todos os outros, mas compara apenas de i para frente (para evitar comparar os mesmos carros duas vezes)
+            for (CarroAdversario p: this.carrosAdversarios.subList(i, this.carrosAdversarios.size())) {
+                // caso os carros sejam diferentes (para não comparar o carro com ele mesmo)
                 if (o != p) {
+                    // testa a colisão e, caso colida, adiciona impulso positivo ao carro da frente e negativo ao carro de trás (o carro que estiver à frente ganha 30 de impulso e o de trás perde 30 de impulso)
                     if (o.getColisor().colideCom(p.getColisor())) {
                         if (o.getLocal().z > p.getLocal().z) {
                             o.setIntensidadeTurbo(-30d);
@@ -212,16 +233,16 @@ public class TG1 extends Fase {
                     }
                 }
             }
+            
+            i++;
         }
         
         // verifica se o fim da fase foi alcançado
         if (!this.colide) {
             if (this.carro.getColisor().colideCom(this.chegada.getColisor())) {
-                this.colide = true;
-                // some com a nave da tela
-                this.carro.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d));
-                
-                this.camera.anexarObjeto(this.chegada);
+                this.colide = true; // guarda essa informação
+                this.carro.setLocal(new Ponto(0d, 0d, this.chegada.getLocal().z - this.chegada.getForma().getDimensoes().z  - 1d)); // some com a nave da tela
+                this.camera.anexarObjeto(this.chegada); // passa a câmera para a linha de chegada
             }
         }
         
