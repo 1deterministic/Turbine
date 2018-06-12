@@ -10,7 +10,8 @@ public class Menu extends Fase {
     private Ceu ceu;
     private Camera camera;
     private ArrayList<Obstaculo> obstaculos;
-    private int direcao;
+    private ArrayList<Texto> textos;
+    private int ultimoSelecionado;
     private int selecionado;
     EscolhaFase escolhaFase;
 
@@ -20,7 +21,8 @@ public class Menu extends Fase {
         this.camera = new Camera();
         this.ceu = new Ceu();
         this.obstaculos = new ArrayList<>();
-        this.direcao = 0;
+        this.textos = new ArrayList<>();
+        this.ultimoSelecionado = 0;
         this.selecionado = 0;
         this.escolhaFase = escolhaFase;
     }
@@ -38,12 +40,15 @@ public class Menu extends Fase {
         // carrega o skybox
         this.ceu.setTextura(this.texturas.getTextura("background"));
         this.ceu.setCor(Color.white);
-
         
-        Obstaculo obstaculo = new Obstaculo();
+        Obstaculo obstaculo;
+        Texto t;
+
+        // opção de menu da fase Um
+        obstaculo = new Obstaculo();
         obstaculo.setLocal(new Ponto(0d, 0d, 0d));
         obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.01d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("Um"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -51,11 +56,18 @@ public class Menu extends Fase {
         obstaculo.atualizarColisor();
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
+        t = new Texto();
+        t.setTexto("80's neon", Color.white);
+        t.setLocal(new Ponto(0d, 1d, 0d));
+        t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
+        this.textos.add(t);
         
+        
+        // opção de menu da fase Dois
         obstaculo = new Obstaculo();
         obstaculo.setLocal(new Ponto(2d, 0d, -0.5d));
         obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.01d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("Dois"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -63,11 +75,18 @@ public class Menu extends Fase {
         obstaculo.atualizarColisor();
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
+        t = new Texto();
+        t.setTexto("Dois", Color.white);
+        t.setLocal(new Ponto(2d, 1d, -0.5d));
+        t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
+        this.textos.add(t);
         
+        
+        // opção de menu da fase TG1
         obstaculo = new Obstaculo();
         obstaculo.setLocal(new Ponto(4d, 0d, -1d));
         obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.01d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("TG1"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -75,11 +94,17 @@ public class Menu extends Fase {
         obstaculo.atualizarColisor();
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
+        t = new Texto();
+        t.setTexto("Beat Ritchie", Color.white);
+        t.setLocal(new Ponto(4d, 1d, -1d));
+        t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
+        this.textos.add(t);
         
+        // opção de menu da fase Tres
         obstaculo = new Obstaculo();
         obstaculo.setLocal(new Ponto(6d, 0d, -1.5d));
         obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.01d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("Tres"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -87,11 +112,17 @@ public class Menu extends Fase {
         obstaculo.atualizarColisor();
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
+        t = new Texto();
+        t.setTexto("Tres", Color.white);
+        t.setLocal(new Ponto(6d, 1d, -1.5d));
+        t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
+        this.textos.add(t);
         
+        // opção de menu da DLC
         obstaculo = new Obstaculo();
         obstaculo.setLocal(new Ponto(8d, 0d, -2d));
         obstaculo.atualizarForma();
-        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.01d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("DLC"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -99,6 +130,11 @@ public class Menu extends Fase {
         obstaculo.atualizarColisor();
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
+        t = new Texto();
+        t.setTexto("DLC", Color.white);
+        t.setLocal(new Ponto(8d, 1d, -2d));
+        t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
+        this.textos.add(t);
         
         // anexa a nave na câmera
         this.camera.anexarObjeto(this.obstaculos.get(this.selecionado));
@@ -106,37 +142,47 @@ public class Menu extends Fase {
     
     // roda a física e a lógica
     public void atualizar(Double deltaTempo, Controle controle) {
+        // caso seja recebido o comando para passar para a opção da direita
         if (controle.direita) {
-            if (this.direcao != 1)
+            // só permite selecionar a próxima opção caso a última mudança não tenha sido para a direita
+            // isso impede que o menu fique trocando rápido demais
+            if (this.ultimoSelecionado != 1)
+                // seleciona a próxima opção do menu ou retorna para a primeira
                 this.selecionado = Math.floorMod((this.selecionado + 1), this.obstaculos.size());
-            
-            this.direcao = 1;
+            // guarda que a última mudança foi para a direita
+            this.ultimoSelecionado = 1;
         }
-        
+        // caso seja recebido o comando para passar para a opção da esquerda
         else if (controle.esquerda)  {
-            if (this.direcao != -1)
+            // só permite selecionar a opção anterior caso a última mudança não tenha sido para a esquerda
+            // isso impede que o menu fique trocando rápido demais
+            if (this.ultimoSelecionado != -1)
+                // seleciona a opção anterior do menu ou retorna para a última
                 this.selecionado = Math.floorMod((this.selecionado - 1), this.obstaculos.size());
-            
-            this.direcao = -1;
+            // guarda que a última mudança foi para a esquerda
+            this.ultimoSelecionado = -1;
         }
-        
+        // caso nenhuma tenha sido recebida
         else
-            this.direcao = 0;
+            // reinicia a última opção
+            this.ultimoSelecionado = 0;
         
-        
+        // caso tenha recebido o comando de confirmação
         if (controle.turbo) {
+            // indica que a fase deve mudar
             this.escolhaFase.setMudar(true);
             
+            // instancia a nova fase e reinicia o controle
             switch(this.selecionado) {
-                case 0: controle.resetarControle(); this.escolhaFase.setFase(new Um());break;
-                case 1:controle.resetarControle(); this.escolhaFase.setFase(new Dois());break;
-                case 2:controle.resetarControle(); this.escolhaFase.setFase(new TG1());break;
-                case 3:controle.resetarControle(); this.escolhaFase.setFase(new Tres());break;
-                case 4: break;
+                case 0: this.escolhaFase.setFase(new Um()); controle.resetarControle(); break;
+                case 1: this.escolhaFase.setFase(new Dois()); controle.resetarControle(); break;
+                case 2: this.escolhaFase.setFase(new TG1()); controle.resetarControle(); break;
+                case 3: this.escolhaFase.setFase(new Tres()); controle.resetarControle(); break;
+                case 4: controle.resetarControle(); break;
             }
         }
         
-        
+        // passa a câmera para a opção selecionada
         this.camera.anexarObjeto(this.obstaculos.get(this.selecionado));
         // atualiza a câmera
         this.camera.transicaoCamera(deltaTempo);
@@ -154,6 +200,10 @@ public class Menu extends Fase {
 
         for (Obstaculo o: this.obstaculos) {
             o.desenhar(ogl);
+        }
+        
+        for (Texto t: this.textos) {
+            t.desenhar(ogl);
         }
     }
     
