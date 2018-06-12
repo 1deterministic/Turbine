@@ -145,16 +145,16 @@ public class Nave extends Objeto {
     // aplica as entradas do controle para a nave
     public void movimentar(Controle c, Double timeDelta){
         if (c.direita)
-            this.direcao.x += 1d * timeDelta;
+            this.direcao.x += 2d * timeDelta;
         
         if (c.esquerda)
-            this.direcao.x -= 1d * timeDelta;
+            this.direcao.x -= 2d * timeDelta;
         
         if (c.cima)
-            this.direcao.y += 1d * timeDelta;
+            this.direcao.y += 2d * timeDelta;
         
         if (c.baixo)
-            this.direcao.y -= 1d * timeDelta;
+            this.direcao.y -= 2d * timeDelta;
         
         if (c.turbo) {
             if (this.quantidadeTurbo > 0d) {
