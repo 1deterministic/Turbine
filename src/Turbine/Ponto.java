@@ -1,25 +1,28 @@
 package Turbine;
 
-// Não é necessariamente um ponto, pense como uma estrutura de dados de 3 valores
-// Foi usada até agora como um ponto, um vetor ou como um vetor de ângulos de rotação
+// não é necessariamente um ponto, pense como uma estrutura de dados de 3 valores
+// foi usada até agora como um ponto, um vetor ou como um vetor de ângulos de rotação
 public class Ponto {
     // atributos públicos para facilitar a codificação
     public Double x;
     public Double y;
     public Double z;
     
+    // cria um ponto na origem
     public Ponto() {
         this.x = 0d;
         this.y = 0d;
         this.z = 0d;
     }
     
+    // cria um ponto com as coordenadas recebidas
     public Ponto(Double x, Double y, Double z){
         this.x = x;
         this.y = y;
         this.z = z;
     }
     
+    // cria um ponto com as coordenadas clonadas de outro ponto
     public Ponto(Ponto p) {
         this.x = p.x;
         this.y = p.y;
@@ -40,6 +43,7 @@ public class Ponto {
         this.z *= v;
     }
     
+    // caso seja usado como um vetor, retorna o vetor escalado no valor v
     public Ponto escalar(Double v) {
         return new Ponto(this.x * v, this.y * v, this.z * v);
     }

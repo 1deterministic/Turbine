@@ -8,7 +8,7 @@ import java.awt.Color;
 public class Texto extends Forma {
 
     private String texto; // string do texto
-    private Ponto dimensoes; // distorções nos 3 eixos
+    private Ponto dimensoes; // dimensões nos 3 eixos
     private Ponto local; // centro
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
@@ -33,15 +33,11 @@ public class Texto extends Forma {
         this.cor = cor;
     }
 
-    public void setTexto(String texto, Color cor) {
-        this.texto = texto;
-        this.cor = cor;
-    }
-
     // desenha o texto na tela
     public void desenhar(OGL ogl) {
-        String textos[] = this.texto.split("\\n+");
+        String textos[] = this.texto.split("\\n+"); // separa o texto em linhas (não são quebradas automaticamente)
 
+        // para cada linha identificada, desenha o texto e salta um certo valor em Y para mostrar a linha seguinte logo abaixo
         int i = 0;
         for (String s : textos) {
             ogl.gl.glPushMatrix();
@@ -88,6 +84,11 @@ public class Texto extends Forma {
         this.cor = cor;
     }
 
+    // retorna a cor do texto
+    public Color getCor() {
+        return cor;
+    }
+
     // define o local do texto "na mão"
     public void setLocal(Ponto p) {
         this.local = p;
@@ -107,27 +108,39 @@ public class Texto extends Forma {
     public Ponto getDimensoes() {
         return this.dimensoes;
     }
-
+    
+    // retorna o texto atualmente exibido
     public String getTexto() {
         return texto;
     }
-
+    
+    // define o texto do objeto sem definir a cor
     public void setTexto(String texto) {
         this.texto = texto;
     }
-
+    
+        // atribui o texto e a cor desse objeto
+    public void setTexto(String texto, Color cor) {
+        this.texto = texto;
+        this.cor = cor;
+    }
+    
+    // retorna o vetor de rotação atualmente aplicado no objeto
     public Ponto getRotacao() {
         return rotacao;
     }
 
+    // retorna o vetor de rotação atualmente aplicado no objeto
     public void setRotacao(Ponto rotacao) {
         this.rotacao = rotacao;
     }
 
+    // retorna o ângulo da rotação
     public Double getAngulo() {
         return angulo;
     }
 
+    // define o ângulo de rotação
     public void setAngulo(Double angulo) {
         this.angulo = angulo;
     }

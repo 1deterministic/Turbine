@@ -6,12 +6,12 @@ import java.awt.Color;
 
 public class CarroAdversario extends Objeto {
     private Ponto local; // posição no espaço
-    private Forma forma; // modelo 3d da nave
-    private Texto hud; // painel de informações da nave
-    private Colisor colisor; // container de colisão da nave
+    private Forma forma; // modelo 3d do carro adversário
+    private Texto hud; // painel de informações do carro adversário
+    private Colisor colisor; // container de colisão do carro adversário
     
-    private Ponto direcao; // direção de movimento da nave
-    private Double velocidade; // velocidade da nave
+    private Ponto direcao; // direção de movimento do carro adversário
+    private Double velocidade; // velocidade do carro adversário
     
     private Double intensidadeTurbo; 
     private Double quantidadeTurbo; // quantidade de powerup de velocidade disponível
@@ -44,71 +44,71 @@ public class CarroAdversario extends Objeto {
         //this.hud.desenhar(ogl);
     }
     
-    // define o local da nave (também atualiza o local da forma e colisor atribuídos)
+    // define o local do carro adversário (também atualiza o local da forma e colisor atribuídos)
     public void setLocal(Ponto p) {
         this.local = p;
         this.atualizarForma();
         this.atualizarColisor();
     }
     
-    // retorna o local da nave
+    // retorna o local do carro adversário
     public Ponto getLocal() {
         return this.local;
     }
     
-    // define a forma da nave
+    // define a forma do carro adversário
     public void setForma(Forma forma) {
         this.forma = forma;
     }
     
-    // retorna  a forma da nave
+    // retorna  a forma do carro adversário
     public Forma getForma() {
         return this.forma;
     }
     
-    // define o colisor da nave
+    // define o colisor do carro adversário
     public void setColisor(Colisor c) {
         this.colisor = c;
     }
     
-    // retorna o colisor da nave
+    // retorna o colisor do carro adversário
     public Colisor getColisor() {
         return this.colisor;
     }
     
-    // define a direção da nave
+    // define a direção do carro adversário
     public void setDirecao(Ponto d) {
         this.direcao = d;
     }
     
-    // retorna a direção da nave
+    // retorna a direção do carro adversário
     public Ponto getDirecao() {
         return this.direcao;
     }
     
-    // define a velocidade da nave
+    // define a velocidade do carro adversário
     public void setVelocidade(Double v) {
         this.velocidade = v;
     }
     
-    // retorna a velocidade da nave
+    // retorna a velocidade do carro adversário
     public Double getVelocidade() {
         return this.velocidade;
     }
     
-    // movimenta a nave de acordo com os valores de delta, movimenta também a forma e o colisor anexos
+    // movimenta o carro adversário de acordo com os valores de delta, movimenta também a forma e o colisor anexos
     public void transladar(Ponto delta) {
         this.local.somar(delta);
         this.atualizarForma();
         this.atualizarColisor();
     }
     
-    // atualiza o local da forma anexa de acordo com o local da nave
+    // atualiza o local da forma anexa de acordo com o local do carro adversário
     public void atualizarForma() {
         this.forma.setLocal(new Ponto(this.local));
     }
     
-    // atualiza o local do colisor anexo de acordo com o local da nave
+    // atualiza o local do colisor anexo de acordo com o local do carro adversário
     public void atualizarColisor() {
         this.colisor.setLocal(new Ponto(this.local));
     }
@@ -125,7 +125,7 @@ public class CarroAdversario extends Objeto {
         return new Ponto(local.x, local.y + 3d, local.z + 4d);
     }
     
-    // movimenta a nave de acordo com a direção e a velocidade atuais
+    // movimenta o carro adversário de acordo com a direção e a velocidade atuais
     public void manterInercia(Double timeDelta) {
         this.transladar(this.direcao.escalar((this.velocidade + this.intensidadeTurbo) * timeDelta));
         
@@ -139,7 +139,7 @@ public class CarroAdversario extends Objeto {
             this.intensidadeTurbo = 0d;
     }
     
-    // aplica gravidade à nave
+    // aplica gravidade ao carro adversário
     public void aplicarGravidade(Double aceleracao, Double timeDelta) {
         this.direcao.y -= aceleracao * timeDelta;
     }
@@ -166,14 +166,17 @@ public class CarroAdversario extends Objeto {
         }        
     }
     
+    // retorna o hud do carro adversário
     public Forma getHud() {
         return this.hud;
     }
     
+    // retorna a intensidade do turbo do carro adversário
     public void setIntensidadeTurbo(Double intensidadeTurbo) {
         this.intensidadeTurbo = intensidadeTurbo;
     }
     
+    // define a intensidade do turbo do carro adversário
     public Double getIntensidadeTurbo() {
         return this.intensidadeTurbo;
     }

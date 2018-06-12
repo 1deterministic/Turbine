@@ -3,16 +3,16 @@ package Turbine;
 import com.jogamp.opengl.util.texture.Texture;
 import java.awt.Color;
 
-// subforma que desenha um cubo
+// subforma que desenha uma nave
 public class NaveModelo extends Forma {
     private Ponto dimensoes; // distorções nos 3 eixos
     private Ponto local; // centro
     private Ponto rotacao; // eixo de rotação
     private Double angulo; // angulo de rotação
-    private Texture textura; // textura atribuída ao cubo
-    private Color cor; // cor base do cubo
+    private Texture textura; // textura atribuída aa nave
+    private Color cor; // cor base da nave
     
-    // construtor padrão, cria um cubo no local 0, 0, 0, com tamanho 1 em todas as dimensões, sem rotação
+    // construtor padrão, cria uma nave no local 0, 0, 0, com tamanho 1 em todas as dimensões, sem rotação
     public NaveModelo(){
         this.dimensoes = new Ponto(1d, 1d, 1d);
         this.local = new Ponto(0.0d, 0.0d, 0.0d);
@@ -31,7 +31,7 @@ public class NaveModelo extends Forma {
         this.cor = cor;
     }
     
-    // desenha o cubo na tela
+    // desenha a nave na tela
     public void desenhar(OGL ogl) {
         this.textura.enable(ogl.gl); // habilita a textura
         this.textura.bind(ogl.gl);
@@ -46,7 +46,7 @@ public class NaveModelo extends Forma {
             ogl.gl.glEnable( ogl.gl.GL_BLEND );
             ogl.gl.glBlendFunc( ogl.gl.GL_SRC_ALPHA, ogl.gl.GL_ONE_MINUS_SRC_ALPHA );
             
-            ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho do cubo
+            ogl.gl.glBegin(ogl.gl.GL_QUADS); // inicia o desenho da nave
                     // seta as coordenadas para a textura e desenha a face frontal
                     ogl.gl.glTexCoord2d(0d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d( 1.0d, -1.0d, 1.0d);
@@ -82,57 +82,57 @@ public class NaveModelo extends Forma {
                     ogl.gl.glTexCoord2d(1d, 0d); ogl.gl.glVertex3d(-1.0d, -1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(1d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, 1.0d);
                     ogl.gl.glTexCoord2d(0d, 1d); ogl.gl.glVertex3d(-1.0d, 1.0d, -1.0d);
-                ogl.gl.glEnd(); // termina o cubo
+                ogl.gl.glEnd(); // termina a nave
             ogl.gl.glFlush();
         ogl.gl.glPopMatrix();
         
         this.textura.disable(ogl.gl); // desabilita a textura
     }
 
-    // escala o cubo em um certo valor
+    // escala a nave em um certo valor
     public void escalar(Double v) {
         this.dimensoes.multiplicar(v);
     }
     
-    // rotaciona o cubo em um certo ângulo em torno de um eixo
+    // rotaciona a nave em um certo ângulo em torno de um eixo
     public void rotacionar(Double angulo, Ponto eixo) {
         // utilizar quaternions para combinar rotações
         this.angulo = angulo % 360;
         this.rotacao = eixo;
     }
     
-    // movimenta o cubo de acordo com os valores de delta
+    // movimenta a nave de acordo com os valores de delta
     public void transladar(Ponto delta) {
         this.local.somar(delta);
     }
     
-    // define a textura do cubo
+    // define a textura da nave
     public void setTextura(Texture textura) {
         this.textura = textura;
         
     }
     
-    // define a cor básica do cubo
+    // define a cor básica da nave
     public void setCor(Color cor) {
         this.cor = cor;
     }
     
-    // define o local do cubo "na mão"
+    // define o local da nave "na mão"
     public void setLocal(Ponto p) {
         this.local = p;
     }
     
-    // retorna o local do cubo
+    // retorna o local da nave
     public Ponto getLocal() {
         return this.local;
     }
     
-    // define as dimensões do cubo
+    // define as dimensões da nave
     public void setDimensoes(Ponto p) {
         this.dimensoes = p;
     }
     
-    // retorna as dimensões do cubo
+    // retorna as dimensões da nave
     public Ponto getDimensoes() {
         return this.dimensoes;
     }

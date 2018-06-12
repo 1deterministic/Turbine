@@ -23,24 +23,13 @@ public class Camera {
     
     // ajusta a perspectiva do jogo em relação a essa câmera
     public void ajustaObservacao(OGL ogl) {
-        // Especifica sistema de coordenadas de projeção
-        ogl.gl.glMatrixMode(GL2.GL_PROJECTION);
-        // Inicializa sistema de coordenadas de projeção
-        ogl.gl.glLoadIdentity();
-
-        // Especifica a projeção perspectiva(angulo,aspecto,zMin,zMax)
-        // 16:9, 120 graus de ângulo visão e 5000 metros de distância de visão
-        ogl.glu.gluPerspective(120d, 1.77d, 0.2, 5000);
-        // Especifica sistema de coordenadas do modelo
-        ogl.gl.glMatrixMode(GL2.GL_MODELVIEW);
-        // Inicializa sistema de coordenadas do modelo
-        ogl.gl.glLoadIdentity();
-        // Especifica posição do observador e do alvo
-        ogl.glu.gluLookAt(this.local.x, this.local.y, this.local.z, this.direcao.x, this.direcao.y, this.direcao.z, 0, 1, 0);
-        //ogl.gl.glTranslated(-this.local.x, -this.local.y, -this.local.z);
-        //ogl.gl.glRotated(this.rotacao.x, 1, 0, 0);
-        //ogl.gl.glRotated(this.rotacao.y, 0, 1, 0);
-        //ogl.gl.glRotated(this.rotacao.z, 0, 0, 1);
+        ogl.gl.glMatrixMode(GL2.GL_PROJECTION); // especifica sistema de coordenadas de projeção
+        ogl.gl.glLoadIdentity(); // inicializa sistema de coordenadas de projeção
+        
+        ogl.glu.gluPerspective(120d, 1.77d, 0.2, 5000);// especifica a projeção perspectiva para 16:9, 120 graus de ângulo visão e 5000 metros de distância de visão
+        ogl.gl.glMatrixMode(GL2.GL_MODELVIEW); // especifica sistema de coordenadas do modelo
+        ogl.gl.glLoadIdentity(); // inicializa sistema de coordenadas do modelo
+        ogl.glu.gluLookAt(this.local.x, this.local.y, this.local.z, this.direcao.x, this.direcao.y, this.direcao.z, 0, 1, 0); // especifica posição do observador e do alvo
     }
     
     

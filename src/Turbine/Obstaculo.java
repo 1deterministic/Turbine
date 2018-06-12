@@ -26,6 +26,7 @@ public class Obstaculo extends Objeto {
         this.colisor = colisor;
     }
     
+    // desenha esse obstáculo (repassa para a forma desenhar)
     public void desenhar(OGL ogl) {
         this.forma.desenhar(ogl);
     }
@@ -139,6 +140,7 @@ public class Obstaculo extends Objeto {
             this.direcao.y = -10d * timeDelta;
     }
     
+    // restringe a movimentação a um cubo entre pontoInicial e pontoFinal
     public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
         if (this.local.x < pontoInicial.x) {
             this.local.x = pontoInicial.x;

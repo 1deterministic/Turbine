@@ -18,6 +18,7 @@ public class Controle {
         this.turbo = false;
     }
     
+    // reinicia o controle para o estado inicial
     public void resetarControle() {
         this.direita = false;
         this.esquerda = false;

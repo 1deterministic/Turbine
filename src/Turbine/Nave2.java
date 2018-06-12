@@ -190,6 +190,7 @@ public class Nave2 extends Objeto {
         this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));
     }
     
+    // restringe a movimentação a um cubo entre pontoInicial e pontoFinal
     public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
         if (this.local.x < pontoInicial.x) {
             this.local.x = pontoInicial.x;
@@ -210,8 +211,9 @@ public class Nave2 extends Objeto {
         // ignorar o z por enquanto
     }
     
+    
+    // retorna o hud da nave
     public Forma getHud() {
         return this.hud;
     }
-
 }

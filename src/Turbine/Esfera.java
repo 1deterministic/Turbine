@@ -104,21 +104,23 @@ public class Esfera extends Forma {
         return this.dimensoes;
     }
 
+    // retorna o eixo de rotação
     public Ponto getRotacao() {
         return rotacao;
     }
 
+    // define o eixo de rotação
     public void setRotacao(Ponto rotacao) {
         this.rotacao = rotacao;
     }
 
+    // retorna o ângulo de rotação
     public Double getAngulo() {
         return angulo;
     }
 
+    // define o eixo de rotação
     public void setAngulo(Double angulo) {
         this.angulo = angulo;
     }
-    
-    
 }

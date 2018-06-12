@@ -4,11 +4,9 @@ import Fases.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.jogamp.opengl.GL;
 import com.jogamp.opengl.GLAutoDrawable;
-import com.jogamp.opengl.GLContext;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.awt.GLCanvas;
 import com.jogamp.opengl.glu.GLU;
@@ -46,7 +44,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
         this.animator = new FPSAnimator(this.canvas, 60);
         this.animator.start();
 
-        // guarda o caminho da raiz do executável
+        // guarda o caminho da raiz do projeto
         this.diretorioRaiz = System.getProperty("user.dir");
         
         // atributos comuns inicializados
@@ -62,10 +60,13 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
     }
  
     public void init(GLAutoDrawable drawable) {
+        // armazena no ogl os objetos de uso comum
         this.ogl.glDrawable = drawable;
         this.ogl.gl = drawable.getGL().getGL2();
         this.ogl.glu = new GLU();
         this.ogl.glut = new GLUT();
+        
+        // limpa o quadro e habilita o uso de texturas
         this.ogl.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         this.ogl.gl.glEnable(GL.GL_DEPTH_TEST);
         this.ogl.gl.glEnable(GL.GL_TEXTURE_2D);
@@ -78,10 +79,13 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
     }
 
     public void display(GLAutoDrawable drawable) {
+        // verifica se foi escolhida uma fase diferente
         if (this.escolhaFase.isMudar()) {
+            // caso tenha sido, carrega a nova fase e reinicia a variável de controle
             this.fase = this.escolhaFase.getFase();
             this.fase.carregar(this.diretorioRaiz);
             this.escolhaFase.setMudar(false);
+            
             // reinicia o controle de tempo
             this.relogio = new Relogio();
             this.relogio.update();
@@ -112,6 +116,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
 
+    // repassa os eventos de pressionamento de tecla para a classe controle
     public void keyPressed(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_UP:
@@ -132,6 +137,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
         
     }
 
+    // repassa os eventos de liberação de tecla para a classe controle
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_UP:
@@ -163,6 +169,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
     public void mouseClicked(MouseEvent e) {
     }
     
+    // repassa os eventos de perssionamento de botão do mouse para a classe controle
     public void mousePressed(MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1: this.controle.esquerda = true; break;
@@ -171,6 +178,7 @@ public class Renderizador implements GLEventListener, KeyListener, MouseListener
         }
     }
 
+    // repassa os eventos de liberação de botão do mouse para a classe controle
     public void mouseReleased(MouseEvent e) {
         switch (e.getButton()) {
             case MouseEvent.BUTTON1: this.controle.esquerda = false; break;

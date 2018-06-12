@@ -177,9 +177,6 @@ public class Carro extends Objeto {
         
         if (this.intensidadeTurbo > 100d)
             this.intensidadeTurbo = 100d;
-//        else if (this.intensidadeTurbo < 0d) {
-//            this.intensidadeTurbo = 0d;
-//        }
     }
     
     public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
@@ -202,14 +199,17 @@ public class Carro extends Objeto {
         // ignorar o z por enquanto
     }
     
+    // retorna o hud do carro
     public Forma getHud() {
         return this.hud;
     }
     
+    // define a intensidade do turbo do carro
     public void setIntensidadeTurbo(Double intensidadeTurbo) {
         this.intensidadeTurbo = intensidadeTurbo;
     }
     
+    // retorna a intensidade do turbo do carro
     public Double getIntensidadeTurbo() {
         return this.intensidadeTurbo;
     }

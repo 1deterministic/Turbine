@@ -66,11 +66,22 @@ public class Dois extends Fase {
         // gera os obstáculos
         for(int i = 0; i < 150; i++) {
             Obstaculo obstaculo = new Obstaculo();
+            Ponto local = new Ponto(ThreadLocalRandom.current().nextDouble(-100d, 100d), 50d, -i * 100d);
             
-            obstaculo.setLocal(new Ponto(
-                    ThreadLocalRandom.current().nextDouble(-100d, 100d), 
-                    50d, 
-                    -i * 100d));
+            obstaculo.setLocal(local);
+            obstaculo.atualizarForma();
+            obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
+            obstaculo.getForma().setTextura(this.texturas.getTextura("azulgelo"));
+            obstaculo.getForma().setCor(Color.white);
+            obstaculo.setDirecao(new Ponto());
+            obstaculo.setVelocidade(0d);
+            obstaculo.atualizarColisor();
+            obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
+            
+            this.obstaculos.add(obstaculo);
+            
+            obstaculo = new Obstaculo();
+            obstaculo.setLocal(new Ponto(-local.x, local.y, local.z));
             obstaculo.atualizarForma();
             obstaculo.getForma().setDimensoes(new Ponto(10d, 100d, 10d));
             obstaculo.getForma().setTextura(this.texturas.getTextura("azulgelo"));

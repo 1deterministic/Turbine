@@ -1,12 +1,12 @@
 package Turbine;
 
-// superclasse dos objetos do jogo
+// classe dos objetos do jogo
 // a ideia é que os elementos do jogo sejam subclasses dessa classe
 public abstract class Objeto {
     // aplicar isso em algum lugar
     //private boolean aplicar_fisica; // diz se a simulação de física será aplicada nesse objeto
     
-    public abstract void desenhar(OGL ogl);
+    public abstract void desenhar(OGL ogl); // desenha a forma do objeto
     
     public abstract void setLocal(Ponto p); // define o local do objeto no espaço
     public abstract Ponto getLocal(); // retorna o local do objeto no espaço
@@ -31,10 +31,10 @@ public abstract class Objeto {
     public abstract Ponto getLocalCamera(); // retorna o ponto onde a câmera deve estar para seguir esse objeto
     
     // controle
-    public abstract void movimentar(Controle c, Double timeDelta);
-    public abstract void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal);
+    public abstract void movimentar(Controle c, Double timeDelta); // repassa a entrada do controle e a variação de tempo para atualizar a direção do objeto
+    public abstract void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal); // restringe a movimentação a um cubo entre pontoInicial e pontoFinal
     
     // física
-    public abstract void manterInercia(Double timeDelta);
-    public abstract void aplicarGravidade(Double aceleracao, Double timeDelta);
+    public abstract void manterInercia(Double timeDelta); // atualiza a posição do objeto de acordo com sua direção de movimento
+    public abstract void aplicarGravidade(Double aceleracao, Double timeDelta); // aplica uma viés na direção de movimento no sentido -y
 }

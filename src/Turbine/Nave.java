@@ -13,7 +13,7 @@ public class Nave extends Objeto {
     private Ponto direcao; // direção de movimento da nave
     private Double velocidade; // velocidade da nave
     
-    private Double intensidadeTurbo; 
+    private Double intensidadeTurbo; // intensidade do turbo aplicado
     private Double quantidadeTurbo; // quantidade de powerup de velocidade disponível
     
     // construtor padrão
@@ -27,7 +27,7 @@ public class Nave extends Objeto {
         this.velocidade = 0d;
         
         this.intensidadeTurbo = 0d;
-        this.quantidadeTurbo = 5d; // quantidade de tempo disponível
+        this.quantidadeTurbo = 5d;
     }
     
     // costrutor completo
@@ -39,6 +39,7 @@ public class Nave extends Objeto {
         this.colisor = colisor;
     }
     
+    // desenha essa nave (repassa para a forma desenhar)
     public void desenhar(OGL ogl) {
         this.forma.desenhar(ogl);
         this.hud.desenhar(ogl);
@@ -129,6 +130,7 @@ public class Nave extends Objeto {
     public void manterInercia(Double timeDelta) {
         this.transladar(this.direcao.escalar((this.velocidade + this.intensidadeTurbo) * timeDelta));
         
+        // diminui gradativamente a intensidade do turbo
         this.intensidadeTurbo -= 10 * timeDelta;
         if (this.intensidadeTurbo < 0d) {
             this.intensidadeTurbo = 0d;
@@ -186,6 +188,7 @@ public class Nave extends Objeto {
         this.forma.rotacionar(this.direcao.x * 80d, new Ponto(0d, 0d, -1d));
     }
     
+    // restringe a movimentação a um cubo entre pontoInicial e pontoFinal
     public void limitarAreaMovimento(Ponto pontoInicial, Ponto pontoFinal) {
         if (this.local.x < pontoInicial.x) {
             this.local.x = pontoInicial.x;
@@ -206,9 +209,8 @@ public class Nave extends Objeto {
         // ignorar o z por enquanto
     }
     
+    // retorna o hud da nave
     public Forma getHud() {
         return this.hud;
     }
-    
-    
 }
