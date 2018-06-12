@@ -31,6 +31,7 @@ public class Menu extends Fase {
         this.texturas.carregarTextura("background", diretorioRaiz + "/src/turbine/Arquivos/Menu/background.png");
         this.texturas.carregarTextura("Um", diretorioRaiz + "/src/turbine/Arquivos/Menu/Um.png");
         this.texturas.carregarTextura("Dois", diretorioRaiz + "/src/turbine/Arquivos/Menu/Dois.png");
+        this.texturas.carregarTextura("Tres", diretorioRaiz + "/src/turbine/Arquivos/Menu/Tres.png");
         this.texturas.carregarTextura("TG1", diretorioRaiz + "/src/turbine/Arquivos/Menu/TG1.png");
         this.texturas.carregarTextura("DLC", diretorioRaiz + "/src/turbine/Arquivos/Menu/DLC.png");
 
@@ -79,6 +80,18 @@ public class Menu extends Fase {
         obstaculo.setLocal(new Ponto(6d, 0d, -1.5d));
         obstaculo.atualizarForma();
         obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
+        obstaculo.getForma().setTextura(this.texturas.getTextura("Tres"));
+        obstaculo.getForma().setCor(Color.white);
+        obstaculo.setDirecao(new Ponto());
+        obstaculo.setVelocidade(0d);
+        obstaculo.atualizarColisor();
+        obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
+        this.obstaculos.add(obstaculo);
+        
+        obstaculo = new Obstaculo();
+        obstaculo.setLocal(new Ponto(8d, 0d, -2d));
+        obstaculo.atualizarForma();
+        obstaculo.getForma().setDimensoes(new Ponto(1d, 0.5d, 0.1d));
         obstaculo.getForma().setTextura(this.texturas.getTextura("DLC"));
         obstaculo.getForma().setCor(Color.white);
         obstaculo.setDirecao(new Ponto());
@@ -118,7 +131,8 @@ public class Menu extends Fase {
                 case 0: controle.resetarControle(); this.escolhaFase.setFase(new Um());break;
                 case 1:controle.resetarControle(); this.escolhaFase.setFase(new Dois());break;
                 case 2:controle.resetarControle(); this.escolhaFase.setFase(new TG1());break;
-                case 3:controle.resetarControle(); break;
+                case 3:controle.resetarControle(); this.escolhaFase.setFase(new Tres());break;
+                case 4: break;
             }
         }
         
