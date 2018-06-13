@@ -113,7 +113,7 @@ public class Menu extends Fase {
         obstaculo.getColisor().setDimensoes(obstaculo.getForma().getDimensoes());
         this.obstaculos.add(obstaculo);
         t = new Texto();
-        t.setTexto("Tres", Color.white);
+        t.setTexto("Matrix Flight", Color.white);
         t.setLocal(new Ponto(6d, 1d, -1.5d));
         t.setDimensoes(new Ponto(0.001d, 0.001d, 0.001d));
         this.textos.add(t);

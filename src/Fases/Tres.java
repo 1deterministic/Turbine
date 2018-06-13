@@ -14,6 +14,10 @@ public class Tres extends Fase {
     private Obstaculo chegada; // linha de chegada
     private ArrayList<Obstaculo> chao; // vetor de pisos
     private boolean colide; // guarda se a nave colidiu com algum obstáculo
+    private Texto msg;
+   
+    
+    
     
     public Tres() {
         this.texturas = new Texturas();
@@ -24,6 +28,8 @@ public class Tres extends Fase {
         this.obstaculos = new ArrayList<>();
         this.chao = new ArrayList<>();
         this.colide = false;
+        this.msg = new Texto();
+        
     }
     
     // carrega todos os elementos da fase
@@ -33,6 +39,8 @@ public class Tres extends Fase {
         this.texturas.carregarTextura("malha", diretorioRaiz + "/src/turbine/Arquivos/malha.png");
         this.texturas.carregarTextura("borda", diretorioRaiz + "/src/turbine/Arquivos/borda.png");
         this.texturas.carregarTextura("matrix", diretorioRaiz + "/src/turbine/Arquivos/matrix.jpg");
+       
+        
 
         
         // define a posição inicial da câmera
@@ -41,6 +49,10 @@ public class Tres extends Fase {
         // carrega o skybox
         this.ceu.setTextura(this.texturas.getTextura("matrix"));
         this.ceu.setCor(Color.white);
+        
+      
+      
+        
         
         // carrega a nave
         this.nave.setLocal(new Ponto(0d, 0d, 500d)); // a nave começa na posição 0, 0, 500
@@ -63,10 +75,10 @@ public class Tres extends Fase {
             // a posição do obstáculo é um valor aleatório entre -100 e 100 no eixo x, 50 no eixo y e -i * 50 no eixo z (todos os obstáculos estão 50m atrás um do outro)
             obstaculo.setLocal(new Ponto(
                     ThreadLocalRandom.current().nextDouble(-150d, 100d), 
-                    50d, 
-                    -i * 10d));
+                    ThreadLocalRandom.current().nextDouble(-50d, 100d), 
+                    -i * 20d));
             obstaculo.atualizarForma(); // atualiza o local da forma para o mesmo local do obstáculo
-            obstaculo.getForma().setDimensoes(new Ponto(ThreadLocalRandom.current().nextDouble(10d, 45d), ThreadLocalRandom.current().nextDouble(0, 75d), ThreadLocalRandom.current().nextDouble(0, 50d))); // faz a forma do obstáculo ter o tamanho 10 em largura, 100 em altura e 10 em profundidade
+            obstaculo.getForma().setDimensoes(new Ponto(ThreadLocalRandom.current().nextDouble(10d, 50d), ThreadLocalRandom.current().nextDouble(0, 80d), ThreadLocalRandom.current().nextDouble(0, 50d))); // faz a forma do obstáculo ter o tamanho 10 em largura, 100 em altura e 10 em profundidade
             obstaculo.getForma().setTextura(this.texturas.getTextura("matrix")); // define a textura "borda" para a forma
             obstaculo.getForma().setCor(Color.white); // define a cor base da forma para branco
             obstaculo.setDirecao(new Ponto()); // define a direção de movimento do colisor para 0, 0, 0 (parado)
@@ -95,7 +107,7 @@ public class Tres extends Fase {
         }
  
         // carrega a linha de chegada
-        this.chegada.setLocal(new Ponto(0d, 50d, -20000d)); // a posição da linha de chegada é 0 no x, 50 no y e -10000 no z
+        this.chegada.setLocal(new Ponto(0d, 50d, -15000d)); // a posição da linha de chegada é 0 no x, 50 no y e -10000 no z
         this.chegada.atualizarForma();// atualiza o local da forma para o mesmo local da linha de chegada
         this.chegada.getForma().setDimensoes(new Ponto(100d, 100d, 10d)); // faz a forma da linha de chegada ter o tamanho 100 em largura, 100 em altura e 10 em profundidade
         this.chegada.getForma().setTextura(this.texturas.getTextura("chegada_um")); // define a textura "borda" para a forma
@@ -114,6 +126,11 @@ public class Tres extends Fase {
         this.nave.aplicarGravidade(0.1d, deltaTempo);
         this.nave.limitarAreaMovimento(new Ponto(-100d, 0d, 0d), new Ponto(100d, 100d, 0d));
         this.nave.atualizarHud();
+        
+        this.msg.setDimensoes(new Ponto(0.05d, 0.05d, 0.05d));
+        this.msg.setLocal(new Ponto(-50d, 25d, 400d));
+        this.msg.setTexto("CONSEGUE ESCAPAR?");
+        this.msg.setCor(Color.white);
         
         // calcula quantos obstáculos faltam até o final (quantos têm z menor que z da nave)
         int pos = 0;
@@ -162,6 +179,7 @@ public class Tres extends Fase {
          // desenha todos os objetos
         this.nave.desenhar(ogl);
         this.chegada.desenhar(ogl);
+        this.msg.desenhar(ogl);
         // desenha todos os obstáculos
         for (Obstaculo o: this.obstaculos) {
             o.desenhar(ogl);
